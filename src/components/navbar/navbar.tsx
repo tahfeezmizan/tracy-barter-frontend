@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import AnnouncementBar from "./announcement-bar";
 import NavMenu from "./navmenu";
 
 export default function Navbar() {
@@ -17,8 +16,6 @@ export default function Navbar() {
 
   return (
     <div className="relative">
-      <AnnouncementBar />
-
       <div
         className={`transition-all ease-in-out duration-300 z-50 ${
           isSticky ? "fixed top-0 left-0 w-full shadow-md bg-white" : "relative"

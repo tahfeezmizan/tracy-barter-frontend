@@ -1,12 +1,12 @@
 "use client";
 import { Heart, LocateFixed, StarIcon, TruckElectric } from "lucide-react";
 import Image from "next/image";
-import bannerImg from "../../asstes/banner-img.png";
-import FlavorImg from "../../asstes/flavor-img.png";
-import man1 from "../../asstes/man (1).jpeg";
-import man2 from "../../asstes/man (2).jpg";
-import man3 from "../../asstes/man (3).jpg";
-import increment from "../../asstes/pluse.png";
+import bannerImg from "@/assets/logo.jpg";
+import FlavorImg from "@/assets/logo.jpg";
+import man1 from "@/assets/logo.jpg";
+import man2 from "@/assets/logo.jpg";
+import man3 from "@/assets/logo.jpg";
+import increment from "@/assets/logo.jpg";
 
 export default function HeroSection() {
   return (

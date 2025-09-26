@@ -3,7 +3,7 @@
 import React from "react";
 import { Facebook, Twitter, Linkedin, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
-import logo from "../../asstes/logo.png";
+import logo from "@/assets/logo.jpg";
 import Link from "next/link";
 
 export default function Footer() {

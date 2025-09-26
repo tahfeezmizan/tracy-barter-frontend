@@ -2,13 +2,16 @@
 
 import { UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Avatar, Dropdown } from "antd";
+import { Avatar, Button, Dropdown } from "antd";
 
 import Image from "next/image";
-import logo from "../../asstes/logo.png";
+import logo from "@/assets/logo.jpg";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function NavMenu() {
+  const pathName = usePathname();
+
   const avatarMenuItems: MenuProps["items"] = [
     {
       key: "profile",
@@ -36,7 +39,17 @@ export default function NavMenu() {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Dropdown
+          {pathName === "/" ? (
+            <Link href="/register">
+              <Button className="!bg-green-600 !text-white !py-5 !text-lg !font-semibold !shadow-2xl">
+                Get Started
+              </Button>
+            </Link>
+          ) : (
+            ""
+          )}
+
+          {/* <Dropdown
             menu={{ items: avatarMenuItems }}
             placement="bottomRight"
             arrow
@@ -47,7 +60,7 @@ export default function NavMenu() {
               src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop"
               className="cursor-pointer border-2 border-[#F1874F] rounded-full overflow-hidden hover:border-orange-400 transition-colors"
             />
-          </Dropdown>
+          </Dropdown> */}
         </div>
       </div>
     </div>
