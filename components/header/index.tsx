@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   // Simulate user logged in or not
-  const user = false;
+  const user = true;
 
   const pathname = usePathname();
 
@@ -32,7 +32,7 @@ export default function Header() {
 
   // Static navigation links
   const navigationLinks = [
-    { href: "/", label: "Home" },
+    // { href: "/", label: "Home" },
     { href: "/Services", label: "Services" },
     { href: "/Pricing", label: "Pricing" },
     { href: "/realtor-referrals", label: "Realtor Referrals" },
@@ -66,9 +66,9 @@ export default function Header() {
             {/* Desktop Navigation */}
             <div
               className={cn(
-                "hidden lg:flex items-center space-x-3",
-                pathname === "/" ? "text-white" : "text-green-900",
-                pathname === "/" && isScrolled && "text-green-900"
+                "hidden lg:flex items-center space-x-2"
+                // pathname === "/" ? "text-white" : "text-green-900",
+                // pathname === "/" && isScrolled && "text-green-900"
               )}
             >
               {navigationLinks.map((link) => (
@@ -100,13 +100,19 @@ export default function Header() {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-green-900 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
                           <CircleUserRound className="size-9 text-white" />
                         </div>
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem asChild>
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-48 bg-secondary text-white border-none"
+                    >
+                      <DropdownMenuItem
+                        asChild
+                        className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                      >
                         <Link
                           href="/profile"
                           className="flex items-center space-x-2"
@@ -116,7 +122,7 @@ export default function Header() {
                         </Link>
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem className="flex items-center space-x-2">
+                      <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>
                       </DropdownMenuItem>
@@ -127,7 +133,7 @@ export default function Header() {
                 <div className="flex items-center space-x-3">
                   <Button
                     asChild
-                    className="bg-green-900 hover:bg-green-800 text-white px-6 py-2 text-base font-medium rounded-lg cursor-pointer"
+                    className="bg-secondary hover:bg-secondary/80 text-white px-4 py-2 text-base font-medium rounded-lg cursor-pointer"
                   >
                     <Link href="/sign-up">Sign in</Link>
                   </Button>
@@ -136,14 +142,13 @@ export default function Header() {
                     asChild
                     variant="outline"
                     className={cn(
-                      "px-6 py-2 text-base font-medium rounded-lg border-2 cursor-pointer",
-                      pathname === "/"
-                        ? "border-green-900 bg-transparent text-white hover:bg-white hover:border-white hover:text-black"
-                        : "border-green-900 text-black hover:bg-green-900 hover:text-white",
-                      pathname === "/" && isScrolled && "text-green-900 "
+                      "bg-transparent px-4 py-2 text-base  rounded-lg border cursor-pointer text-secondary"
+                      // isScrolled && "text-green-900 "
                     )}
                   >
-                    <Link href="/">Get Started</Link>
+                    <Link href="/" className="font-semibold">
+                      Get Started
+                    </Link>
                   </Button>
                 </div>
               )}
@@ -166,13 +171,47 @@ export default function Header() {
                       )}
                     />
                   ) : (
-                    <Menu
-                      className={cn(
-                        "size-9",
-                        pathname === "/" ? "text-white" : "text-black",
-                        pathname === "/" && isScrolled && "text-black "
-                      )}
-                    />
+                    <>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
+                            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                              <CircleUserRound className="size-9 text-white" />
+                            </div>
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-48 bg-secondary text-white border-none"
+                        >
+                          <DropdownMenuItem
+                            asChild
+                            className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                          >
+                            <Link
+                              href="/profile"
+                              className="flex items-center space-x-2"
+                            >
+                              <User className="h-4 w-4" />
+                              <span>Profile</span>
+                            </Link>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
+                            <LogOut className="h-4 w-4" />
+                            <span>Logout</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      <Menu
+                        className={cn(
+                          "size-9",
+                          pathname === "/" ? "text-white" : "text-black",
+                          pathname === "/" && isScrolled && "text-black "
+                        )}
+                      />
+                    </>
                   )}
                 </div>
               </Button>
@@ -202,23 +241,23 @@ export default function Header() {
                   <div className="flex flex-col space-y-3">
                     <Button
                       asChild
-                      variant="outline"
-                      className={cn(
-                        "px-6 py-2 text-base font-medium rounded-lg border-2 cursor-pointer",
-                        pathname === "/"
-                          ? "border-green-900 bg-transparent text-white hover:bg-white hover:border-white hover:text-black"
-                          : "border-green-900 text-black hover:bg-green-900 hover:text-white",
-                        pathname === "/" && isScrolled && "text-green-900 "
-                      )}
+                      className="bg-secondary text-primary hover:bg-secondary/90 px-6 py-2 text-base font-medium rounded-lg cursor-pointer"
                     >
-                      <Link href="/login">Login</Link>
+                      <Link href="/sign-up">Sign up</Link>
                     </Button>
 
                     <Button
                       asChild
-                      className="bg-green-900 hover:bg-green-800 text-white px-6 py-2 text-base font-medium rounded-lg cursor-pointer"
+                      variant="outline"
+                      className={cn(
+                        "px-6 py-2 text-base text-secondary  font-medium rounded-lg border border-secondary cursor-pointer bg-transparent hover:bg-secondary hover:text-primary duration-300"
+                        // pathname === "/"
+                        //   ? "border-green-900  text-white hover:bg-white hover:border-white hover:text-black"
+                        //   : "border-green-900 text-black hover:bg-green-900 hover:text-white",
+                        // pathname === "/" && isScrolled && "text-green-900"
+                      )}
                     >
-                      <Link href="/sign-up">Sign up</Link>
+                      <Link href="/login">Login</Link>
                     </Button>
                   </div>
                 )}

@@ -6,7 +6,7 @@
 
   /* Custom color variables */
   --color-primary: #D5BD69; 
-  --color-secondary: #9333ea;
+  --color-secondary: #0F233F;
   --color-accent: #fff; /* amber-500 */
 }
 
@@ -28,7 +28,7 @@
 
     /* Adjusted dark mode colors */
     --color-primary: #D5BD69; /* lighter blue */
-    --color-secondary: #a855f7; /* lighter purple */
+    --color-secondary: #0F233F; /* lighter purple */
     --color-accent: #fff; /* lighter amber */
   }
 }
