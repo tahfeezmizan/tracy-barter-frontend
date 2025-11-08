@@ -1,13 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #000000;
+
+  /* Custom color variables */
+  --color-primary: #D5BD69; 
+  --color-secondary: #9333ea;
+  --color-accent: #fff; /* amber-500 */
 }
 
 @theme inline {
-  --color-background: var(--foreground);
-  --color-foreground: var(--background);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,6 +25,11 @@
   :root {
     --background: #ffffff;
     --foreground: #000000;
+
+    /* Adjusted dark mode colors */
+    --color-primary: #D5BD69; /* lighter blue */
+    --color-secondary: #a855f7; /* lighter purple */
+    --color-accent: #fff; /* lighter amber */
   }
 }
 
