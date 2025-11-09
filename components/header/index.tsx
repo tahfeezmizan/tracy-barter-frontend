@@ -1,19 +1,18 @@
 "use client";
 
-import logo from "@/assets/logo.png";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
 
 export default function Header() {
   // Simulate user logged in or not
@@ -48,13 +47,13 @@ export default function Header() {
           pathname === "/" && isScrolled && "bg-primary !top-0 border-b"
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1 rounded-lg bg-primary">
+        <div className="max-w-7xl mx-auto px-3 py-1 rounded-lg bg-primary">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
               <Link href={"/"}>
                 <Image
-                  src={logo}
+                  src={require("@/assets/logo.png")}
                   alt="Logo"
                   width={165}
                   height={40}
