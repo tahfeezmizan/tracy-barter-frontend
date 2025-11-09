@@ -29,7 +29,7 @@ export default function HeroSection() {
     <div
       className="relative min-h-screen flex items-center overflow-hidden pt-10"
       style={{
-        background: `linear-gradient(to bottom, #fbf8f0 92%,#f0f1f5 80%)`,
+        background: `linear-gradient(to bottom, #fbf8f0 92%, #f0f1f5ad 80%)`,
       }}
     >
       <div className="">
@@ -79,7 +79,7 @@ export default function HeroSection() {
               by vetted locals. Or, join as a provider and get steady, well-paid
               work.
             </p>
-            <Button className="bg-secondary text-2xl text-white mt-6">
+            <Button className="bg-secondary py-6 text-2xl text-white mt-6">
               I need home services
             </Button>
 
@@ -87,7 +87,10 @@ export default function HeroSection() {
               {data.map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <div key={index} className="flex flex-col items-center justify-center gap-2 text-center">
+                  <div
+                    key={index}
+                    className="flex flex-col items-center justify-center gap-2 text-center"
+                  >
                     <div className="mb-2">
                       <Icon className="size-8" />
                     </div>

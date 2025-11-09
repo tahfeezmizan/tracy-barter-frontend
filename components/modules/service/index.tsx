@@ -78,8 +78,8 @@ export default function ServiceSection() {
   const visibleCards = getVisibleCards();
 
   return (
-    <div className="min-h-screen bg-white py-16 md:px-4 pr-4  lg:px-8">
-      <div className="max-full mx-auto">
+    <div className="min-h-screen overflow-hidden bg-white py-16 md:px-4 pr-4 lg:px-8">
+      <div className="max-w-full mx-auto ">
         <div className="text-center mb-16 text-black">
           <h1 className="text-3xl font-bold  mb-3">Service Highlights</h1>
           <p className="text-lg sm:text-xl w-full  md:max-w-80 mx-auto">
@@ -98,7 +98,11 @@ export default function ServiceSection() {
                 key={`${service.id}-${idx}`}
                 className={`
                       transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
-                      ${isCenter ? "scale-100 z-10 !w-full md:!w-96" : "scale-90 "}
+                      ${
+                        isCenter
+                          ? "scale-100 z-10 !w-full md:!w-96"
+                          : "scale-90 "
+                      }
                       ${isEdge ? "hidden lg:block" : ""}
                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
                       shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
