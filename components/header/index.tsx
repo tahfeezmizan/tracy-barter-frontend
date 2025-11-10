@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +15,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
+import path from "path";
 
 export default function Header() {
   // Simulate user logged in or not
@@ -32,7 +35,7 @@ export default function Header() {
   // Static navigation links
   const navigationLinks = [
     // { href: "/", label: "Home" },
-    { href: "/Services", label: "Services" },
+    { href: "/service", label: "Services" },
     { href: "/Pricing", label: "Pricing" },
     { href: "/realtor-referrals", label: "Realtor Referrals" },
     { href: "/terms-conditions", label: "Terms & Conditions" },
@@ -42,9 +45,9 @@ export default function Header() {
     <header className="text-accent relative">
       <div
         className={cn(
-          "fixed top-0 w-full z-50 transition-colors duration-400 ease-in-out`",
-          pathname === "/" && "lg:top-12 left-0",
-          pathname === "/" && isScrolled && "bg-primary !top-0 border-b"
+          "fixed top-0 w-full z-50 transition duration-300 ease-in`",
+          pathname === "/" && "lg:top-12 left-0 ",
+          pathname === "/" && isScrolled && "bg-primary !top-0 border-b transition duration-300"
         )}
       >
         <div className="max-w-7xl mx-auto px-3 py-1 rounded-lg bg-primary">

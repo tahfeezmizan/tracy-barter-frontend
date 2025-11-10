@@ -11,7 +11,6 @@ import PricingPlan from "@/components/pricing/pricing-plan";
 export default function Page() {
   return (
     <div className="min-h-screen">
-      <Header />
       <HeroSection />
       <ServiceSection />
       <GroceryAssistant />
@@ -19,7 +18,6 @@ export default function Page() {
       <PricingPlan />
       <ClientReview />
       <FAQSection />
-      <Footer />
     </div>
   );
 }
