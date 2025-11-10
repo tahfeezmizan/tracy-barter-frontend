@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
@@ -21,14 +23,14 @@ export default function GroceryAssistant() {
           alt="hero"
           width={200}
           height={200}
-          className="absolute top-4 -left-8 z-50 rotate-180 w-[189px] h-[151px]"
+          className="absolute top-4 -left-8 z-40 rotate-180 w-[189px] h-[151px]"
         />
         <Image
           src={require("@/assets/spiral.svg")}
           alt="hero"
           width={150}
           height={150}
-          className="absolute top-10 left-56 rotate-180 z-50 w-14 h-14"
+          className="absolute top-10 left-56 rotate-180 z-40 w-14 h-14"
         />
       </div>
 
@@ -38,25 +40,25 @@ export default function GroceryAssistant() {
           alt="hero"
           width={200}
           height={200}
-          className="absolute bottom-0 -right-16 z-50  w-[189px] h-[151px]"
+          className="absolute bottom-0 -right-16 z-40  w-[189px] h-[151px]"
         />
         <Image
           src={require("@/assets/spiral.svg")}
           alt="hero"
           width={150}
           height={150}
-          className="absolute bottom-6 right-56 z-50 w-14 h-14"
+          className="absolute bottom-6 right-56 z-40 w-14 h-14"
         />
       </div>
-      <div className="max-w-7xl mx-auto py-24">
-        <div className="flex items-center justify-between gap-10">
+      <div className="max-w-7xl mx-auto px-4 py-24">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 pt-20 pb-10 md:pt-0 lg:py-0">
           <div className="flex-1 flex justify-center">
             <Image
               src={require("@/assets/grocery-assistant-img.png")}
               alt="here"
               width={1000}
               height={1000}
-              className="w-[495px] h-[509px]"
+              className="w-full md:w-[495px] h-full md:h-[509px]"
             />
           </div>
 
