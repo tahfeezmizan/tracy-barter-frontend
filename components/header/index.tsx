@@ -98,11 +98,11 @@ export default function Header() {
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
+                      <Button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
                         <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
                           <CircleUserRound className="size-9 text-white" />
                         </div>
-                      </button>
+                      </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"

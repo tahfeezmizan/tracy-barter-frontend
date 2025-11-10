@@ -17,7 +17,7 @@ export default function GroceryAssistant() {
       #f0f1f5ad 100%)`,
       }}
     >
-      <div className="">
+      <div className="hidden md:block">
         <Image
           src={require("@/assets/abstract-blob.svg")}
           alt="hero"
@@ -34,7 +34,7 @@ export default function GroceryAssistant() {
         />
       </div>
 
-      <div className="">
+      <div className="hidden md:block">
         <Image
           src={require("@/assets/abstract-blob.svg")}
           alt="hero"
@@ -50,8 +50,8 @@ export default function GroceryAssistant() {
           className="absolute bottom-6 right-56 z-40 w-14 h-14"
         />
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-24">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 pt-20 pb-10 md:pt-0 lg:py-0">
+      <div className="max-w-7xl mx-auto px-4 pb-14 md:py-24">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-5 md:gap-10 pt-14 pb-10 md:pt-0 lg:py-0">
           <div className="flex-1 flex justify-center">
             <Image
               src={require("@/assets/grocery-assistant-img.png")}
@@ -63,10 +63,10 @@ export default function GroceryAssistant() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-5xl text-black font-bold leading-tight tracking-tight py-1 mb-2">
+            <h2 className="text-4xl md:text-5xl text-black font-bold leading-tight tracking-tight py-1 mb-2">
               Smart, Stocked Kitchen
             </h2>
-            <p className="text-2xl leading-snug ">
+            <p className="text-xl md:text-2xl leading-snug ">
               Tell our Grocery Assistant what you want (“3-day stay, breakfast +
               snacks”) and arrive to a filled fridge
             </p>

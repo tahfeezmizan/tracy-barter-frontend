@@ -1,3 +1,5 @@
+import FAQSection from "@/components/faq";
+import Footer from "@/components/footer/footer";
 import Header from "@/components/header";
 import AboutTracy from "@/components/modules/about-tracy";
 import ClientReview from "@/components/modules/client-review";
@@ -16,6 +18,8 @@ export default function Page() {
       <AboutTracy />
       <PricingPlan />
       <ClientReview />
+      <FAQSection />
+      <Footer />
     </div>
   );
 }

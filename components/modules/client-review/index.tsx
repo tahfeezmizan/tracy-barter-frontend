@@ -84,12 +84,12 @@ export default function ClientReview() {
 
   return (
     <div className="overflow-hidden bg-secondary py-16 md:px-4 pr-4 lg:px-8">
-      <div className="max-w-7xl mx-auto px-4 overflow-hidden">
-        <h1 className="text-5xl text-white text-center font-bold mb-9">
-          What Our Clients Say About Us
+      <div className="max-w-7xl mx-auto pl-4 lg:px-4 overflow-hidden">
+        <h1 className="text-4xl md:text-5xl text-white text-center font-bold mb-9">
+          What Our Clients <br className="lg:hidden" /> Say About Us
         </h1>
 
-        <div className="flex gap-2 justify-center items-stretch px-4 lg:px-12">
+        <div className="flex gap-2 justify-center items-stretch px-0 lg:px-12">
           {visibleCards.map((service, idx) => {
             const isCenter = idx === 2;
             const isEdge = idx === 0 || idx === 4;
@@ -101,12 +101,12 @@ export default function ClientReview() {
                       flex items-center justify-center transition-all duration-500 ease-out p-0
                       ${
                         isCenter
-                          ? "scale-100 z-10 w-full md:!w-[500px]"
+                          ? "scale-100 z-10 w-full md:!w-[500px] md:h-96 h-auto"
                           : "scale-75 "
                       }
                       ${isEdge ? "hidden lg:block" : ""}
                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
-                      shrink-0 w-full sm:w-[280px] lg:w-[400px] hover:shadow-xl bg-white rounded-3xl overflow-hidden
+                      md:h-96 lg:h-auto shrink-0 w-full sm:w-[280px] lg:w-[400px] hover:shadow-xl bg-white rounded-3xl overflow-hidden
                     `}
               >
                 <CardContent className="p-5">
@@ -130,7 +130,7 @@ export default function ClientReview() {
                     <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+                    <p className="text-base text-neutral-600 leading-relaxed">
                       {service.review}
                     </p>
                   </div>

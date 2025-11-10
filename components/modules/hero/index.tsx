@@ -47,7 +47,6 @@ export default function HeroSection() {
           className="absolute top-6 left-56 z-40 w-14 h-14"
         />
       </div>
-
       <div className="hidden md:block">
         <Image
           src={require("@/assets/abstract-blob.svg")}
@@ -64,17 +63,18 @@ export default function HeroSection() {
           className="absolute bottom-6 right-56 z-40 w-14 h-14"
         />
       </div>
+
       <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-5">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-12 lg:gap-5 ">
           <div className="flex-1">
-            <span className="text-2xl font-medium leading-10">
+            <span className="text-xl md:text-2xl font-medium leading-10">
               Your Home, Handled.
             </span>
-            <h2 className="text-5xl text-primary font-bold leading-tight tracking-tight py-1 mb-2">
+            <h2 className="text-4xl md:text-5xl text-primary font-bold leading-tight tracking-tight py-1 mb-2">
               It's More Than A Service... <br className="" />{" "}
               It's A Lifestyle.
             </h2>
-            <p className="text-2xl leading-snug ">
+            <p className="text-lg md:text-2xl leading-snug md:pr-44 lg:pr-0">
               Cleaning, landscaping, grocery stocking, and occasional check-ins
               by vetted locals. Or, join as a provider and get steady, well-paid
               work.

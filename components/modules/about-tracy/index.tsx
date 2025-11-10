@@ -22,13 +22,13 @@ export default function AboutTracy() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-5xl text-black font-bold leading-tight tracking-tight ">
+            <h2 className="text-4xl md:text-5xl text-black font-bold leading-tight tracking-tight ">
               Tracy Barter
             </h2>
             <Button className="p-2.5 bg-primary/60 text-secondary text-base font-medium rounded-full my-3">
               Founder & Realtor®
             </Button>
-            <p className="text-2xl leading-snug text-secondary ">
+            <p className="text-xl md:text-2xl leading-snug text-secondary ">
               With over two decades of experience in real estate, Tracy Barter
               has built her career on exceptional service, trusted
               relationships, and a deep love for helping clients feel at home in

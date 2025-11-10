@@ -78,17 +78,17 @@ export default function ServiceSection() {
   const visibleCards = getVisibleCards();
 
   return (
-    <div className="min-h-screen overflow-hidden bg-white py-16 md:px-4 pr-4 lg:px-8">
+    <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
       <div className="max-w-full mx-auto ">
-        <div className="text-center mb-16 text-black">
+        <div className="text-center mb-10 lg:mb-16 text-black">
           <h1 className="text-3xl font-bold  mb-3">Service Highlights</h1>
-          <p className="text-lg sm:text-xl w-full  md:max-w-80 mx-auto">
+          <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
             Everything you need to keep your home ready for arrival whenever you
             need it.
           </p>
         </div>
 
-        <div className="flex gap-4 sm:gap-6 justify-center items-stretch px-4 lg:px-12">
+        <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
           {visibleCards.map((service, idx) => {
             const isCenter = idx === 2;
             const isEdge = idx === 0 || idx === 4;
@@ -140,7 +140,7 @@ export default function ServiceSection() {
           size="icon"
           className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="size-7" />
         </Button>
         {services.map((_, index) => (
           <button
@@ -150,8 +150,8 @@ export default function ServiceSection() {
                 transition-all duration-300 rounded-full
                 ${
                   index === currentIndex
-                    ? "w-12 h-3 bg-neutral-800"
-                    : "w-3 h-3 bg-neutral-400 hover:bg-neutral-600"
+                    ? "w-12 h-3 bg-secondary"
+                    : "w-3 h-3 bg-neutral-400"
                 }
               `}
             aria-label={`Go to slide ${index + 1}`}
@@ -163,7 +163,7 @@ export default function ServiceSection() {
           size="icon"
           className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="size-7" />
         </Button>
       </div>
     </div>

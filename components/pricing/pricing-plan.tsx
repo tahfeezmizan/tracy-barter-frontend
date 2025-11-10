@@ -52,24 +52,13 @@ const plans: PricingPlan[] = [
 
 export default function PricingPlan() {
   return (
-    <div
-      className="bg-white py-36 px-4 sm:px-6 lg:px-8"
-      style={{
-        background: `linear-gradient(
-      to bottom,
-      #f0f1f5ad 0%,
-      #f0f1f5ad 8%,
-      #ffffff 8%,
-      #ffffff 92%,
-      #f0f1f5ad 92%,
-      #f0f1f5ad 100%
-    )`,
-      }}
-    >
+    <div className="bg-white py-32 px-4 sm:px-6 lg:px-8 faq-gradient-bg">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-black mb-6">Pricing</h1>
-          <p className="text-2xl text-neutral-700 max-w-3xl mx-auto leading-relaxed">
+        <div className="text-center mb-8 md:mb-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-black mb-3 md:mb-5">
+            Pricing
+          </h1>
+          <p className="text-xl md:text-2xl text-neutral-700 max-w-3xl mx-auto leading-relaxed">
             Flexible plans that fit your needs—from occasional help to
             full-service care.
           </p>
