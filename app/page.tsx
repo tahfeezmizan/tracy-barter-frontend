@@ -4,6 +4,7 @@ import ClientReview from "@/components/modules/client-review";
 import GroceryAssistant from "@/components/modules/grocery-assistant";
 import HeroSection from "@/components/modules/hero";
 import ServiceSection from "@/components/modules/service";
+import PricingPlan from "@/components/pricing/pricing-plan";
 
 export default function Page() {
   return (
@@ -13,7 +14,7 @@ export default function Page() {
       <ServiceSection />
       <GroceryAssistant />
       <AboutTracy />
-
+      <PricingPlan />
       <ClientReview />
     </div>
   );
