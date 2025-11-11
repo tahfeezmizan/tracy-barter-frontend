@@ -47,10 +47,11 @@ export default function Header() {
         className={cn(
           "fixed top-0 w-full z-50 transition duration-300 ease-in`",
           pathname === "/" && "lg:top-12 left-0 ",
-          pathname === "/" && isScrolled && "bg-primary !top-0 border-b transition duration-300"
+          pathname === "/" && isScrolled && "bg-primary !top-0 border-b transition duration-300",
+          pathname !== "/" && isScrolled &&  "bg-primary"
         )}
       >
-        <div className="max-w-7xl mx-auto px-3 py-1 rounded-lg bg-primary">
+        <div className="max-w-7xl mx-auto px-3 py-1 lg:rounded-lg bg-primary">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
