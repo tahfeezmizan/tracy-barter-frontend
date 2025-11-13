@@ -42,9 +42,9 @@ export function ReferralProgramWorks() {
           <div className="absolute top-8 left-0 right-0 h-1 hidden md:block" />
 
           {/* Steps grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
             {defaultSteps.map((step) => (
-              <div className="relative text-center rounded-xl p-6 transition-all border border-gray-200 bg-white">
+              <div className="relative text-center rounded-xl p-6 transition-all border border-gray-200 bg-white mb-4 lg:mb-0">
                 {/* Step number circle */}
                 <div className="absolute -top-6 left-6 w-14 h-14 bg-slate-900 rounded-full flex items-center justify-center ">
                   <span className="text-2xl font-medium text-primary">

@@ -37,13 +37,13 @@ export function WhyPartnerSection() {
           Why Partner with Us?
         </h2>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:gap-28">
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:gap-28">
           {defaultBenefits.map((benefit) => (
-            <div className="flex flex-col items-center justify-center  rounded-xl bg-white p-8 text-center w-full md:w-[430px] mx-auto">
-              <h3 className="mb-4 text-2xl font-bold text-primary">
+            <div className="flex flex-col items-center justify-center rounded-xl bg-white p-8 text-center w-full lg:w-[430px] h-52 mx-auto">
+              <h3 className="mb-4 text-2xl font-semibold text-primary">
                 {benefit.title}
               </h3>
-              <p className="text-lg text-secondary">{benefit.description}</p>
+              <p className="text-base md:text-lg text-secondary">{benefit.description}</p>
             </div>
           ))}
         </div>

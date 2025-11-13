@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
 export default function ReferralsHero() {
   return (
     <div
-      className="relative flex items-center overflow-hidden pt-10"
+      className="relative flex items-center overflow-hidden pt-16"
       style={{
         background: `linear-gradient(to top, #fbf8f0 75%, #f0f1f5ad 25%)`,
       }}
@@ -28,7 +27,7 @@ export default function ReferralsHero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-32 lg:py-44 text-center">
+      <div className="max-w-7xl mx-auto px-4 py-20 lg:py-44 text-center">
         <div className="">
           <Link
             href={"#"}
