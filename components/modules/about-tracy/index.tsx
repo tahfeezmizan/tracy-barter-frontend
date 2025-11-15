@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { BookmarkMinus, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export default function AboutTracy() {
   return (
