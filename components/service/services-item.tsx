@@ -1,67 +1,9 @@
-// import Image from "next/image";
-// import Link from "next/link";
-
-// export default function ServicesItem() {
-//   return (
-//     <div
-//       style={{
-//         background: `linear-gradient(to top, #fbf8f0 92%, #f0f1f5ad 80%)`,
-//       }}
-//     >
-//       <div className="max-w-7xl mx-auto px-4 py-24">
-//         <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-//           <div className="flex-1 w-[550px] h-[550px]">
-//             <Image
-//               src={require("@/assets/services-item.png")}
-//               alt="services "
-//               width={1000}
-//               height={1000}
-//               className=""
-//             />
-//           </div>
-//           <div className="flex-1">
-//             <h3 className="text-4xl font-semibold text-primary mb-4">
-//               Home Cleaning
-//             </h3>
-//             <p className="text-lg text-gray-500">
-//               Scheduled wellness checks for your property while you're away.
-//             </p>
-
-//             <div className="my-8">
-//               <h3 className="text-2xl font-medium text-primary">What we do:</h3>
-//               <ul className="mt-4 list-disc list-inside text-gray-500 space-y-1">
-//                 <li>Exterior & interior walkthrough</li>
-//                 <li>Doors/windows, thermostat & humidity check</li>
-//                 <li>Leak, breaker, and appliance glance-over</li>
-//                 <li>Quick photo report in your dashboard</li>
-//               </ul>
-//             </div>
-
-//             <div className="pb-12">
-//               <h3 className="text-2xl font-medium text-primary mb-4">
-//                 When to book:
-//               </h3>
-//               <p className="text-base text-gray-500">
-//                 travel days, after storms, before guests, or any time you want
-//                 peace of mind.
-//               </p>
-//             </div>
-
-//             <Link
-//               href={"#"}
-//               className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 "
-//             >
-//               Book Now
-//             </Link>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 interface ServicesItemProps {
   title: string;

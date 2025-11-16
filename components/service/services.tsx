@@ -23,7 +23,7 @@ export default function ServicesPage() {
       whenToBook:
         "Travel days, after storms, before guests, or any time you want peace of mind.",
       buttonLabel: "Book Now",
-      buttonLink: "#",
+      buttonLink: "/service/booking",
       reverse: false,
     },
     {
@@ -40,7 +40,7 @@ export default function ServicesPage() {
       whenToBook:
         "travel days, after storms, before guests, or any time you want peace of mind.",
       buttonLabel: "Book Now",
-      buttonLink: "#",
+      buttonLink: "/service/booking",
       reverse: true,
     },
     {
@@ -57,7 +57,7 @@ export default function ServicesPage() {
       whenToBook:
         "travel days, after storms, before guests, or any time you want peace of mind.",
       buttonLabel: "Book Now",
-      buttonLink: "#",
+      buttonLink: "/service/booking",
       reverse: false,
     },
     {
@@ -74,7 +74,7 @@ export default function ServicesPage() {
       whenToBook:
         "travel days, after storms, before guests, or any time you want peace of mind.",
       buttonLabel: "Book Now",
-      buttonLink: "#",
+      buttonLink: "/service/booking",
       reverse: true,
     },
     {
@@ -91,7 +91,7 @@ export default function ServicesPage() {
       whenToBook:
         "travel days, after storms, before guests, or any time you want peace of mind.",
       buttonLabel: "Book Now",
-      buttonLink: "#",
+      buttonLink: "/service/booking",
       reverse: false,
     },
   ];
