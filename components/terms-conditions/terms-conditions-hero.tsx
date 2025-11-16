@@ -1,12 +1,12 @@
 "use client";
+import { BookmarkMinus } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
 export default function TermsConditionsHero() {
   return (
     <div
-      className="relative flex items-center overflow-hidden pt-10"
+      className="relative overflow-hidden pt-10"
       style={{
         background: `linear-gradient(to top, #fbf8f0 75%, #f0f1f5ad 25%)`,
       }}
@@ -28,23 +28,23 @@ export default function TermsConditionsHero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-32 text-center">
-        <div className="">
+      <div className="max-w-7xl mx-auto px-4 py-28">
+        <div className="space-y-1.5">
+          <p className="text-xl md:text-3xl font-medium leading-relaxed">
+            Policies & Procedures
+          </p>
+          <p className="text-xl md:text-3xl font-medium leading-relaxed">
+            Happy Valley Home Concierge Service Agreement
+          </p>
+          <p className="text-xl md:text-3xl font-medium leading-relaxed mb-6">
+            Last updated: 2025-01-28
+          </p>
           <Link
             href={"#"}
-            className="text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-secondary "
+            className="w-96 text-2xl text-primary px-4 py-1.5 flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary rounded-lg"
           >
-            Our Services
-          </Link>
-          <h3 className="text-xl md:text-2xl md:px-24 lg:px-0 py-10 leading-relaxed">
-            We keep your home running smoothly with the core services you ask
-            for, nothing less.
-          </h3>
-          <Link
-            href={"#"}
-            className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 "
-          >
-            Book a visit
+            <BookmarkMinus className="size-6 text-primary group-hover:text-secondary" />
+            Continue
           </Link>
         </div>
       </div>

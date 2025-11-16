@@ -1,0 +1,118 @@
+{
+  "sections": [
+    {
+      "id": "mission-statement",
+      "title": "Mission Statement",
+      "icon": "1",
+      "content": "Happy Valley Home Concierge LLC exists to give second home owners peace of mind. We coordinate scheduling, landscaping, inspections, grocery prep, and tight secure support—so you enjoy your cottage property."
+    },
+    {
+      "id": "scope-of-services",
+      "title": "Scope of Services",
+      "icon": "2",
+      "content": "We offer:",
+      "subsections": [
+        "Full home cleaning and deep cleans: interior and exterior windows, ovens, fridges, and cabinet work, move-in/out packages",
+        "*Landscaping*: Seasonal maintenance, snow removal, gutter cleaning, weed control, and seasonal plantings",
+        "Grocery shopping*: Filter checks, water run-offs, thermostat adjustments",
+        "*AI-Powered Grocery Shopping*: Personalized predictive stocking based on your preferences, property calendar, and household profiles",
+        "We also provide:",
+        "Structural repairs or licensed trades (plumbing, electric, HVAC, walls)",
+        "Emergency access and standby support",
+        "Post-purchase property orientation",
+        "Long-term property management (tenant placement, lease administration)"
+      ],
+      "note": "If specialized work is needed, we coordinate approved vendor contracts at your written request."
+    },
+    {
+      "id": "service-delivery-quality",
+      "title": "Service Delivery & Quality Standards",
+      "icon": "3",
+      "content": "All providers are background-checked, insured, and trained in our protocols. Standard cleaning frequency is weekly or bi-weekly; landscape work is seasonal. Any damage or issue discovered during service is reported immediately via SMS/email. For all property issues or billing discrepancies, contact us immediately at no charge."
+    },
+    {
+      "id": "scheduling-changes",
+      "title": "Scheduling & Changes",
+      "icon": "4",
+      "content": "**Rescheduling**: Submit requests via the online portal, email, or phone. Confirmation includes date, arrival window, and assigned provider. **Changes**: Update routine services anytime. **Cancellations**: One-time deep clean requires 7 days' notice. **Expedited runs**: Outdoor services may require deep clean and specialty run-ups. **Weather delays**: For outdoor services, we notify you if conditions are unsafe and propose alternate dates."
+    },
+    {
+      "id": "property-access-security",
+      "title": "Property Access & Security",
+      "icon": "5",
+      "content": "You provide secure access (lockbox, code, smart lock PIN, keyhand-off or garage greeting). **Gate codes**: All entry points use locked encrypted and shared only with assigned provider. **Breach protocol**: Immediately contact us if access is compromised. **Arm security systems** in advance if pets are present. We're crafting a secure confinement unless you instruct otherwise."
+    },
+    {
+      "id": "third-party-vendors",
+      "title": "Third-Party Vendors & Approved Contractors",
+      "icon": "6",
+      "content": "When services fall outside our core offerings (i.e., HVAC, repair, plumbing, tree removal), we coordinate with pre-approved vendors under a scope of work you authorize and define. You authorize us to vet, communicate, and oversee the job per our maintenance plan. Vendor contracts are your responsibility unless covered under a pre-paid maintenance plan."
+    },
+    {
+      "id": "billing-payment",
+      "title": "Billing & Payment",
+      "icon": "7",
+      "content": "**Financing cycle**: Monthly statements issued by the 5th of the month for prior month services. **Payment due**: By the 15th of the following month for maximum allowed by IRA rules on account after the due date. **Dispute**: Contact any charge within 15 days of invoice date. **Disputes**: Contact any charge within 15 days of invoice date. Resolution pauses late fees on the disputed amount."
+    },
+    {
+      "id": "insurance-liability",
+      "title": "Insurance & Liability Limits",
+      "icon": "8",
+      "content": "Happy Valley holds $2M general liability insurance covering property damage and injury. **Damage claim**: $500 limit for property damage; $100K+ for serious liability. **Acts of nature** (flood, hail, tree fall, freeze damage) unless negligence is proven. **Casualty process**: Report damage within 48 hours. Submit photos and a written statement. Our insurance adjuster investigates and may dispute claim on the denied amount."
+    },
+    {
+      "id": "membership-plans",
+      "title": "Membership Plans (Optional)",
+      "icon": "9",
+      "content": "Choose from flexible membership tiers:",
+      "subsections": [
+        "**Basic Clip**: 3% discount on cleaning and landscaping priority scheduling",
+        "**Premium Clip**: 10% discount weekly home checks, concierge text, line priority + emergency general contractor rates",
+        "**Elite Clip**: 15% discount, weekly home checks, concierge text line, priority + emergency general contractor rates"
+      ],
+      "note": "Membership has a fixed monthly fee in addition to services performed, not third party contractor invoices."
+    },
+    {
+      "id": "confidentiality-privacy",
+      "title": "Confidentiality & Data Privacy",
+      "icon": "10",
+      "content": "Happy Valley Home Concierge follows a strict privacy protocol. Photos reports are shared only with assigned personnel. **Photos reports and Property notes** in the portal and admin staff for quality review under confidentiality. **Data retention**: Service records are kept for 7 years per IRA regulations. Upon account closure, you may request secure deletion. **Photos**: You agree photos are for internal use only for quality control and documentation."
+    },
+    {
+      "id": "termination-cancellation",
+      "title": "Termination & Cancellation",
+      "icon": "11",
+      "content": "**Instant initiation**: Provide 30 days' written notice to cancel ongoing/recurring services. One-time booking stops immediately. **Cancellation window**: Recurring or subscription services can be cancelled 14 days notice by written request. **Unpaid invoices**: We reserve the right to terminate service for non-payment. **Fraudulent chargebacks or disputes**: We may terminate service if agreed under a pre-agreement fee schedule. **Fraudulent disputes or chargebacks**: We may terminate service and pursue collections. We retain the right to terminate service for non-payment of outstanding balance is due immediately. Stored access credentials are deleted upon termination; any outstanding balance is due immediately."
+    },
+    {
+      "id": "force-majeure",
+      "title": "Force Majeure",
+      "icon": "12",
+      "content": "Neither party is liable for delay or default of services caused by events beyond reasonable control: natural disasters, war, civil unrest, government lockdown, pandemics, utilities failure, accidents. We will notify you promptly and propose alternative dates or partial refunds as appropriate."
+    },
+    {
+      "id": "independent-contractor",
+      "title": "Independent Contractor Relationship",
+      "icon": "13",
+      "content": "Happy Valley Home Concierge does not employ any assigned independent contractors, not employees or agents of the property owner. You are not responsible for staff taxes, workers comp or benefits for our staff. All vendor services are billed to you by the contractor. You are not liable for injuries or property disputes caused by our independent contractors unless directly caused by our gross negligence or your instruction in writing."
+    },
+    {
+      "id": "governing-law",
+      "title": "Governing Law & Dispute Resolution",
+      "icon": "14",
+      "content": "This agreement is governed by the laws of the Commonwealth of Pennsylvania. Any disputes will be settled by one final resolution meeting within 30 days. Unresolved disputes will go to arbitration via hal@happyvalleyoman.com or (814) 555-0123 for written good-faith resolution within 15 days. **Binding arbitration**: Any unresolved dispute goes to binding arbitration per JAMS rules. You agree to resolve disputes individually, not as part of a class or collective action."
+    },
+    {
+      "id": "severability-amendment",
+      "title": "Severability & Amendment",
+      "icon": "15",
+      "content": "If any provision is found unenforceable, the remainder of the agreement remains in effect. We may update these Terms at any time. Continued use of services after the effective date constitutes acceptance. Major changes will require prior written notice."
+    },
+    {
+      "id": "feedback-quality-assurance",
+      "title": "Feedback & Quality Assurance",
+      "icon": "16",
+      "content": "After each service, you'll receive one-tap rating and optional comment box. Scores below 4.5 stars are escalated to our quality team within 24 hours and addressed via follow-up communication."
+    }
+  ]
+}
