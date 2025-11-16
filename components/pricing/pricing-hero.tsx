@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export default function ServiceHero() {
+export default function PricingHero() {
   return (
     <div
       className="relative flex items-center overflow-hidden pt-10"
@@ -34,18 +34,13 @@ export default function ServiceHero() {
             href={"#"}
             className="text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-secondary "
           >
-            Our Services
+            Pricing & Plans
           </Link>
-          <h3 className="text-xl md:text-2xl md:px-24 lg:px-0 py-10 leading-relaxed">
-            We keep your home running smoothly with the core services you ask
-            for, nothing less.
-          </h3>
-          <Link
-            href={"#"}
-            className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 "
-          >
-            Book a visit
-          </Link>
+          <p className="text-xl md:text-2xl md:px-24 lg:px-0 py-10 leading-relaxed">
+            Choose a simple membership that fits how you use your second home.
+            Every plan is handled by vetted, insured local pros and comes with
+            time-stamped photo reports and clear communication.
+          </p>
         </div>
       </div>
     </div>

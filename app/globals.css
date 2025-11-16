@@ -49,12 +49,12 @@ body {
 .faq-gradient-bg {
   background: linear-gradient(
     to bottom,
-    #f0f1f5ad 0%,
-    #f0f1f5ad 5%,
+    #f6faff 0%,
+    #f6faff 5%,
     #ffffff 5%,
     #ffffff 95%,
-    #f0f1f5ad 95%,
-    #f0f1f5ad 100%
+    #f6faff 95%,
+    #f6faff 100%
   ) !important;
 }
 
@@ -62,12 +62,12 @@ body {
   .faq-gradient-bg {
     background: linear-gradient(
       to bottom,
-      #f0f1f5ad 0%,
-      #f0f1f5ad 8%,
+      #f6faff 0%,
+      #f6faff 8%,
       #ffffff 8%,
       #ffffff 92%,
-      #f0f1f5ad 92%,
-      #f0f1f5ad 100%
+      #f6faff 92%,
+      #f6faff 100%
     ) !important;
   }
 }
