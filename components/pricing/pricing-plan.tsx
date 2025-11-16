@@ -18,41 +18,6 @@ interface PricingPlan {
   cta: string;
 }
 
-// const plans: PricingPlan[] = [
-//   {
-//     name: "À-la-carte",
-//     description:
-//       "Book what you need, when you need it. Availability not promised.",
-//     price: "$150",
-//     period: "Per visit",
-//     cta: "View detiels",
-//   },
-//   {
-//     name: "Concierge Essential",
-//     description:
-//       "Ideal for owners who visit occasionally and want reliable monthly touchpoints.",
-//     price: "$250",
-//     period: "/ month",
-//     cta: "View detiels",
-//   },
-//   {
-//     name: "Concierge Tailor",
-//     description:
-//       "More touchpoints, faster turnaround—great for hands-off owners.",
-//     price: "$400",
-//     period: "/ month",
-//     cta: "View detiels",
-//   },
-//   {
-//     name: "Concierge Club (Unlimited)",
-//     description:
-//       "White-glove support for families who never want to think about logistics.",
-//     price: "$550",
-//     period: "/ month",
-//     cta: "View detiels",
-//   },
-// ];
-
 const plans: PricingPlan[] = [
   {
     name: "À-la-carte",
@@ -131,7 +96,7 @@ export default function PricingPlan() {
               className="border border-primary/70 transition-all duration-300 flex flex-col bg-white rounded-2xl overflow-hidden "
             >
               <CardHeader className="flex flex-col h-full justify-between">
-                <div className="flex flex-col items-center justify-center w-full">
+                <div className="flex flex-col items-center justify-center w-full border-b pb-3">
                   <CardTitle className="text-2xl font-semibold text-black mb-3 p-0">
                     {plan.name}
                   </CardTitle>

@@ -1,25 +1,23 @@
 "use client";
 
-import React from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
-import path from "path";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   // Simulate user logged in or not
-  const user = true;
+  const user = false;
 
   const pathname = usePathname();
 
@@ -47,8 +45,10 @@ export default function Header() {
         className={cn(
           "fixed top-0 w-full z-50 transition duration-300 ease-in`",
           pathname === "/" && "lg:top-12 left-0 ",
-          pathname === "/" && isScrolled && "bg-primary !top-0 border-b transition duration-300",
-          pathname !== "/" && isScrolled &&  "bg-primary"
+          pathname === "/" &&
+            isScrolled &&
+            "bg-primary !top-0 border-b transition duration-300",
+          pathname !== "/" && isScrolled && "bg-primary"
         )}
       >
         <div className="max-w-7xl mx-auto px-3 py-1 lg:rounded-lg bg-primary">
@@ -138,7 +138,7 @@ export default function Header() {
                     asChild
                     className="bg-secondary hover:bg-secondary/80 text-white px-4 py-2 text-base font-medium rounded-lg cursor-pointer"
                   >
-                    <Link href="/sign-up">Sign in</Link>
+                    <Link href="/signup">Sign in</Link>
                   </Button>
 
                   <Button
@@ -149,7 +149,7 @@ export default function Header() {
                       // isScrolled && "text-green-900 "
                     )}
                   >
-                    <Link href="/" className="font-semibold">
+                    <Link href="/service" className="font-semibold">
                       Get Started
                     </Link>
                   </Button>
@@ -175,38 +175,41 @@ export default function Header() {
                     />
                   ) : (
                     <>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
-                            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                              <CircleUserRound className="size-9 text-white" />
-                            </div>
-                          </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="w-48 bg-secondary text-white border-none"
-                        >
-                          <DropdownMenuItem
-                            asChild
-                            className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                      {user ? (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
+                              <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                                <CircleUserRound className="size-9 text-white" />
+                              </div>
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="w-48 bg-secondary text-white border-none"
                           >
-                            <Link
-                              href="/profile"
-                              className="flex items-center space-x-2"
+                            <DropdownMenuItem
+                              asChild
+                              className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
                             >
-                              <User className="h-4 w-4" />
-                              <span>Profile</span>
-                            </Link>
-                          </DropdownMenuItem>
+                              <Link
+                                href="/profile"
+                                className="flex items-center space-x-2"
+                              >
+                                <User className="h-4 w-4" />
+                                <span>Profile</span>
+                              </Link>
+                            </DropdownMenuItem>
 
-                          <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
-                            <LogOut className="h-4 w-4" />
-                            <span>Logout</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-
+                            <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
+                              <LogOut className="h-4 w-4" />
+                              <span>Logout</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      ) : (
+                        ""
+                      )}
                       <Menu
                         className={cn(
                           "size-9",
@@ -246,7 +249,7 @@ export default function Header() {
                       asChild
                       className="bg-secondary text-primary hover:bg-secondary/90 px-6 py-2 text-base font-medium rounded-lg cursor-pointer"
                     >
-                      <Link href="/sign-up">Sign up</Link>
+                      <Link href="/signup">Sign up</Link>
                     </Button>
 
                     <Button
@@ -260,7 +263,7 @@ export default function Header() {
                         // pathname === "/" && isScrolled && "text-green-900"
                       )}
                     >
-                      <Link href="/login">Login</Link>
+                      <Link href="/service">Get Started</Link>
                     </Button>
                   </div>
                 )}

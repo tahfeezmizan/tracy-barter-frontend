@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
 export default function PricingHero() {
@@ -28,7 +27,7 @@ export default function PricingHero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-32 text-center">
+      <div className="max-w-7xl mx-auto px-4 py-5 pt-28 lg:py-32 text-center">
         <div className="">
           <Link
             href={"#"}
