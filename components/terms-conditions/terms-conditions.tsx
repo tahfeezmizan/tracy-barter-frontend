@@ -5,7 +5,7 @@ import termsData from "@/lib/data/terms-and-conditions.json";
 interface Section {
   id: string;
   title: string;
-  icon: string;
+  serial: string;
   content: string;
   subsections?: string[];
   note?: string;
@@ -21,7 +21,7 @@ export function TermsAndConditionsPage() {
               {/* Icon */}
               <div className="flex-shrink-0">
                 <div className="flex items-center justify-center w-10 h-8 font-medium rounded-lg bg-primary">
-                  <span className="text-2xl">{section.icon}</span>
+                  <span className="text-2xl">{section.serial}</span>
                 </div>
               </div>
 
