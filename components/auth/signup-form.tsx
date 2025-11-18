@@ -52,7 +52,7 @@ export function SignupForm() {
               placeholder="John"
               value={formData.firstName}
               onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5"
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
           </div>
@@ -65,7 +65,7 @@ export function SignupForm() {
               placeholder="Smith"
               value={formData.lastName}
               onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5"
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
           </div>
@@ -80,7 +80,7 @@ export function SignupForm() {
             placeholder="example@gmail.com"
             value={formData.email}
             onChange={handleInputChange}
-            className="border-none bg-gray-200 text-black !text-xl py-5"
+            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
             required
           />
         </div>
@@ -95,7 +95,7 @@ export function SignupForm() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5"
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
             <Button
@@ -124,7 +124,7 @@ export function SignupForm() {
               type={showPassword ? "text" : "password"}
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5"
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
             <Button

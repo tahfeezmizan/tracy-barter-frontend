@@ -1,19 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Step1 from "@/components/service/booking/step-1";
 import Step2 from "@/components/service/booking/step-2";
 import Step3 from "@/components/service/booking/step-3";
 import Step4 from "@/components/service/booking/step-4";
 import Step5 from "@/components/service/booking/step-5";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export interface BookingFormData {
   serviceType: string;
@@ -83,10 +79,10 @@ export default function BookingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 pt-28">
-      <div className="max-w-3xl mx-auto">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between mb-4">
+      <div className="max-w-3xl mx-auto ">
+        <Card className="border-none shadow-none">
+          <CardHeader className="border p-5 rounded-lg border-gray-300">
+            <div className="flex items-center justify-between mb-2">
               <CardTitle>
                 Step {currentStep} of {TOTAL_STEPS}
               </CardTitle>
@@ -97,7 +93,7 @@ export default function BookingPage() {
             <Progress value={progress} className="h-2 " />
           </CardHeader>
 
-          <CardContent className="pt-6">
+          <CardContent className="border p-5 rounded-lg border-gray-300">
             {currentStep === 1 && (
               <Step1 formData={formData} updateFormData={updateFormData} />
             )}

@@ -56,7 +56,7 @@ export function LoginForm() {
             placeholder="John smith"
             value={formData.username}
             onChange={handleInputChange}
-            className="border-none bg-gray-200 text-black !text-xl py-5"
+            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
             required
           />
         </div>
@@ -71,7 +71,7 @@ export function LoginForm() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5"
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
             <Button
