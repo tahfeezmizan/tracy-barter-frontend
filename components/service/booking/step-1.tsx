@@ -12,7 +12,7 @@ interface Step1Props {
 
 export default function Step1({ formData, updateFormData }: Step1Props) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 border p-5 rounded-lg border-gray-300">
       <div>
         <h3 className="text-2xl font-bold mb-4">Service Type</h3>
         <RadioGroup
@@ -66,7 +66,7 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="bedrooms" className="mb-2 block font-medium">
+          <Label htmlFor="bedrooms" className="mb-2 block text-lg font-semibold text-secondary">
             Bedroom
           </Label>
           <Input
@@ -79,7 +79,7 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
           />
         </div>
         <div>
-          <Label htmlFor="bathrooms" className="mb-2 block font-medium">
+          <Label htmlFor="bathrooms" className="mb-2 block text-lg font-semibold text-secondary">
             Bathroom
           </Label>
           <Input
@@ -94,7 +94,7 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
       </div>
 
       <div>
-        <Label htmlFor="homeSize" className="mb-2 block font-medium">
+        <Label htmlFor="homeSize" className="mb-2 block text-lg font-semibold text-secondary">
           Home size (Square feet)
         </Label>
         <Input
@@ -108,7 +108,7 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
       </div>
 
       <div>
-        <Label htmlFor="note" className="mb-2 block font-medium">
+        <Label htmlFor="note" className="mb-2 block text-lg font-semibold text-secondary">
           Note (optional)
         </Label>
         <Textarea

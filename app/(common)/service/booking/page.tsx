@@ -25,9 +25,12 @@ export interface BookingFormData {
   email: string;
   phone: string;
   address: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 4 ;
 
 export default function BookingPage() {
   const router = useRouter();
@@ -46,6 +49,9 @@ export default function BookingPage() {
     email: "",
     phone: "",
     address: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
   const updateFormData = (field: keyof BookingFormData, value: any) => {
@@ -74,9 +80,7 @@ export default function BookingPage() {
     console.log("Submitting booking:", formData);
     router.push("/service/booking/confirmation");
   };
-
   const progress = (currentStep / TOTAL_STEPS) * 100;
-
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 pt-28">
       <div className="max-w-3xl mx-auto ">
@@ -93,7 +97,7 @@ export default function BookingPage() {
             <Progress value={progress} className="h-2 " />
           </CardHeader>
 
-          <CardContent className="border p-5 rounded-lg border-gray-300">
+          <CardContent className="p-0">
             {currentStep === 1 && (
               <Step1 formData={formData} updateFormData={updateFormData} />
             )}
@@ -103,10 +107,10 @@ export default function BookingPage() {
             {currentStep === 3 && (
               <Step3 formData={formData} updateFormData={updateFormData} />
             )}
-            {currentStep === 4 && (
+            {/* {currentStep === 4 && (
               <Step4 formData={formData} updateFormData={updateFormData} />
-            )}
-            {currentStep === 5 && (
+            )} */}
+            {currentStep === 4 && (
               <Step5 formData={formData} updateFormData={updateFormData} />
             )}
 
