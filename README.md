@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Happy Valley Home Concierge – Full-Stack Application
 
-## Getting Started
+Live Site: **https://tracy-barter-frontend.vercel.app/**  
 
-First, run the development server:
+A production-ready full-stack application for **Happy Valley Home Concierge**, a lifestyle-focused home-service and concierge platform.  
+The project includes a modern **Next.js + TypeScript** frontend styled with **shadcn/ui** and a fully functional backend using **Node.js, Express, and MongoDB**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📸 Project Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project delivers a complete marketing and service-management experience for a home concierge brand.  
+Key sections include:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🏡 Hero Section
+- Strong brand messaging  
+- Background-checked & insured badges  
+- Lifestyle imagery  
+- Primary CTA: **“I need home services”**
 
-## Learn More
+### 🧰 Service Highlights
+Includes:
+- Cleaning  
+- Grocery Assistant  
+- Event & Stay Prep  
+- Occasional Check-ins  
+- Lawn & Landscaping  
 
-To learn more about Next.js, take a look at the following resources:
+Each service displays an image, short description, and pricing info.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🛒 Smart, Stocked Kitchen
+A feature section for the AI-powered grocery assistant with a CTA button.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 👩 About Section
+Founder bio with professional portrait and brand story.
 
-## Deploy on Vercel
+### 💵 Pricing Plans
+Four plans with call-to-action buttons:
+- À-la-carte  
+- Concierge Essential  
+- Concierge Tailor  
+- Concierge Club (Unlimited)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ⭐ Testimonials
+A user-friendly review carousel.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### ❓ FAQ Section
+Built with an accordion component using **shadcn/ui**.
+
+### 📞 Footer
+Office hours, contact details, and business information.
+
+---
+
+# 🧱 Tech Stack
+
+## **Frontend**
+- **Next.js (App Router)**  
+- **TypeScript**  
+- **shadcn/ui** (Radix UI + Tailwind Components)  
+- **Tailwind CSS**  
+- Fully responsive layout  
+
+## **Backend**
+- **Node.js**  
+- **Express.js**  
+- **MongoDB** (Mongoose ODM)  
+- REST API architecture  
+- Secure environment variable configuration  
+
+## **Deployment**
+- **Vercel** → Frontend  
+- **Render / Railway / VPS (depending on your actual choice)** → Backend  
+- **MongoDB Atlas** for cloud database
+
+---
+
+# 📦 Features
+
+### Frontend Features
+- Modern, elegant UI using shadcn components  
+- Fully responsive grid and layout  
+- Testimonials carousel  
+- Interactive FAQ accordion  
+- SEO-optimized with Next.js  
+- Clean, reusable component architecture  
+
+### Backend Features
+- REST API with Express  
+- MongoDB data models  
+- Secure API routing  
+- CORS-enabled for frontend integration  
+- Production-ready environment structure  
