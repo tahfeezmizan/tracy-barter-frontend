@@ -23,7 +23,7 @@ const defaultSteps: ReferralStep[] = [
     stepNumber: 3,
     title: "We Pay You",
     description:
-      "We pay $300 for Single Family property and $500 for Multi-Family property.*",
+      "We’ll send you a gift card to a Happy Valley restaurant of your choice!",
   },
 ];
 

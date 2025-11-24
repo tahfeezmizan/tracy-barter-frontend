@@ -50,6 +50,8 @@ export default function GroceryAssistant() {
           className="absolute bottom-6 right-56 z-40 w-14 h-14"
         />
       </div>
+
+      
       <div className="max-w-7xl mx-auto px-4 pb-14 md:py-24">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-5 md:gap-10 pt-14 pb-10 md:pt-0 lg:py-0">
           <div className="flex-1 flex justify-center">
