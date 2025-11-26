@@ -1,58 +1,86 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* Dark variant setup */
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: 0 0% 100%;
+  --foreground: 240 10% 4%;
+  --border: 220 14% 96%;
+  --ring: 217 91% 60%;
 
   /* Custom color variables */
   --color-primary: #d5bd69;
   --color-secondary: #0f233f;
-  --color-accent: #fff; /* amber-500 */
+  --color-accent: #ffffff;
+
+  /* Sidebar variables */
+  --sidebar: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
+/* Tailwind theme link */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-accent: var(--color-accent);
 
   --font-montserrat: var(--font-montserrat);
+
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #000000;
-
-    /* Adjusted dark mode colors */
-    --color-primary: #d5bd69; /* lighter blue */
-    --color-secondary: #0f233f; /* lighter purple */
-    --color-accent: #fff; /* lighter amber */
-  }
+/* Dark mode */
+.dark {
+  --background: 240 5.9% 10%;
+  --foreground: 240 4.8% 95.9%;
+  --border: 240 3.7% 15.9%;
+  --ring: 217 91% 60%;
 }
 
+/* Smooth scroll */
 * {
   scroll-behavior: smooth;
 }
 
-/* Chrome, Safari, Edge, Opera */
+/* Remove number input arrows */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
 }
 
+/* Buttons always clickable */
 button {
   cursor: pointer !important;
 }
 
+/* Body styling */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: var(--font-montserrat);
 }
 
+/* FAQ background */
 .faq-gradient-bg {
   background: linear-gradient(
     to bottom,
@@ -65,16 +93,11 @@ body {
   ) !important;
 }
 
-@media (min-width: 768px) {
-  .faq-gradient-bg {
-    background: linear-gradient(
-      to bottom,
-      #f6faff 0%,
-      #f6faff 8%,
-      #ffffff 8%,
-      #ffffff 92%,
-      #f6faff 92%,
-      #f6faff 100%
-    ) !important;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
