@@ -1,0 +1,10 @@
+import SchedulePage from "@/components/dashboard/provider/schedule/schedule-page";
+import React from "react";
+
+export default function page() {
+  return (
+    <div>
+      <SchedulePage />
+    </div>
+  );
+}

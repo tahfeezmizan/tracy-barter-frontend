@@ -1,7 +1,4 @@
-import React from "react";
 import StatsCard from "../../stats-card";
-import RevenueChart from "../revenue-chart";
-import ServiceRequestChart from "../service-request-chart";
 import AllClientsTable from "./all-clients";
 
 export default function ClientsPage() {

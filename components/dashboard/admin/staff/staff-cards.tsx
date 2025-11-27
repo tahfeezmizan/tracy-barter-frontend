@@ -45,7 +45,7 @@ const providers = [
 
 export default function StaffCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {providers.map((person, i) => (
         <Card key={i} className="p-6 rounded-xl shadow-sm bg-white">
           <CardContent className="p-0 space-y-4">
@@ -56,7 +56,9 @@ export default function StaffCards() {
                   {person.initials}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-black">{person.name}</h3>
+                  <h3 className="font-semibold text-lg text-black">
+                    {person.name}
+                  </h3>
                   <p className="text-gray-500 text-sm">{person.service}</p>
                 </div>
               </div>

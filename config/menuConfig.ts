@@ -50,6 +50,11 @@ export const menuItems: Record<string, MenuItem[]> = {
       url: "/dashboard/quality-control",
       icon: ClipboardCheck,
     },
+    {
+      title: "Referral",
+      url: "/dashboard/referral",
+      icon: Users,
+    },
   ],
   provider: [
     {
