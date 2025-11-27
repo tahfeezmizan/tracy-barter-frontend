@@ -1,5 +1,8 @@
 import React from "react";
-import StatsCard from "../stats-card";
+import StatsCard from "../../stats-card";
+import RevenueChart from "../revenue-chart";
+import ServiceRequestChart from "../service-request-chart";
+import AllClientsTable from "./all-clients";
 
 export default function ClientsPage() {
   const stats = [
@@ -22,8 +25,9 @@ export default function ClientsPage() {
   ];
 
   return (
-    <div>
+    <div className="space-y-6">
       <StatsCard stats={stats} />
+      <AllClientsTable />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -12,6 +13,7 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { menuItems, useUserRole } from "@/config/menuConfig";
+import { LogOut } from "lucide-react";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -48,7 +50,7 @@ export function AppSidebar() {
                 {items?.map((item) => (
                   <SidebarMenuItem
                     key={item.title}
-                    className={`relative  p-2 px-4 transition-colors rounded-xl  ${
+                    className={`relative p-2 px-4 transition-colors rounded-xl  ${
                       (
                         item.url === "/dashboard"
                           ? pathname === "/dashboard" ||
@@ -79,6 +81,13 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
+        <SidebarFooter className="mb-14">
+          <div className="flex items-center justify-start gap-4 px-6 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 ">
+            <LogOut />
+            Logout
+          </div>
+        </SidebarFooter>
       </div>
     </Sidebar>
   );
