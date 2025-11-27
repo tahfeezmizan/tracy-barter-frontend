@@ -82,8 +82,8 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter className="mb-14">
-          <div className="flex items-center justify-start gap-4 px-6 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 ">
+        <SidebarFooter className="mb-14 px-0">
+          <div className="flex items-center justify-start gap-4 px-4 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 ">
             <LogOut />
             Logout
           </div>

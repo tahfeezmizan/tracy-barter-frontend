@@ -19,7 +19,7 @@ export default function StatsCard({ stats }: { stats: any }) {
               )}
             </div>
 
-            <p className="text-3xl font-medium text-slate-700">284</p>
+            <p className="text-3xl font-medium text-slate-700">{stat?.value}</p>
           </CardContent>
         </Card>
       ))}
