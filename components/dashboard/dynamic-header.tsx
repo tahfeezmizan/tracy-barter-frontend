@@ -1,45 +1,46 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { ElementType } from "react";
 import { SidebarTrigger } from "../ui/sidebar";
-import { usePathname } from "next/navigation";
 
-export default function DynamicHeader() {
-  const pathname = usePathname();
-  const [role, setRole] = useState<string | null>(null);
+interface headerType {
+  title: string;
+  des: string;
+  button?: string;
+  link?: string;
+  icon?: ElementType; // icon component
+}
 
-  useEffect(() => {
-    const storedRole = localStorage.getItem("userRole");
-    setRole(storedRole);
-  }, []);
-
-  // Extract clean page name
-  const page = pathname.replace("/", "").toLowerCase();
-
-  let title = "";
-
-  if (page === "dashboard") {
-    title = `${role ?? ""} Dashboard`;
-  } else if (page === "client") {
-    title = "Client Management";
-  } else if (page === "staff") {
-    title = "Staff Management";
-  } else {
-    // Default: "PageName Management"
-    const pretty = page.replace("-", " "); // convert dashes to spaces
-    title = `${pretty} Management`;
-  }
+export default function DynamicHeader({
+  title,
+  des,
+  button,
+  link,
+  icon: Icon,
+}: headerType) {
   return (
-    <div className="mb-6 flex items-center gap-2">
-      <SidebarTrigger className="lg:hidden " />
-      <div className="border-l pl-3 lg:border-l-0 lg:pl-0">
-        <h3 className=" text-xl md:text-2xl font-semibold leading-snug capitalize">
-          {title}
-        </h3>
-        <p className="text-base md:text-xl text-slate-300">
-          Overview of your concierge business
-        </p>
+    <div className="mb-6 flex items-center justify-between gap-2">
+      <div>
+        <SidebarTrigger className="lg:hidden" />
+        <div className="border-l pl-3 lg:border-l-0 lg:pl-0">
+          <h3 className="text-xl md:text-2xl font-semibold leading-snug capitalize">
+            {title || "Dashboard"}
+          </h3>
+          <p className="text-base md:text-xl text-slate-300">
+            {des || "Overview of your concierge business"}
+          </p>
+        </div>
       </div>
+
+      {button && link && (
+        <Link
+          href={link}
+          className="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary/90 flex items-center gap-2"
+        >
+          {Icon && <Icon className="text-white size-6" />}
+          {button}
+        </Link>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import AllClientsTable from "./all-clients";
 
@@ -23,6 +24,10 @@ export default function ClientsPage() {
 
   return (
     <div className="space-y-6">
+      <DynamicHeader
+        title={"Client Management"}
+        des="Manage your client database"
+      />
       <StatsCard stats={stats} />
       <AllClientsTable />
     </div>

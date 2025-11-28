@@ -4,6 +4,7 @@ import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
 import RevenueChart from "../admin/revenue-chart";
 import ServiceRequestChart from "../admin/service-request-chart";
 import RecentServices from "../admin/recent-services";
+import DynamicHeader from "../dynamic-header";
 
 export default function AdminDash() {
   const stats = [
@@ -31,6 +32,10 @@ export default function AdminDash() {
 
   return (
     <div className="space-y-6">
+      <DynamicHeader
+        title={"Admin Dashboard"}
+        des="Overview of your concierge business"
+      />
       <StatsCard stats={stats} />
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
         <ServiceRequestChart />

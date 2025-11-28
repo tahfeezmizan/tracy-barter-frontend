@@ -2,6 +2,7 @@ import React from "react";
 import ClientFeedback from "./client-feedback";
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
 import StatsCard from "../../stats-card";
+import DynamicHeader from "../../dynamic-header";
 
 export default function QualityControlPage() {
   const stats = [
@@ -29,6 +30,10 @@ export default function QualityControlPage() {
 
   return (
     <div className="space-y-6">
+      <DynamicHeader
+        title={"Quality Control"}
+        des="Monitor service quality and handle issues"
+      />
       <StatsCard stats={stats} />
       <ClientFeedback />
     </div>

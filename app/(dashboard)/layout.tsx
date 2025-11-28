@@ -9,7 +9,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex w-full h-screen">
         <AppSidebar />
         <div className="flex-1 min-h-0 bg-[#0F233F] text-white p-8 overflow-auto ">
-          <DynamicHeader />
           {children}
           <RoleSwitcher />
         </div>

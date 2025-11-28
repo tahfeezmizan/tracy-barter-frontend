@@ -1,5 +1,7 @@
-import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
-import React from "react";
+"use client";
+
+import { Briefcase, DollarSign, Download, User, UserCog } from "lucide-react";
+import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import TransactionsTable from "./transactions-table";
 
@@ -29,6 +31,13 @@ export default function PaymentsPage() {
 
   return (
     <div className="space-y-6">
+      <DynamicHeader
+        title={"Payment Management"}
+        des="Track and manage all transactions"
+        button="Export Data"
+        link="#"
+        icon={Download}
+      />
       <StatsCard stats={stats} />
       <TransactionsTable />
     </div>
