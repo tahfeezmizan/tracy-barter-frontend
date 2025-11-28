@@ -8,7 +8,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { format } from "date-fns";
 
 export default function CalendarView() {
-  const [date, setDate] = React.useState(new Date(2025, 9, 28));
+  const [date, setDate] = React.useState<Date | undefined>(
+    new Date(2025, 9, 28)
+  );
 
   return (
     <Card className="w-full bg-white text-black">
@@ -25,6 +27,7 @@ export default function CalendarView() {
           onSelect={setDate}
           month={date}
           onMonthChange={setDate}
+          required={false} // ← ADD THIS LINE
           className="rounded-md border"
         />
       </CardContent>
