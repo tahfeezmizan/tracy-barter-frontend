@@ -12,8 +12,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 export function SignupForm() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -42,33 +41,18 @@ export function SignupForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First name</Label>
-            <Input
-              id="firstName"
-              name="firstName"
-              type="text"
-              placeholder="John"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last name</Label>
-            <Input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder="Smith"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-              required
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="fullName">First name</Label>
+          <Input
+            id="fullName"
+            name="fullName"
+            type="text"
+            placeholder="John"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+            required
+          />
         </div>
 
         <div className="space-y-2">
