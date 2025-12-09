@@ -2,13 +2,14 @@
 
 import type React from "react";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
+import { useSignUpUserMutation } from "@/redux/features/authApi";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 export function SignupForm() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ export function SignupForm() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
+  const [signUpUser, { isLoading }] = useSignUpUserMutation({});
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -29,9 +32,21 @@ export function SignupForm() {
     setFormData((prev) => ({ ...prev, agreeToTerms: checked }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Signup form data:", formData);
+
+    try {
+      const res = await signUpUser({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -142,7 +157,7 @@ export function SignupForm() {
           type="submit"
           className="w-full bg-secondary text-2xl text-white mt-6 py-6 duration-300"
         >
-          Sign up
+          {isLoading ? "Signing up..." : "Sign up"}
         </Button>
       </form>
 
