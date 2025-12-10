@@ -9,18 +9,52 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useLoginUserMutation } from "@/redux/features/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/slice/userSlice";
+import { useRouter } from "next/navigation";
 
-export function LoginForm() {
+export function SignInForm() {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
     rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loginUser, { isLoading }] = useLoginUserMutation({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login form data:", formData);
+    // console.log("Login form data:", formData);
+
+    try {
+      const res = await loginUser({
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      });
+
+      if (res?.data?.success) {
+        // store token on redux
+        dispatch(
+          setUser({
+            data: {
+              accessToken: res?.data?.data?.accessToken,
+              role: res?.data?.data?.role,
+            },
+          })
+        );
+
+        // Redirect based on role
+        router.push("/");
+      }
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +65,7 @@ export function LoginForm() {
     }));
   };
 
-  const handleRememberMeChange = (checked: boolean) => {
+  const handlerememberMeChange = (checked: boolean) => {
     setFormData((prev) => ({
       ...prev,
       rememberMe: checked,
@@ -48,13 +82,13 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="username">User name</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="John smith"
-            value={formData.username}
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
             onChange={handleInputChange}
             className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
             required
@@ -95,7 +129,7 @@ export function LoginForm() {
             <Checkbox
               id="remember"
               checked={formData.rememberMe}
-              onCheckedChange={handleRememberMeChange}
+              onCheckedChange={handlerememberMeChange}
             />
             <Label htmlFor="remember" className="text-sm">
               Remember me

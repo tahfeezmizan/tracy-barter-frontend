@@ -1,12 +1,11 @@
 import { AuthLayout } from "@/components/auth/auth-layout";
-import { LoginForm } from "@/components/auth/login-form";
-import React from "react";
+import { SignInForm } from "@/components/auth/login-form";
 
 export default function page() {
   return (
     <div>
       <AuthLayout>
-        <LoginForm />
+        <SignInForm />
       </AuthLayout>
     </div>
   );

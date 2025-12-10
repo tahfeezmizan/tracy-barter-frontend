@@ -3,12 +3,24 @@
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useVerifyUserMutation } from "@/redux/features/authApi";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { setUser } from "@/redux/slice/userSlice";
 
 export default function OtpVerify() {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const dispatch = useDispatch();
+
+  const [verifyOTP] = useVerifyUserMutation();
 
   useEffect(() => {
     if (countdown > 0) {
@@ -63,7 +75,45 @@ export default function OtpVerify() {
   const handleVerify = async () => {
     setIsLoading(true);
     await new Promise((r) => setTimeout(r, 2000));
-    console.log("Verifying OTP:", otp.join(""));
+    // console.log("Verifying OTP:", otp.join(""));
+
+    try {
+      const res = await verifyOTP({
+        email: email || "",
+        oneTimeCode: otp.join(""),
+      });
+      const responseData = res?.data;
+
+      if (responseData?.data?.token) {
+        const token = responseData.data.token;
+        // ✅ Forgot password flow
+        toast.success(
+          responseData?.message || "OTP verified, please reset your password"
+        );
+        router.push(`/set-new-password?token=${token}`);
+      } else if (responseData?.data?.accessToken) {
+        // ✅ Normal login flow
+        dispatch(
+          setUser({
+            data: {
+              accessToken: responseData?.data?.accessToken,
+              role: responseData?.data?.role,
+            },
+          })
+        );
+
+        toast.success("OTP verification successful");
+        router.push("/");
+      } else {
+        const err = res as any;
+        toast.error(err?.data?.message || "Something went wrong");
+      }
+
+      console.log("API Res", res);
+    } catch (error) {
+      console.log(error);
+    }
+
     setIsLoading(false);
   };
 

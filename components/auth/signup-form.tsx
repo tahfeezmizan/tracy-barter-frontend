@@ -9,7 +9,10 @@ import { Label } from "@/components/ui/label";
 import { useSignUpUserMutation } from "@/redux/features/authApi";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+
 import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function SignupForm() {
   const [formData, setFormData] = useState({
@@ -20,6 +23,7 @@ export function SignupForm() {
     agreeToTerms: false,
   });
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const [signUpUser, { isLoading }] = useSignUpUserMutation({});
 
@@ -43,9 +47,25 @@ export function SignupForm() {
         password: formData.password,
       });
 
+      if (res?.data?.status) {
+        toast.success("User created successfully");
+        router.push(`/otp-verify?email=${encodeURIComponent(formData.email)}`);
+      } else if (res?.error) {
+        console.log("error", res?.error?.data?.message);
+        toast.error(res?.error?.data?.message || "Something went wrong");
+      }
+
       console.log(res);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+
+      // Extract backend message safely
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      toast.error(errorMessage);
     }
   };
 
@@ -164,8 +184,8 @@ export function SignupForm() {
       <div className="text-center">
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="text-green-600 hover:underline">
-            Login
+          <Link href="/signin" className="text-green-600 hover:underline">
+            Sign In
           </Link>
         </p>
       </div>

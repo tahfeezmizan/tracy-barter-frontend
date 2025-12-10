@@ -11,17 +11,26 @@ import { cn } from "@/lib/utils";
 import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { removeUser } from "@/redux/slice/userSlice";
 
 export default function Header() {
-  // Simulate user logged in or not
-  const user = false;
-
+  const dispatch = useDispatch();
+  const router = useRouter();
   const pathname = usePathname();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const [token, setToken] = useState<boolean>(false);
+
+  useEffect(() => {
+    // setIsMounted(true);
+    setToken(!!Cookies.get("token"));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -32,11 +41,18 @@ export default function Header() {
   // Static navigation links
   const navigationLinks = [
     // { href: "/", label: "Home" },
-    { href: "/service", label: "Services" },
+    { href: "/signup", label: "Services" },
     { href: "/pricing", label: "Pricing" },
     { href: "/realtor-referrals", label: "Realtor Referrals" },
     { href: "/terms-conditions", label: "Terms & Conditions" },
   ];
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    dispatch(removeUser());
+    setToken(false); // instant UI update
+    router.push("/");
+  };
 
   return (
     <header className="text-accent relative">
@@ -86,7 +102,7 @@ export default function Header() {
 
             {/* Desktop Right Side */}
             <div className="hidden lg:flex items-center space-x-4">
-              {user ? (
+              {token ? (
                 <>
                   {/* <Link
                     href="/messages"
@@ -124,7 +140,10 @@ export default function Header() {
                         </Link>
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer"
+                      >
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>
                       </DropdownMenuItem>
@@ -137,7 +156,7 @@ export default function Header() {
                     asChild
                     className="bg-secondary hover:bg-secondary/80 text-white px-4 py-2 text-base font-medium rounded-lg cursor-pointer"
                   >
-                    <Link href="/signup">Sign in</Link>
+                    <Link href="/signin">Sign in</Link>
                   </Button>
 
                   <Button
@@ -148,7 +167,7 @@ export default function Header() {
                       // isScrolled && "text-green-900 "
                     )}
                   >
-                    <Link href="/service" className="font-semibold">
+                    <Link href="/signup" className="font-semibold">
                       Get Started
                     </Link>
                   </Button>
@@ -174,7 +193,7 @@ export default function Header() {
                     />
                   ) : (
                     <>
-                      {user ? (
+                      {token ? (
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
@@ -242,13 +261,13 @@ export default function Header() {
                   </Link>
                 ))}
 
-                {!user && (
+                {!token && (
                   <div className="flex flex-col space-y-3">
                     <Button
                       asChild
                       className="bg-secondary text-primary hover:bg-secondary/90 px-6 py-2 text-base font-medium rounded-lg cursor-pointer"
                     >
-                      <Link href="/signup">Sign up</Link>
+                      <Link href="/signin">Sign In</Link>
                     </Button>
 
                     <Button
@@ -262,7 +281,7 @@ export default function Header() {
                         // pathname === "/" && isScrolled && "text-green-900"
                       )}
                     >
-                      <Link href="/service">Get Started</Link>
+                      <Link href="/signup">Get Started</Link>
                     </Button>
                   </div>
                 )}
