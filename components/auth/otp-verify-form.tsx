@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import {
   useResendOTPMutation,
   useVerifyUserMutation,
-} from "@/redux/features/authApi";
+} from "@/redux/features/auth/authApi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";

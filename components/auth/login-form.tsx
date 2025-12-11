@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
-import { useLoginUserMutation } from "@/redux/features/authApi";
+import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slice/userSlice";
 import { useRouter } from "next/navigation";

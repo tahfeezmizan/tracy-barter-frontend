@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSignUpUserMutation } from "@/redux/features/authApi";
+import { useSignUpUserMutation } from "@/redux/features/auth/authApi";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 

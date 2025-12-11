@@ -41,7 +41,7 @@ export default function Header() {
   // Static navigation links
   const navigationLinks = [
     // { href: "/", label: "Home" },
-    { href: "/signup", label: "Services" },
+    { href: "/service", label: "Services" },
     { href: "/pricing", label: "Pricing" },
     { href: "/realtor-referrals", label: "Realtor Referrals" },
     { href: "/terms-conditions", label: "Terms & Conditions" },
