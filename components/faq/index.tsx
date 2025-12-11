@@ -77,7 +77,7 @@ export default function FAQSection() {
             <AccordionItem
               key={item.id}
               value={item.id}
-              className="w-full md:w-3xl lg:w-6xl border border-neutral-200 rounded-2xl px-3 md:px-6 py-0 md:py-2 hover:border-neutral-300 transition data-[state=open]:border-neutral-300 duration-700"
+              className="w-full md:w-3xl lg:w-6xl !border border-neutral-200 rounded-2xl px-3 md:px-6 py-0 md:py-2 hover:border-neutral-300 transition data-[state=open]:border-neutral-300 duration-700"
             >
               <AccordionTrigger className="text-lg md:text-xl font-semibold text-black hover:no-underline py-4 ">
                 {item.question}

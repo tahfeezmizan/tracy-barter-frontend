@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSignUpUserMutation } from "@/redux/features/authApi";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 
 import { useState } from "react";
@@ -47,9 +47,13 @@ export function SignupForm() {
         password: formData.password,
       });
 
-      if (res?.data?.status) {
+      if (res?.data?.success) {
         toast.success("User created successfully");
-        router.push(`/otp-verify?email=${encodeURIComponent(formData.email)}`);
+        router.push(
+          `/otp-verify?email=${encodeURIComponent(
+            formData.email
+          )}&authType=createAccount`
+        );
       } else if (res?.error) {
         console.log("error", res?.error?.data?.message);
         toast.error(res?.error?.data?.message || "Something went wrong");
@@ -77,7 +81,9 @@ export function SignupForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="fullName">First name</Label>
+          <Label className="text-md font-semibold" htmlFor="fullName">
+            First name
+          </Label>
           <Input
             id="fullName"
             name="fullName"
@@ -91,7 +97,9 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label className="text-md font-semibold" htmlFor="email">
+            Email
+          </Label>
           <Input
             id="email"
             name="email"
@@ -105,7 +113,9 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label className="text-md font-semibold" htmlFor="password">
+            Password
+          </Label>
           <div className="relative">
             <Input
               id="password"
@@ -134,7 +144,9 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label className="text-md font-semibold" htmlFor="password">
+            Change Password
+          </Label>
           <div className="relative">
             <Input
               id="confirmPassword"
@@ -168,7 +180,11 @@ export function SignupForm() {
             checked={formData.agreeToTerms}
             onCheckedChange={handleCheckboxChange}
           />
-          <Label htmlFor="terms" className="text-sm font-normal">
+          <Label
+            className="text-md font-semibold"
+            htmlFor="terms"
+            className="text-sm font-normal"
+          >
             I have read and agree to roqit's Terms and conditions
           </Label>
         </div>
@@ -177,7 +193,7 @@ export function SignupForm() {
           type="submit"
           className="w-full bg-secondary text-2xl text-white mt-6 py-6 duration-300"
         >
-          {isLoading ? "Signing up..." : "Sign up"}
+          {isLoading ? <Loader className="animate-spin size-8" /> : "Sign Up"}
         </Button>
       </form>
 

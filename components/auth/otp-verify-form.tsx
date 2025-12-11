@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useVerifyUserMutation } from "@/redux/features/authApi";
+import {
+  useResendOTPMutation,
+  useVerifyUserMutation,
+} from "@/redux/features/authApi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -18,9 +21,11 @@ export default function OtpVerify() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+  const authType = searchParams.get("authType");
   const dispatch = useDispatch();
 
   const [verifyOTP] = useVerifyUserMutation();
+  const [resendOTP] = useResendOTPMutation({});
 
   useEffect(() => {
     if (countdown > 0) {
@@ -117,10 +122,29 @@ export default function OtpVerify() {
     setIsLoading(false);
   };
 
-  const handleResend = () => {
+  const handleResend = async () => {
     setOtp(Array(6).fill(""));
     setCountdown(60);
     inputRefs.current[0]?.focus();
+
+    try {
+      const res = await resendOTP({
+        email: email || "",
+        authType: authType || "createAccount",
+      });
+
+      console.log(res);
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.message || "OTP resent sucessfully");
+      } else if (res?.error) {
+        console.log("error", res?.error?.data?.message);
+        toast.error(res?.error?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     console.log("Resending OTP...");
   };
 

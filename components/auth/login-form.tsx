@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 import { useLoginUserMutation } from "@/redux/features/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slice/userSlice";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
@@ -50,6 +51,9 @@ export function SignInForm() {
 
         // Redirect based on role
         router.push("/");
+      } else if (res?.error) {
+        console.log("error", res?.error?.data?.message);
+        toast.error(res?.error?.data?.message || "Something went wrong");
       }
       console.log(res);
     } catch (error) {
@@ -147,7 +151,7 @@ export function SignInForm() {
           type="submit"
           className="w-full bg-secondary text-2xl text-white mt-6 py-6 duration-300"
         >
-          Login
+          {isLoading ? <Loader className="animate-spin size-8" /> : "Login"}
         </Button>
       </form>
 
