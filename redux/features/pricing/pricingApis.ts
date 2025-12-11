@@ -7,6 +7,9 @@ const pricingApis = baseApi.injectEndpoints({
         url: "/plan",
         method: "GET",
       }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
     }),
   }),
 });

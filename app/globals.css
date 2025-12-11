@@ -58,9 +58,9 @@
 }
 
 /* Smooth scroll */
-* {
+/* * {
   scroll-behavior: smooth;
-}
+} */
 
 /* Remove number input arrows */
 input::-webkit-outer-spin-button,

@@ -1,9 +1,8 @@
+import ReduxProvider from "@/redux/ReduxProvider";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider";
-import ReduxProvider from "@/redux/ReduxProvider";
-import { Toaster } from "@/components/ui/sonner";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -22,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${montserrat.variable} antialiased`}>
         <ReduxProvider>
           <Provider>{children}</Provider>
