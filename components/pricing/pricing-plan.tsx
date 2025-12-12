@@ -19,7 +19,7 @@ export default function PricingPlan() {
 
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="bg-white py-32 px-4 sm:px-6 lg:px-8 faq-gradient-bg">

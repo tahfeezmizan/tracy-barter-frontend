@@ -1,10 +1,243 @@
+// "use client";
+
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent } from "@/components/ui/card";
+// import LoadingSpinner from "@/lib/loading-spinner";
+// import { getImageUrl } from "@/lib/utils";
+// import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+// import { ChevronLeft, ChevronRight } from "lucide-react";
+// import Image from "next/image";
+// import { useState } from "react";
+
+// interface Service {
+//   id: number;
+//   title: string;
+//   description: string;
+//   image: string;
+// }
+
+// const services: Service[] = [
+//   {
+//     id: 1,
+//     title: "Cleaning",
+//     description: "Maintenance, deep cleans, and move-out detailing.",
+//     image:
+//       "https://images.pexels.com/photos/4099468/pexels-photo-4099468.jpeg?auto=compress&cs=tinysrgb&w=800",
+//   },
+//   {
+//     id: 2,
+//     title: "Grocery Assistant",
+//     description: "Scheduled wellness checks while you're away.",
+//     image:
+//       "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=800",
+//   },
+//   {
+//     id: 3,
+//     title: "Event & Stay Prep",
+//     description: "Guest-ready setup for parties, rentals, or family visits.",
+//     image:
+//       "https://images.pexels.com/photos/1738986/pexels-photo-1738986.jpeg?auto=compress&cs=tinysrgb&w=800",
+//   },
+//   {
+//     id: 4,
+//     title: "Occasional Check-Ins",
+//     description: "Scheduled wellness checks while you're away.",
+//     image:
+//       "https://images.pexels.com/photos/7640443/pexels-photo-7640443.jpeg?auto=compress&cs=tinysrgb&w=800",
+//   },
+//   {
+//     id: 5,
+//     title: "Lawn & Landscaping",
+//     description: "Lawn care, snow removal, and seasonal upkeep.",
+//     image:
+//       "https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&cs=tinysrgb&w=800",
+//   },
+// ];
+
+// export default function ServiceSection() {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+
+//   const { data, isLoading } = useGetServiceQuery(undefined);
+//   const servicesCards = data?.data || [];
+
+//   const nextSlide = () => {
+//     setCurrentIndex((prev) => (prev + 1) % servicesCards.length);
+//   };
+
+//   const prevSlide = () => {
+//     setCurrentIndex(
+//       (prev) => (prev - 1 + servicesCards.length) % servicesCards.length
+//     );
+//   };
+
+//   const goToSlide = (index: number) => {
+//     setCurrentIndex(index);
+//   };
+
+//   const getVisibleCards = () => {
+//     const cards = [];
+//     for (let i = 0; i < 5; i++) {
+//       const index = (currentIndex + i) % servicesCards.length;
+//       cards.push(servicesCards[index]);
+//     }
+//     return cards;
+//   };
+
+//   const visibleCards = getVisibleCards();
+
+//   // console.log(servicesCards);
+
+//   return (
+//     <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
+//       <div className="max-w-full mx-auto ">
+//         <div className="text-center mb-10 lg:mb-16 text-black">
+//           <h1 className="text-3xl font-bold  mb-3">Service Highlights</h1>
+//           <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
+//             Everything you need to keep your home ready for arrival whenever you
+//             need it.
+//           </p>
+//         </div>
+
+//         {isLoading ? (
+//           <LoadingSpinner />
+//         ) : (
+//           <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
+//             {visibleCards?.map((service: any, idx: number) => {
+//               const isCenter = idx === 2;
+//               const isEdge = idx === 0 || idx === 4;
+
+//               return (
+//                 <Card
+//                   key={`${service.id}-${idx}`}
+//                   className={`
+//                       transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
+//                       ${
+//                         isCenter
+//                           ? "scale-100 z-10 !w-full md:!w-96"
+//                           : "scale-90 "
+//                       }
+//                       ${isEdge ? "hidden lg:block" : ""}
+//                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
+//                       shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
+//                     `}
+//                 >
+//                   <CardContent className="p-3 text-center">
+//                     <div className="relative ">
+//                       <Image
+//                         src={getImageUrl(service?.image)}
+//                         alt={service?.name}
+//                         width={400}
+//                         height={400}
+//                         className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 overflow-hidden"
+//                       />
+//                     </div>
+//                     <div className="p-6">
+//                       <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
+//                         {service?.name}
+//                       </h3>
+//                       <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+//                         {service?.description}
+//                       </p>
+//                     </div>
+//                   </CardContent>
+//                 </Card>
+//               );
+//             })}
+//           </div>
+//         )}
+
+//         {/* <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
+//           {visibleCards.map((service, idx) => {
+//             const isCenter = idx === 2;
+//             const isEdge = idx === 0 || idx === 4;
+
+//             return (
+//               <Card
+//                 key={`${service.id}-${idx}`}
+//                 className={`
+//                       transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
+//                       ${
+//                         isCenter
+//                           ? "scale-100 z-10 !w-full md:!w-96"
+//                           : "scale-90 "
+//                       }
+//                       ${isEdge ? "hidden lg:block" : ""}
+//                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
+//                       shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
+//                     `}
+//               >
+//                 <CardContent className="p-3 text-center">
+//                   <div className="relative ">
+//                     <Image
+//                       src={service.image}
+//                       alt={service.title}
+//                       width={400}
+//                       height={400}
+//                       className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 overflow-hidden"
+//                     />
+//                   </div>
+//                   <div className="p-6">
+//                     <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
+//                       {service.title}
+//                     </h3>
+//                     <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+//                       {service.description}
+//                     </p>
+//                   </div>
+//                 </CardContent>
+//               </Card>
+//             );
+//           })}
+//         </div> */}
+//       </div>
+
+//       <div className="flex justify-center items-center gap-3 mt-12">
+//         <Button
+//           onClick={prevSlide}
+//           variant="outline"
+//           size="icon"
+//           className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+//         >
+//           <ChevronLeft className="size-7" />
+//         </Button>
+//         {services.map((_, index) => (
+//           <button
+//             key={index}
+//             onClick={() => goToSlide(index)}
+//             className={`
+//                 transition-all duration-300 rounded-full
+//                 ${
+//                   index === currentIndex
+//                     ? "w-12 h-3 bg-secondary"
+//                     : "w-3 h-3 bg-neutral-400"
+//                 }
+//               `}
+//             aria-label={`Go to slide ${index + 1}`}
+//           />
+//         ))}
+//         <Button
+//           onClick={nextSlide}
+//           variant="outline"
+//           size="icon"
+//           className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+//         >
+//           <ChevronRight className="size-7" />
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import LoadingSpinner from "@/lib/loading-spinner";
+import { getImageUrl } from "@/lib/utils";
+import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Service {
   id: number;
@@ -53,42 +286,183 @@ const services: Service[] = [
 
 export default function ServiceSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [animationDirection, setAnimationDirection] = useState<
+    "left" | "right" | "none"
+  >("none");
+  const [prevIndex, setPrevIndex] = useState(0);
+
+  const { data, isLoading } = useGetServiceQuery(undefined);
+  const servicesCards = data?.data || [];
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % services.length);
+    setPrevIndex(currentIndex);
+    setAnimationDirection("right");
+    setCurrentIndex((prev) => (prev + 1) % servicesCards.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + services.length) % services.length);
+    setPrevIndex(currentIndex);
+    setAnimationDirection("left");
+    setCurrentIndex(
+      (prev) => (prev - 1 + servicesCards.length) % servicesCards.length
+    );
   };
 
   const goToSlide = (index: number) => {
+    setPrevIndex(currentIndex);
+    setAnimationDirection(index > currentIndex ? "right" : "left");
     setCurrentIndex(index);
   };
 
   const getVisibleCards = () => {
     const cards = [];
     for (let i = 0; i < 5; i++) {
-      const index = (currentIndex + i) % services.length;
-      cards.push(services[index]);
+      const index = (currentIndex + i) % servicesCards.length;
+      cards.push(servicesCards[index]);
     }
     return cards;
   };
 
   const visibleCards = getVisibleCards();
 
+  // Reset animation after it completes
+  useEffect(() => {
+    if (animationDirection !== "none") {
+      const timer = setTimeout(() => {
+        setAnimationDirection("none");
+      }, 500); // Match this with CSS animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [animationDirection]);
+
   return (
     <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
+      {/* Add CSS animations */}
+      <style jsx>{`
+        @keyframes slideFromRight {
+          from {
+            opacity: 0;
+            transform: translateX(100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideFromLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .slide-in-right {
+          animation: slideFromRight 0.5s ease-out forwards;
+        }
+
+        .slide-in-left {
+          animation: slideFromLeft 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        .fade-in-scale {
+          animation: fadeInScale 0.4s ease-out forwards;
+        }
+
+        @keyframes buttonPulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .button-pulse {
+          animation: buttonPulse 0.3s ease-in-out;
+        }
+      `}</style>
+
       <div className="max-w-full mx-auto ">
-        <div className="text-center mb-10 lg:mb-16 text-black">
-          <h1 className="text-3xl font-bold  mb-3">Service Highlights</h1>
+        <div className="text-center mb-10 lg:mb-16 text-black fade-in-scale">
+          <h1 className="text-3xl font-bold mb-3">Service Highlights</h1>
           <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
             Everything you need to keep your home ready for arrival whenever you
             need it.
           </p>
         </div>
 
-        <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <div
+            className={`flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12 
+            ${animationDirection === "right" ? "slide-in-right" : ""}
+            ${animationDirection === "left" ? "slide-in-left" : ""}`}
+          >
+            {visibleCards?.map((service: any, idx: number) => {
+              const isCenter = idx === 2;
+              const isEdge = idx === 0 || idx === 4;
+
+              return (
+                <Card
+                  key={`${service.id}-${idx}`}
+                  className={`
+                      transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
+                      ${
+                        isCenter
+                          ? "scale-100 z-10 !w-full md:!w-96"
+                          : "scale-90 "
+                      }
+                      ${isEdge ? "hidden lg:block" : ""}
+                      ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
+                      shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
+                    `}
+                >
+                  <CardContent className="p-3 text-center">
+                    <div className="relative overflow-hidden">
+                      <Image
+                        src={getImageUrl(service?.image)}
+                        alt={service?.name}
+                        width={400}
+                        height={400}
+                        className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 hover:scale-105 overflow-hidden"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
+                        {service?.name}
+                      </h3>
+                      <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        {service?.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+
+        {/* <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
           {visibleCards.map((service, idx) => {
             const isCenter = idx === 2;
             const isEdge = idx === 0 || idx === 4;
@@ -130,7 +504,7 @@ export default function ServiceSection() {
               </Card>
             );
           })}
-        </div>
+        </div> */}
       </div>
 
       <div className="flex justify-center items-center gap-3 mt-12">
@@ -138,7 +512,9 @@ export default function ServiceSection() {
           onClick={prevSlide}
           variant="outline"
           size="icon"
-          className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+          className={`h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white ${
+            animationDirection === "left" ? "button-pulse" : ""
+          }`}
         >
           <ChevronLeft className="size-7" />
         </Button>
@@ -161,7 +537,9 @@ export default function ServiceSection() {
           onClick={nextSlide}
           variant="outline"
           size="icon"
-          className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+          className={`h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white ${
+            animationDirection === "right" ? "button-pulse" : ""
+          }`}
         >
           <ChevronRight className="size-7" />
         </Button>
