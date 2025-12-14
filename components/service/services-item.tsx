@@ -1,31 +1,11 @@
 "use client";
 
+import { ServiceItem } from "@/config/Types/types";
+import { getImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
 
-interface ServicesItemProps {
-  title: string;
-  description: string;
-  image: string;
-  whatWeDo: string[];
-  whenToBook: string;
-  buttonLabel?: string;
-  buttonLink?: string;
-  reverse?: boolean;
-}
-
-export default function ServicesItem({
-  title,
-  description,
-  image,
-  whatWeDo,
-  whenToBook,
-  buttonLabel = "Book Now",
-  buttonLink = "#",
-  reverse = false,
-}: ServicesItemProps) {
+export default function ServicesItem({ service, imagePosition }: ServiceItem) {
   return (
     <section
       style={{
@@ -35,29 +15,29 @@ export default function ServicesItem({
       <div className="max-w-7xl mx-auto px-4 py-10 lg:py-24 lg:pb-36">
         <div
           className={`flex flex-col ${
-            reverse ? "lg:flex-row-reverse" : "lg:flex-row"
+            imagePosition === "right" ? "flex-row-reverse" : "flex-row"
           } items-center justify-between gap-10`}
         >
-          <div className="flex-1 w-full md:w-[550px] h-auto md:h-[500px]">
+          <div className="flex-1 w-full md:w-[550px] h-auto md:h-[600px] overflow-hidden">
             <Image
-              src={image}
-              alt={title}
+              src={getImageUrl(service?.image)}
+              alt={service?.name}
               width={1000}
               height={1000}
-              className="rounded-xl object-cover"
+              className="rounded-xl object-cover w-full h-full"
             />
           </div>
 
           <div className="flex-1">
             <h3 className="text-4xl font-medium text-primary mb-2 md:mb-4">
-              {title}
+              {service?.name}
             </h3>
-            <p className="text-lg text-gray-500">{description}</p>
+            <p className="text-lg text-gray-500">{service?.description}</p>
 
             <div className="my-6 md:my-8">
               <h4 className="text-2xl font-medium text-primary">What we do:</h4>
               <ul className="mt-4 list-disc list-inside text-gray-500 space-y-1">
-                {whatWeDo.map((item, idx) => (
+                {service?.servicesProvided?.map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
               </ul>
@@ -67,14 +47,18 @@ export default function ServicesItem({
               <h4 className="text-2xl font-medium text-primary mb-2.5 md:mb-4">
                 When to book:
               </h4>
-              <p className="text-base text-gray-500">{whenToBook}</p>
+              <ul className="mt-4 list-disc list-inside text-gray-500 space-y-1">
+                {service?.occasions?.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
             </div>
 
             <Link
-              href={buttonLink}
+              href={"#"}
               className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 inline-block"
             >
-              {buttonLabel}
+              Book Now
             </Link>
           </div>
         </div>
