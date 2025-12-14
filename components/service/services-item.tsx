@@ -5,7 +5,16 @@ import { getImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ServicesItem({ service, imagePosition }: ServiceItem) {
+interface ServicesItemProps {
+  service: ServiceItem;
+  imagePosition: "left" | "right";
+}
+
+
+export default function ServicesItem({
+  service,
+  imagePosition,
+}: ServicesItemProps) {
   return (
     <section
       style={{

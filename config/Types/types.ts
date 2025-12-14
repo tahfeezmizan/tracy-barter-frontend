@@ -52,3 +52,24 @@ export interface ServiceType {
 export interface StaffMember {
   [key: string]: any;
 }
+
+export interface Reviewer {
+  _id: string;
+  id: string;
+  name: string;
+  profile: string;
+  role: "staff" | "admin" | "user"; // extend if needed
+}
+
+export interface ReviewTypes {
+  _id: string;
+  title: string;
+  review: string;
+  rating: number;
+  status: "pending" | "approved" | "rejected"; // adjust based on backend
+  service: string;
+  reviewer: Reviewer;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+}
