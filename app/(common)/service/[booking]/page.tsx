@@ -30,7 +30,7 @@ export interface BookingFormData {
   zip: string;
 }
 
-const TOTAL_STEPS = 4 ;
+const TOTAL_STEPS = 4;
 
 export default function BookingPage() {
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function BookingPage() {
       setCurrentStep((prev) => prev - 1);
       window.scrollTo(0, 0);
     } else {
-      router.push("/");
+      router.push("/service");
     }
   };
 
@@ -81,6 +81,8 @@ export default function BookingPage() {
     router.push("/service/booking/confirmation");
   };
   const progress = (currentStep / TOTAL_STEPS) * 100;
+
+  
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 pt-28">
       <div className="max-w-3xl mx-auto ">

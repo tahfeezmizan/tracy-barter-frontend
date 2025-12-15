@@ -180,11 +180,7 @@ export function SignupForm() {
             checked={formData.agreeToTerms}
             onCheckedChange={handleCheckboxChange}
           />
-          <Label
-            className="text-md font-semibold"
-            htmlFor="terms"
-            className="text-sm font-normal"
-          >
+          <Label className="text-md font-semibold" htmlFor="terms">
             I have read and agree to roqit's Terms and conditions
           </Label>
         </div>

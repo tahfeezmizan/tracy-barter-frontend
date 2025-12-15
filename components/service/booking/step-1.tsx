@@ -1,9 +1,10 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { BookingFormData } from "@/app/(common)/service/booking/page";
+import { BookingFormData } from "@/app/(common)/service/[booking]/page";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
+import { useParams } from "next/navigation";
 
 interface Step1Props {
   formData: BookingFormData;
@@ -11,6 +12,11 @@ interface Step1Props {
 }
 
 export default function Step1({ formData, updateFormData }: Step1Props) {
+  const params = useParams();
+  const id = params.booking;
+
+  console.log("params:", id);
+
   return (
     <div className="space-y-6 border p-5 rounded-lg border-gray-300">
       <div>
@@ -66,7 +72,10 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="bedrooms" className="mb-2 block text-lg font-semibold text-secondary">
+          <Label
+            htmlFor="bedrooms"
+            className="mb-2 block text-lg font-semibold text-secondary"
+          >
             Bedroom
           </Label>
           <Input
@@ -79,7 +88,10 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
           />
         </div>
         <div>
-          <Label htmlFor="bathrooms" className="mb-2 block text-lg font-semibold text-secondary">
+          <Label
+            htmlFor="bathrooms"
+            className="mb-2 block text-lg font-semibold text-secondary"
+          >
             Bathroom
           </Label>
           <Input
@@ -94,7 +106,10 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
       </div>
 
       <div>
-        <Label htmlFor="homeSize" className="mb-2 block text-lg font-semibold text-secondary">
+        <Label
+          htmlFor="homeSize"
+          className="mb-2 block text-lg font-semibold text-secondary"
+        >
           Home size (Square feet)
         </Label>
         <Input
@@ -108,7 +123,10 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
       </div>
 
       <div>
-        <Label htmlFor="note" className="mb-2 block text-lg font-semibold text-secondary">
+        <Label
+          htmlFor="note"
+          className="mb-2 block text-lg font-semibold text-secondary"
+        >
           Note (optional)
         </Label>
         <Textarea
