@@ -73,3 +73,12 @@ export interface ReviewTypes {
   updatedAt: string; // ISO date string
   __v: number;
 }
+
+export interface FAQTypes {
+  _id: string;
+  question: string;
+  answer: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+}

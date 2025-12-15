@@ -12,7 +12,7 @@ import { useState } from "react";
 export default function ClientReview() {
   const { data, isLoading } = useGetReviewQuery(undefined);
   const reviews = data?.data || [];
-  console.log(data?.data);
+  // console.log(data?.data);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
