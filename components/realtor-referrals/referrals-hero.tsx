@@ -43,7 +43,7 @@ export default function ReferralsHero() {
             take it from there.
           </h3>
           <Link
-            href={"#"}
+            href={"#referral-form"}
             className="text-2xl text-white mt-6 px-10 py-2 bg-secondary rounded-lg hover:bg-secondary/80 "
           >
             Submit a referral

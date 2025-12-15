@@ -9,7 +9,9 @@ export default function page() {
       <ReferralsHero />
       <ReferralProgramWorks />
       <WhyPartnerSection />
-      <ReferralForm />
+      <div id="referral-form" className="">
+        <ReferralForm />
+      </div>
     </div>
   );
 }

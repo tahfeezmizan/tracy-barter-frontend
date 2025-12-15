@@ -2,6 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { useCreateReferralMutation } from "@/redux/features/referral/referralApis";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
 
 interface ReferralFormData {
   name: string;
@@ -30,10 +33,28 @@ export function ReferralForm() {
     },
   });
 
-  const onSubmit = (data: ReferralFormData) => {
+  const [createReferral, { isLoading }] = useCreateReferralMutation({});
+
+  const onSubmit = async (data: ReferralFormData) => {
     console.log("Form submitted:", data);
-    // Handle form submission here
-    reset();
+
+    try {
+      const res = await createReferral({
+        yourName: data.name,
+        referralName: data.referralName,
+        referralEmail: data.email,
+        referralPhone: data.phone,
+        notes: data.notes,
+      });
+      console.log("Referral created:", res);
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        reset();
+      } else {
+        toast.error(res?.error?.data?.message);
+      }
+    } catch {}
   };
 
   return (
@@ -130,13 +151,6 @@ export function ReferralForm() {
                 Phone
               </label>
               <input
-                {...register("phone", {
-                  pattern: {
-                    value:
-                      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
-                    message: "Invalid phone number format",
-                  },
-                })}
                 id="phone"
                 type="tel"
                 placeholder="(123) 456-7890"
@@ -196,7 +210,11 @@ export function ReferralForm() {
             type="submit"
             className="w-full text-xl bg-secondary hover:bg-slate-800 text-white font-medium py-6 rounded-md transition"
           >
-            Submit a referral
+            {isLoading ? (
+              <Loader className="size-8 animate-spin" />
+            ) : (
+              "Submit a referral"
+            )}
           </Button>
         </form>
       </div>

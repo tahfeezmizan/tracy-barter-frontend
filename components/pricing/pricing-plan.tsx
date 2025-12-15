@@ -10,16 +10,37 @@ import {
 import { PricingPlanType } from "@/config/Types/types";
 
 import LoadingSpinner from "@/lib/loading-spinner";
-import { useGetPricingPlansQuery } from "@/redux/features/pricing/pricingApis";
+import {
+  useCreateSubscriptionMutation,
+  useGetPricingPlansQuery,
+} from "@/redux/features/pricing/pricingApis";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function PricingPlan() {
   const pathname = usePathname();
+  const router = useRouter();
 
+  // Fetch pricing plans
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
 
-  // console.log(data);
+  
+  const [createSubscription] = useCreateSubscriptionMutation();
+
+  const handleSubscription = async (planId: string) => {
+    try {
+      const res = await createSubscription(planId).unwrap();
+      console.log("createSubscription", res);
+
+      if (res.success) {
+        toast.success(res.message);
+        router.push(res?.data);
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+    }
+  };
 
   return (
     <div className="bg-white py-32 px-4 sm:px-6 lg:px-8 faq-gradient-bg">
@@ -76,14 +97,15 @@ export default function PricingPlan() {
                     </CardDescription>
                   </div>
 
-                  <Link href={"/"} className="w-full">
+                  <div className="w-full">
                     <Button
+                      onClick={() => handleSubscription(plan?._id)}
                       variant="outline"
                       className="border border-primary text-primary hover:bg-primary/15 font-semibold text-2xl py-6 rounded-xl transition-all duration-300"
                     >
                       Get started
                     </Button>
-                  </Link>
+                  </div>
                 </CardHeader>
               </Card>
             ))}

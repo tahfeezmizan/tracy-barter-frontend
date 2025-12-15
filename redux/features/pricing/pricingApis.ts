@@ -11,7 +11,15 @@ const pricingApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+
+    createSubscription: builder.mutation({
+      query: (planId: string) => ({
+        url: `/subscription/create-checkout-session/${planId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetPricingPlansQuery } = pricingApis;
+export const { useGetPricingPlansQuery, useCreateSubscriptionMutation } =
+  pricingApis;
