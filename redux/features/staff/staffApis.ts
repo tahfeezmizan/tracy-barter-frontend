@@ -1,6 +1,6 @@
 import { baseApi } from "../baseApi";
 
-const serviceApis = baseApi.injectEndpoints({
+const staffApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getService: builder.query({
       query: () => ({
@@ -12,9 +12,9 @@ const serviceApis = baseApi.injectEndpoints({
       },
     }),
 
-    getSingleService: builder.query({
+    getStaffsbyService: builder.query({
       query: ({ id }) => ({
-        url: `/service/${id}`,
+        url: `/user/staff/service/${id}`,
         method: "GET",
       }),
       transformResponse: (response: any) => {
@@ -24,4 +24,4 @@ const serviceApis = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetServiceQuery, useGetSingleServiceQuery } = serviceApis;
+export const { useGetServiceQuery, useGetStaffsbyServiceQuery } = staffApis;

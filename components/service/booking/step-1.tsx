@@ -1,21 +1,16 @@
-import { BookingFormData } from "@/app/(common)/service/[booking]/page";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { useParams } from "next/navigation";
 
 interface Step1Props {
-  formData: BookingFormData;
-  updateFormData: (field: keyof BookingFormData, value: any) => void;
+  formData: any;
+  updateFormData: (field: keyof any, value: any) => void;
 }
 
-export default function Step1({ formData, updateFormData }: Step1Props) {
-  const params = useParams();
-  const id = params.booking;
-
-  console.log("params:", id);
+export default function Step1({ formData, updateFormData, data }: Step1Props) {
+  console.log("From Step 1", data);
 
   return (
     <div className="space-y-6 border p-5 rounded-lg border-gray-300">
@@ -25,103 +20,56 @@ export default function Step1({ formData, updateFormData }: Step1Props) {
           value={formData.serviceType}
           onValueChange={(value) => updateFormData("serviceType", value)}
         >
-          <div className="space-y-3">
+          {data?.serviceType?.map((type) => (
             <div className="flex items-center justify-center gap-5 p-4 py-3 border border-gray-400 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <Checkbox value="standard" id="standard" />
+              <Checkbox
+                value={type?._id}
+                id={type?._id}
+                className="border-black"
+              />
               <Label
-                htmlFor="standard"
-                className="flex-1 flex-col items-start cursor-pointer"
-              >
-                <p className="text-lg font-bold text-slate-900">Standard</p>
-                <p className="text-base text-gray-600">
-                  Regular maintenance Cleaning
-                </p>
-              </Label>
-            </div>
-
-            <div className="flex items-center justify-center gap-5 p-4 border border-gray-400 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <Checkbox value="deep" id="deep" />
-              <Label
-                htmlFor="deep"
-                className="flex-1 flex-col items-start cursor-pointer"
-              >
-                <p className="text-lg font-bold text-slate-900">Deep clean</p>
-                <p className="text-base text-gray-600">
-                  Detailed cleaning including baseboards, cabinets
-                </p>
-              </Label>
-            </div>
-
-            <div className="flex items-center justify-center gap-5 p-4 border border-gray-400 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <Checkbox value="move" id="move" />
-              <Label
-                htmlFor="move"
+                htmlFor={type?._id}
                 className="flex-1 flex-col items-start cursor-pointer"
               >
                 <p className="text-lg font-bold text-slate-900">
-                  Move-in / Move out
+                  {type?.title}
                 </p>
-                <p className="text-base text-gray-600">
-                  Complete deep cleaning for transitions
-                </p>
+                <p className="text-base text-gray-600">{type?.description}</p>
               </Label>
             </div>
-          </div>
+          ))}
         </RadioGroup>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <Label
-            htmlFor="bedrooms"
-            className="mb-2 block text-lg font-semibold text-secondary"
-          >
-            Bedroom
-          </Label>
-          <Input
-            id="bedrooms"
-            type="number"
-            placeholder="Number of bedrooms"
-            value={formData.bedrooms}
-            onChange={(e) => updateFormData("bedrooms", e.target.value)}
-            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-          />
-        </div>
-        <div>
-          <Label
-            htmlFor="bathrooms"
-            className="mb-2 block text-lg font-semibold text-secondary"
-          >
-            Bathroom
-          </Label>
-          <Input
-            id="bathrooms"
-            type="number"
-            placeholder="Number of bathrooms"
-            value={formData.bathrooms}
-            onChange={(e) => updateFormData("bathrooms", e.target.value)}
-            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-          />
-        </div>
-      </div>
+        {data?.fields?.map((field) => (
+          <div>
+            <Label
+              htmlFor={field?.name}
+              className="mb-2 block text-lg font-semibold text-secondary capitalize"
+            >
+              {field?.label}
+            </Label>
+            {(field?.type === "number" || field?.type === "string") && (
+              <Input
+                id={field?.name}
+                type={field?.type === "number" ? "number" : "text"}
+                placeholder={`Enter ${field?.label.toLowerCase()}`}
+                value={formData[field?.name] as string}
+                onChange={(e) => updateFormData(field?.name, e.target.value)}
+                className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+              />
+            )}
 
-      <div>
-        <Label
-          htmlFor="homeSize"
-          className="mb-2 block text-lg font-semibold text-secondary"
-        >
-          Home size (Square feet)
-        </Label>
-        <Input
-          id="homeSize"
-          type="number"
-          placeholder="Enter home size"
-          value={formData.homeSize}
-          onChange={(e) => updateFormData("homeSize", e.target.value)}
-          className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-        />
+            {field?.type === "boolean" && (
+              <div className="flex items-center gap-3">
+                <Checkbox id={field?.name} className="border-black" />
+                <Label htmlFor={field?.name}>Yes</Label>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-
       <div>
         <Label
           htmlFor="note"

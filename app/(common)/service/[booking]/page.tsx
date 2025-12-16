@@ -8,34 +8,35 @@ import Step5 from "@/components/service/booking/step-5";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useRouter } from "next/navigation";
+import { useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-export interface BookingFormData {
-  serviceType: string;
-  bedrooms: string;
-  bathrooms: string;
-  homeSize: string;
-  note: string;
-  provider: string;
-  date: Date | undefined;
-  startTime: string;
-  endTime: string;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-}
+// export interface BookingFormData {
+//   serviceType: string;
+//   bedrooms: string;
+//   bathrooms: string;
+//   homeSize: string;
+//   note: string;
+//   provider: string;
+//   date: Date | undefined;
+//   startTime: string;
+//   endTime: string;
+//   name: string;
+//   email: string;
+//   phone: string;
+//   address: string;
+//   city: string;
+//   state: string;
+//   zip: string;
+// }
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 export default function BookingPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<BookingFormData>({
+  const [formData, setFormData] = useState<any>({
     serviceType: "",
     bedrooms: "",
     bathrooms: "",
@@ -54,7 +55,13 @@ export default function BookingPage() {
     zip: "",
   });
 
-  const updateFormData = (field: keyof BookingFormData, value: any) => {
+  const params = useParams();
+  const id = params.booking;
+  const { data, isLoading } = useGetSingleServiceQuery({ id });
+
+  // console.log("params:", data);
+
+  const updateFormData = (field: keyof any, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -82,7 +89,6 @@ export default function BookingPage() {
   };
   const progress = (currentStep / TOTAL_STEPS) * 100;
 
-  
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 pt-28">
       <div className="max-w-3xl mx-auto ">
@@ -101,19 +107,39 @@ export default function BookingPage() {
 
           <CardContent className="p-0">
             {currentStep === 1 && (
-              <Step1 formData={formData} updateFormData={updateFormData} />
+              <Step1
+                formData={formData}
+                data={data}
+                updateFormData={updateFormData}
+              />
             )}
             {currentStep === 2 && (
-              <Step2 formData={formData} updateFormData={updateFormData} />
+              <Step2
+                formData={formData}
+                data={data}
+                updateFormData={updateFormData}
+              />
             )}
             {currentStep === 3 && (
-              <Step3 formData={formData} updateFormData={updateFormData} />
+              <Step3
+                formData={formData}
+                data={data}
+                updateFormData={updateFormData}
+              />
             )}
-            {/* {currentStep === 4 && (
-              <Step4 formData={formData} updateFormData={updateFormData} />
-            )} */}
             {currentStep === 4 && (
-              <Step5 formData={formData} updateFormData={updateFormData} />
+              <Step4
+                formData={formData}
+                data={data}
+                updateFormData={updateFormData}
+              />
+            )}
+            {currentStep === 5 && (
+              <Step5
+                formData={formData}
+                data={data}
+                updateFormData={updateFormData}
+              />
             )}
 
             <div className="flex gap-4 mt-8">

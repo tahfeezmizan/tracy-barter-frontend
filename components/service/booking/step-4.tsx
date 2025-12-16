@@ -1,63 +1,79 @@
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { BookingFormData } from '@/app/(common)/service/booking/page';
+"use client";
 
-interface Step4Props {
-  formData: BookingFormData;
-  updateFormData: (field: keyof BookingFormData, value: any) => void;
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+interface Step3Props {
+  formData: any;
+  updateFormData: (field: keyof any, value: any) => void;
 }
-
-export default function Step4({ formData, updateFormData }: Step4Props) {
+export default function Step4({ formData, updateFormData }: Step3Props) {
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Contact Information</h3>
-        <p className="text-sm text-gray-600 mb-4">How can we reach you?</p>
-      </div>
+      <div className="border p-5 rounded-lg border-gray-300">
+        <h2 className="text-2xl font-bold mb-4">Address & ZIP Check</h2>
 
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="name" className="mb-2 block font-medium">Full Name</Label>
+        {/* Service Address */}
+        <div className="mt-6">
+          <Label className="mb-2 block text-lg font-semibold text-secondary">
+            Service Address
+          </Label>
           <Input
-            id="name"
-            placeholder="Enter your full name"
-            value={formData.name}
-            onChange={(e) => updateFormData('name', e.target.value)}
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="email" className="mb-2 block font-medium">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="your.email@example.com"
-            value={formData.email}
-            onChange={(e) => updateFormData('email', e.target.value)}
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="phone" className="mb-2 block font-medium">Phone Number</Label>
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="(123) 456-7890"
-            value={formData.phone}
-            onChange={(e) => updateFormData('phone', e.target.value)}
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="address" className="mb-2 block font-medium">Service Address</Label>
-          <Textarea
-            id="address"
-            placeholder="Enter your complete address"
+            placeholder=""
             value={formData.address}
-            onChange={(e) => updateFormData('address', e.target.value)}
-            className="min-h-[100px]"
+            onChange={(e) => updateFormData("address", e.target.value)}
+            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
           />
+        </div>
+
+        {/* City + State */}
+        <div className="grid grid-cols-2 gap-6 mt-6">
+          <div>
+            <Label className="mb-2 block text-lg font-semibold text-secondary">
+              City
+            </Label>
+            <Input
+              placeholder=""
+              value={formData.city ?? ""}
+              onChange={(e) => updateFormData("city" as any, e.target.value)}
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <Label className="mb-2 block text-lg font-semibold text-secondary">
+              State
+            </Label>
+            <Input
+              placeholder=""
+              value={formData.state ?? ""}
+              onChange={(e) => updateFormData("state" as any, e.target.value)}
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+            />
+          </div>
+        </div>
+
+        {/* ZIP + Check Availability */}
+        <div className="grid grid-cols-2 gap-6 mt-6 items-end">
+          <div>
+            <Label className="mb-2 block text-lg font-semibold text-secondary">
+              Zip
+            </Label>
+            <Input
+              placeholder=""
+              value={formData.zip ?? ""}
+              onChange={(e) => updateFormData("zip" as any, e.target.value)}
+              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+            />
+          </div>
+
+          <Button
+            type="button"
+            className="py-5 rounded-lg border border-primary text-secondary bg-white text-lg"
+          >
+            Check Availability
+          </Button>
         </div>
       </div>
     </div>

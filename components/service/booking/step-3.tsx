@@ -1,81 +1,87 @@
-"use client";
-
-import { BookingFormData } from "@/app/(common)/service/booking/page";
-import { Button } from "@/components/ui/button";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Star } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useGetStaffsbyServiceQuery } from "@/redux/features/staff/staffApis";
 
-interface Step3Props {
-  formData: BookingFormData;
-  updateFormData: (field: keyof BookingFormData, value: any) => void;
+interface Step2Props {
+  formData: any;
+  updateFormData: (field: keyof any, value: any) => void;
 }
-export default function Step3({ formData, updateFormData }: Step3Props) {
+
+export default function Step3({ formData, updateFormData, data }: Step2Props) {
+  const params = useParams();
+  const id = params.booking;
+  const { data: staffProvider, isLoading } = useGetStaffsbyServiceQuery({ id });
+
+  console.log("get staffs by service id", staffProvider);
+
   return (
     <div className="space-y-6">
+      {/* Service Provider */}
       <div className="border p-5 rounded-lg border-gray-300">
-        <h2 className="text-2xl font-bold mb-4">Address & ZIP Check</h2>
+        <h3 className="text-lg font-semibold">Choose Your Service Provider</h3>
+        <p className="text-base text-gray-600">
+          Select your preferred concierge representative
+        </p>
 
-        {/* Service Address */}
-        <div className="mt-6">
-          <Label className="mb-2 block text-lg font-semibold text-secondary">
-            Service Address
-          </Label>
-          <Input
-            placeholder=""
-            value={formData.address}
-            onChange={(e) => updateFormData("address", e.target.value)}
-            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-          />
-        </div>
-
-        {/* City + State */}
-        <div className="grid grid-cols-2 gap-6 mt-6">
-          <div>
-            <Label className="mb-2 block text-lg font-semibold text-secondary">
-              City
-            </Label>
-            <Input
-              placeholder=""
-              value={formData.city ?? ""}
-              onChange={(e) => updateFormData("city" as any, e.target.value)}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <Label className="mb-2 block text-lg font-semibold text-secondary">
-              State
-            </Label>
-            <Input
-              placeholder=""
-              value={formData.state ?? ""}
-              onChange={(e) => updateFormData("state" as any, e.target.value)}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* ZIP + Check Availability */}
-        <div className="grid grid-cols-2 gap-6 mt-6 items-end">
-          <div>
-            <Label className="mb-2 block text-lg font-semibold text-secondary">
-              Zip
-            </Label>
-            <Input
-              placeholder=""
-              value={formData.zip ?? ""}
-              onChange={(e) => updateFormData("zip" as any, e.target.value)}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-            />
-          </div>
-
-          <Button
-            type="button"
-            className="py-5 rounded-lg border border-primary text-secondary bg-white text-lg"
+        <RadioGroup
+          value={formData.provider}
+          onValueChange={(value) => updateFormData("provider", value)}
+          className="mt-5 space-y-3"
+        >
+          {/* Provider 1 */}
+          <div
+            onClick={() => updateFormData("provider", "standard")}
+            className={`
+              flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer
+              ${
+                formData.provider === "standard"
+                  ? "border-[#155DFC] bg-[#CCE2FF]"
+                  : "border-gray-400 hover:bg-gray-50"
+              }
+            `}
           >
-            Check Availability
-          </Button>
-        </div>
+            <div>
+              <p className="text-base font-medium text-slate-900">Mike Chen</p>
+              <p className="text-base text-gray-600">
+                Grocery Shopping • 5 years experience
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-yellow-500">
+              <Star size={16} fill="currentColor" />
+              <span className="font-medium text-gray-700">5.5</span>
+            </div>
+          </div>
+
+          {/* Provider 2 */}
+          <div
+            onClick={() => updateFormData("provider", "move")}
+            className={`
+              flex items-center justify-between p-4 border rounded-lg cursor-pointer
+              ${
+                formData.provider === "move"
+                  ? "border-[#155DFC] bg-[#CCE2FF]"
+                  : "border-gray-400 hover:bg-gray-50"
+              }
+            `}
+          >
+            <div>
+              <p className="text-base font-medium text-slate-900">Mike Chen</p>
+              <p className="text-base text-gray-600">
+                Grocery Shopping • 5 years experience
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-yellow-500">
+              <Star size={16} fill="currentColor" />
+              <span className="font-medium text-gray-700">5.5</span>
+            </div>
+          </div>
+        </RadioGroup>
       </div>
     </div>
   );
