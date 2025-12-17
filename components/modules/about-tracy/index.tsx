@@ -27,7 +27,7 @@ export default function AboutTracy() {
             <Button className="p-2.5 bg-primary/60 text-secondary text-base font-medium rounded-full my-3">
               Founder & Realtor®
             </Button>
-            <p className="text-xl md:text-2xl leading-snug text-secondary ">
+            <p className="text-lg md:text-xl leading-snug text-secondary ">
               With over two decades of experience in real estate, Tracy Barter
               has built her career on exceptional service, trusted
               relationships, and a deep love for helping clients feel at home in
@@ -48,7 +48,7 @@ export default function AboutTracy() {
               </Button>
               <Link
                 href={"#"}
-                className="flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg"
+                className="flex items-center gap-3 justify-center font-medium group hover:bg-primary/80 hover:text-secondary text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg"
               >
                 Connect On Socials
                 <Facebook className="size-6 text-primary group-hover:text-secondary" />

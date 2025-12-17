@@ -17,19 +17,15 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { RevenueTrendItem } from "@/config/Types/admin/adminType";
 
-const data = [
-  { month: "May", revenue: 5400 },
-  { month: "Jun", revenue: 6200 },
-  { month: "Jul", revenue: 7100 },
-  { month: "Aug", revenue: 6800 },
-  { month: "Sep", revenue: 8000 },
-  { month: "Oct", revenue: 8600 },
-];
+type RevenueChartProps = {
+  data?: RevenueTrendItem[];
+};
 
-export default function RevenueChart() {
+export default function RevenueChart({ data }: RevenueChartProps) {
   return (
-    <Card className="w-full rounded-2xl bg-white text-black" >
+    <Card className="w-full rounded-2xl bg-white text-black">
       <CardHeader>
         <CardTitle>Revenue Trend</CardTitle>
         <CardDescription>Monthly revenue over time</CardDescription>

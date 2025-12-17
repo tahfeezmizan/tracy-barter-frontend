@@ -1,31 +1,36 @@
-import React from "react";
-import StatsCard from "../stats-card";
+import { StatsCardItem } from "@/config/Types/admin/adminType";
+import { useGetadminStatsQuery } from "@/redux/features/admindashboard/adminStatsApis";
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
+import RecentServices from "../admin/recent-services";
 import RevenueChart from "../admin/revenue-chart";
 import ServiceRequestChart from "../admin/service-request-chart";
-import RecentServices from "../admin/recent-services";
 import DynamicHeader from "../dynamic-header";
+import StatsCard from "../stats-card";
+import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AdminDash() {
-  const stats = [
+  const { data, isLoading } = useGetadminStatsQuery(undefined);
+  console.log("adminStatsApis", data);
+
+  const stats: StatsCardItem[] = [
     {
       title: "Total Clients",
-      value: "245",
+      value: data?.totalClients,
       icon: User,
     },
     {
       title: "Active Services",
-      value: "80",
+      value: data?.activeServices,
       icon: Briefcase,
     },
     {
       title: "Total Revenew",
-      value: "$8500",
+      value: data?.totalRevenue,
       icon: DollarSign,
     },
     {
       title: "Total Staff",
-      value: "20",
+      value: data?.activeStaff,
       icon: UserCog,
     },
   ];
@@ -36,11 +41,17 @@ export default function AdminDash() {
         title={"Admin Dashboard"}
         des="Overview of your concierge business"
       />
-      <StatsCard stats={stats} />
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-        <ServiceRequestChart />
-        <RevenueChart />
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <StatsCard stats={stats} />
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <ServiceRequestChart data={data?.serviceRequests} />
+            <RevenueChart data={data?.revenueTrend} />
+          </div>
+        </>
+      )}
       <RecentServices />
     </div>
   );

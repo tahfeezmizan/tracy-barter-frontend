@@ -1,7 +1,6 @@
 import { Card, CardContent } from "../ui/card";
 
 export default function StatsCard({ stats }: { stats: any }) {
-  console.log(stats);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats?.map((stat: any) => (
@@ -15,7 +14,7 @@ export default function StatsCard({ stats }: { stats: any }) {
               {stat.icon ? (
                 <stat.icon className="text-black size-6" />
               ) : (
-                <div className="w-6 h-6"></div> 
+                <div className="w-6 h-6"></div>
               )}
             </div>
 

@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { ServiceRequestItem } from "@/config/Types/admin/adminType";
 import {
   BarChart,
   Bar,
@@ -16,16 +17,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { month: "May", value: 45 },
-  { month: "Jun", value: 52 },
-  { month: "Jul", value: 61 },
-  { month: "Aug", value: 58 },
-  { month: "Sep", value: 67 },
-  { month: "Oct", value: 74 },
-];
+type ServiceRequestItemProps = {
+  data?: ServiceRequestItem[];
+};
 
-export default function ServiceRequestChart() {
+export default function ServiceRequestChart({ data }: ServiceRequestItemProps) {
   return (
     <Card className="w-full bg-white text-black">
       <CardHeader>
