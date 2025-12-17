@@ -5,7 +5,7 @@ interface Step5Props {
   updateFormData: (field: keyof BookingFormData, value: any) => void;
 }
 
-export default function Step5({ formData }: Step5Props) {
+export default function Step5({ formData }) {
   return (
     <div className="space-y-6">
       <div>

@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup } from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 
 interface Step1Props {
@@ -9,12 +9,12 @@ interface Step1Props {
   updateFormData: (field: keyof any, value: any) => void;
 }
 
-export default function Step1({ formData, updateFormData, data }: Step1Props) {
-  console.log("From Step 1", data);
+export default function Step1({ formData, updateFormData, data }) {
+  // console.log("From Step 1", data);
 
   return (
     <div className="space-y-6 border p-5 rounded-lg border-gray-300">
-      <div>
+      {/* <div>
         <h3 className="text-2xl font-bold mb-4">Service Type</h3>
         <RadioGroup
           value={formData.serviceType}
@@ -36,6 +36,40 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
                 </p>
                 <p className="text-base text-gray-600">{type?.description}</p>
               </Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </div> */}
+
+      {/* SERVICE TYPE */}
+      <div>
+        <h3 className="text-2xl font-bold mb-4">Service Type</h3>
+
+        <RadioGroup value={formData.serviceType}>
+          {data?.serviceType?.map((type: any) => (
+            <div
+              key={type._id}
+              onClick={() => {
+                updateFormData("serviceType", type._id);
+                console.log("🟢 Selected Service Type:", type._id);
+              }}
+              className={`flex items-center gap-5 p-4 py-3 border rounded-lg cursor-pointer
+                ${
+                  formData.serviceType === type._id
+                    ? "border-primary bg-gray-100"
+                    : "border-gray-400 hover:bg-gray-50"
+                }`}
+            >
+              {/* VISUAL CHECK ONLY */}
+              <Checkbox
+                checked={formData.serviceType === type._id}
+                className="border-black"
+              />
+
+              <div className="flex-1">
+                <p className="text-lg font-bold text-slate-900">{type.title}</p>
+                <p className="text-base text-gray-600">{type.description}</p>
+              </div>
             </div>
           ))}
         </RadioGroup>
@@ -61,11 +95,39 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
               />
             )}
 
-            {field?.type === "boolean" && (
-              <div className="flex items-center gap-3">
-                <Checkbox id={field?.name} className="border-black" />
-                <Label htmlFor={field?.name}>Yes</Label>
-              </div>
+            {/* BOOLEAN YES / NO */}
+            {field.type === "boolean" && (
+              <RadioGroup
+                value={
+                  formData[field.name] === true
+                    ? "yes"
+                    : formData[field.name] === false
+                    ? "no"
+                    : ""
+                }
+                onValueChange={(value) =>
+                  updateFormData(field.name, value === "yes")
+                }
+                className="flex gap-6 mt-2"
+              >
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem
+                    className="border-black"
+                    value="yes"
+                    id={`${field.name}-yes`}
+                  />
+                  <Label htmlFor={`${field.name}-yes`}>Yes</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem
+                    className="border-black"
+                    value="no"
+                    id={`${field.name}-no`}
+                  />
+                  <Label htmlFor={`${field.name}-no`}>No</Label>
+                </div>
+              </RadioGroup>
             )}
           </div>
         ))}

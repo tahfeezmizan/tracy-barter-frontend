@@ -22,6 +22,7 @@ const serviceApis = baseApi.injectEndpoints({
       },
     }),
   }),
+  overrideExisting: true,
 });
 
 export const { useGetServiceQuery, useGetSingleServiceQuery } = serviceApis;

@@ -8,7 +8,7 @@ interface Step3Props {
   formData: any;
   updateFormData: (field: keyof any, value: any) => void;
 }
-export default function Step4({ formData, updateFormData }: Step3Props) {
+export default function Step4({ formData, updateFormData }) {
   return (
     <div className="space-y-6">
       <div className="border p-5 rounded-lg border-gray-300">

@@ -7,8 +7,8 @@ interface Step2Props {
   updateFormData: (field: keyof any, value: any) => void;
 }
 
-export default function Step2({ formData, updateFormData, data }: Step2Props) {
-  console.log(data);
+export default function Step2({ formData, updateFormData }) {
+  // console.log(data);
   return (
     <div className="space-y-6">
       {/* Service Provider */}
