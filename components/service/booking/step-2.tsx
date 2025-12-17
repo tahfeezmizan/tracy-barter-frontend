@@ -1,13 +1,17 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BookingFormData } from "@/config/Types/serviceTypes";
 
 interface Step2Props {
-  formData: any;
-  updateFormData: (field: keyof any, value: any) => void;
+  formData: BookingFormData;
+  updateFormData: <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K]
+  ) => void;
 }
 
-export default function Step2({ formData, updateFormData }) {
+export default function Step2({ formData, updateFormData }: Step2Props) {
   // console.log(data);
   return (
     <div className="space-y-6">

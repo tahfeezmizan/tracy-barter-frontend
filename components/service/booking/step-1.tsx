@@ -3,13 +3,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import { BookingFormData, ServiceResponse } from "@/config/Types/serviceTypes";
 
 interface Step1Props {
-  formData: any;
-  updateFormData: (field: keyof any, value: any) => void;
+  formData: BookingFormData;
+  data: ServiceResponse;
+  updateFormData: <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K]
+  ) => void;
 }
 
-export default function Step1({ formData, updateFormData, data }) {
+export default function Step1({ formData, updateFormData, data }: Step1Props) {
   // console.log("From Step 1", data);
 
   return (

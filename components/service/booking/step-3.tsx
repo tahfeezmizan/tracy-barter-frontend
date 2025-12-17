@@ -1,15 +1,19 @@
 import { RadioGroup } from "@/components/ui/radio-group";
+import { BookingFormData } from "@/config/Types/serviceTypes";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { useGetStaffsbyServiceQuery } from "@/redux/features/staff/staffApis";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation";
 
-interface Step2Props {
-  formData: any;
-  updateFormData: (field: keyof any, value: any) => void;
+interface Step3Props {
+  formData: BookingFormData;
+   updateFormData: <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K]
+  ) => void;
 }
 
-export default function Step3({ formData, updateFormData }) {
+export default function Step3({ formData, updateFormData }: Step3Props) {
   const params = useParams();
   const id = params.booking;
   const { data: staffProvider, isLoading } = useGetStaffsbyServiceQuery({ id });

@@ -3,12 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BookingFormData } from "@/config/Types/serviceTypes";
 
-interface Step3Props {
-  formData: any;
-  updateFormData: (field: keyof any, value: any) => void;
+interface Step4Props {
+  formData: BookingFormData;
+  updateFormData: <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K]
+  ) => void;
 }
-export default function Step4({ formData, updateFormData }) {
+export default function Step4({ formData, updateFormData }: Step4Props) {
   return (
     <div className="space-y-6">
       <div className="border p-5 rounded-lg border-gray-300">

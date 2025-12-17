@@ -1,11 +1,10 @@
-import { BookingFormData } from "@/app/(common)/service/booking/page";
+import { BookingFormData } from "@/config/Types/serviceTypes";
 
 interface Step5Props {
   formData: BookingFormData;
-  updateFormData: (field: keyof BookingFormData, value: any) => void;
 }
 
-export default function Step5({ formData }) {
+export default function Step5({ formData }: Step5Props) {
   return (
     <div className="space-y-6">
       <div>

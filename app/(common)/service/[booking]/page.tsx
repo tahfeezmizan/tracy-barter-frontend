@@ -151,8 +151,8 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import Step1 from "@/components/service/booking/step-1";
 import Step2 from "@/components/service/booking/step-2";
@@ -164,6 +164,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
+import { BookingFormData, ServiceResponse } from "@/config/Types/serviceTypes";
 import { useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
 
 const TOTAL_STEPS = 5;
@@ -173,31 +174,43 @@ export default function BookingPage() {
   const params = useParams();
   const id = params.booking as string;
 
-  const { data: serviceData } = useGetSingleServiceQuery({ id });
+  const { data: serviceData } = useGetSingleServiceQuery<{
+    data: ServiceResponse;
+  }>({ id });
 
   console.log(serviceData);
 
   const [currentStep, setCurrentStep] = useState(1);
 
   // 🔑 Single Source of Truth
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BookingFormData>({
     serviceType: "",
     note: "",
-    isOutdoor: "",
+    isOutdoor: false,
 
     provider: "",
-    date: undefined as Date | undefined,
-    startTime: "",
-    endTime: "",
+    date: undefined,
+    startTime: "8:00",
+    endTime: "9:00",
 
     address: "",
     city: "",
     state: "",
     zip: "",
+
+    name: "",
+    email: "",
+    phone: "",
   });
 
-  const updateFormData = (field: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const updateFormData = <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K]
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   // 🟢 LIVE CONSOLE (ALL DATA)
