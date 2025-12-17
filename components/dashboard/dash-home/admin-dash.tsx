@@ -1,15 +1,16 @@
 import { StatsCardItem } from "@/config/Types/admin/adminType";
-import { useGetadminStatsQuery } from "@/redux/features/admindashboard/adminStatsApis";
+
+import LoadingSpinner from "@/lib/loading-spinner";
+import { useGetAdminStatsQuery } from "@/redux/features/admindashboard/adminStatsApis";
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
 import RecentServices from "../admin/recent-services";
 import RevenueChart from "../admin/revenue-chart";
 import ServiceRequestChart from "../admin/service-request-chart";
 import DynamicHeader from "../dynamic-header";
 import StatsCard from "../stats-card";
-import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AdminDash() {
-  const { data, isLoading } = useGetadminStatsQuery(undefined);
+  const { data, isLoading } = useGetAdminStatsQuery(undefined);
   console.log("adminStatsApis", data);
 
   const stats: StatsCardItem[] = [

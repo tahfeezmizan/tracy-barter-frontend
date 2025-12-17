@@ -1,24 +1,30 @@
+"use client";
+
+import { useGetClientStatsQuery } from "@/config/Types/admin/clientApis";
 import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import AllClientsTable from "./all-clients";
 
 export default function ClientsPage() {
+  const { data, isLoading } = useGetClientStatsQuery(undefined);
+  console.log(data);
+
   const stats = [
     {
       title: "Total Clients",
-      value: "350",
+      value: data?.totalClients,
     },
     {
       title: "Premium Members",
-      value: "189",
+      value: data?.premiumMembers,
     },
     {
       title: "Active This Month",
-      value: "156",
+      value: data?.activeThisMonth,
     },
     {
       title: "New This Month",
-      value: "25",
+      value: data?.newThisMonth,
     },
   ];
 
