@@ -14,7 +14,7 @@ import { useGetClientsQuery } from "@/config/Types/admin/clientApis";
 import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AllClientsTable() {
-  const { data, isLoading } = useGetClientsQuery(undefined);
+  const { data, isLoading } = useGetClientsQuery("client");
   console.log(data?.data);
 
   return (
@@ -59,14 +59,31 @@ export default function AllClientsTable() {
                     <td className="p-4">
                       <Badge
                         className={`px-3 py-1 rounded-full ${
-                          client.subscribe === ""
+                          client.status === "false"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {client.subscribe}
+                        {client.status}
                       </Badge>
                     </td>
 
-                    <td className="p-4">jpasdjhp</td>
+                    <td className="p-4">
+                      {client.services && client.services.length > 0 ? (
+                        client.services.map((service, index) => (
+                          <Badge
+                            key={index}
+                            className="px-3 py-1 rounded-full bg-blue-100 text-blue-700"
+                          >
+                            {service}
+                          </Badge>
+                        ))
+                      ) : (
+                        <span className="text-gray-500 text-sm">
+                          No services
+                        </span>
+                      )}
+                    </td>
                     <td className="p-4">{client.totalSpent || "0"}</td>
 
                     <td className="p-4 text-center flex items-center justify-center gap-3">

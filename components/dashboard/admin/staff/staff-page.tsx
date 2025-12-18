@@ -9,7 +9,6 @@ import { useGetStaffStatsQuery } from "@/config/Types/admin/staffApis";
 
 export default function StaffPage() {
   const { data, isLoading } = useGetStaffStatsQuery(undefined);
-  console.log("useGetStaffStatsQuery", data);
 
   const stats = [
     {

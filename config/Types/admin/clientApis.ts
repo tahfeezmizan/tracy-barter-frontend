@@ -12,10 +12,10 @@ const clientApis = baseApi.injectEndpoints({
       },
     }),
     getClients: builder.query({
-      query: () => ({
+      query: (role) => ({
         url: "/user",
         method: "GET",
-        params: { role: "client" },
+        params: { role },
       }),
       transformResponse: (response: any) => {
         return response?.data;

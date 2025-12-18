@@ -11,16 +11,6 @@ const staffApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
-    getStaffs: builder.query({
-      query: () => ({
-        url: "/user",
-        method: "GET",
-        params: { role: "client" },
-      }),
-      transformResponse: (response: any) => {
-        return response?.data;
-      },
-    }),
   }),
   overrideExisting: true,
 });
