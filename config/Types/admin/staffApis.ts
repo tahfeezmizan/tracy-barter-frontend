@@ -1,17 +1,17 @@
 import { baseApi } from "@/redux/features/baseApi";
 
-const clientApis = baseApi.injectEndpoints({
+const staffApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getClientStats: builder.query({
+    getStaffStats: builder.query({
       query: () => ({
-        url: "/stats/admin/client-stats",
+        url: "/stats/admin/staff-stats",
         method: "GET",
       }),
       transformResponse: (response: any) => {
         return response?.data;
       },
     }),
-    getClients: builder.query({
+    getStaffs: builder.query({
       query: () => ({
         url: "/user",
         method: "GET",
@@ -25,4 +25,4 @@ const clientApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetClientsQuery, useGetClientStatsQuery } = clientApis;
+export const { useGetStaffStatsQuery } = staffApis;

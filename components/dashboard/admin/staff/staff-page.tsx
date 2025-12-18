@@ -1,29 +1,32 @@
 "use client";
 
-
 import React from "react";
 import StatsCard from "../../stats-card";
 import StaffCards from "./staff-cards";
 import DynamicHeader from "../../dynamic-header";
 import { UserPlus } from "lucide-react";
+import { useGetStaffStatsQuery } from "@/config/Types/admin/staffApis";
 
 export default function StaffPage() {
+  const { data, isLoading } = useGetStaffStatsQuery(undefined);
+  console.log("useGetStaffStatsQuery", data);
+
   const stats = [
     {
       title: "Total Staff",
-      value: "15",
+      value: data?.totalStaff,
     },
     {
       title: "Active Today",
-      value: "10",
+      value: data?.activeToday,
     },
     {
       title: "Avg Rating",
-      value: "4.8⭐",
+      value: `${data?.averageRating}⭐`,
     },
     {
       title: "Services This Month",
-      value: "350",
+      value: data?.servicesThisMonth,
     },
   ];
 

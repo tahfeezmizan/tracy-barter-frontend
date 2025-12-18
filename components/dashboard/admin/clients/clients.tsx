@@ -7,7 +7,6 @@ import AllClientsTable from "./all-clients";
 
 export default function ClientsPage() {
   const { data, isLoading } = useGetClientStatsQuery(undefined);
-  console.log(data);
 
   const stats = [
     {
