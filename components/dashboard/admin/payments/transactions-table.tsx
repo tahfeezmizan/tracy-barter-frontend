@@ -60,7 +60,7 @@ export default function TransactionsTable() {
   return (
     <Card className="bg-white shadow-sm rounded-xl p-6">
       {/* Title */}
-      <div className="mb-6 text-black">
+      <div className="text-black">
         <h2 className="text-xl font-semibold">Transactions</h2>
         <p className="text-gray-500 text-sm">
           View and manage all payment transactions
@@ -68,7 +68,7 @@ export default function TransactionsTable() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="all" className="w-full mb-4 text-black">
+      <Tabs defaultValue="all" className="w-full text-black">
         <TabsList className="bg-gray-100 rounded-full p-1">
           <TabsTrigger
             value="all"
