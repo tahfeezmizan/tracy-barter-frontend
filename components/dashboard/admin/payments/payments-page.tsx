@@ -34,9 +34,6 @@ export default function PaymentsPage() {
       <DynamicHeader
         title={"Payment Management"}
         des="Track and manage all transactions"
-        button="Export Data"
-        link="#"
-        icon={Download}
       />
       <StatsCard stats={stats} />
       <TransactionsTable />

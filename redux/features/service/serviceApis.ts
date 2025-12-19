@@ -12,6 +12,16 @@ const serviceApis = baseApi.injectEndpoints({
       },
     }),
 
+    getServiceStats: builder.query({
+      query: () => ({
+        url: "/stats/admin/service-stats",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+    }),
+
     getSingleService: builder.query({
       query: ({ id }) => ({
         url: `/service/${id}`,
@@ -25,4 +35,8 @@ const serviceApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetServiceQuery, useGetSingleServiceQuery } = serviceApis;
+export const {
+  useGetServiceQuery,
+  useGetSingleServiceQuery,
+  useGetServiceStatsQuery,
+} = serviceApis;

@@ -58,12 +58,12 @@ export default function StaffCards() {
               {/* Header */}
               <div className="flex items-center justify-between mb-7">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center font-semibold">
+                  <div className="w-12 h-12 rounded-full border text-white flex items-center justify-center font-semibold">
                     {person?.profile ? (
                       ""
                     ) : (
                       <Image
-                        src={getImageUrl(person?.profile)}
+                        src={getImageUrl(person?.profile) || person?.profile}
                         alt={person?.name}
                         width={200}
                         height={200}
@@ -71,7 +71,7 @@ export default function StaffCards() {
                     )}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-black">
+                    <h3 className="font-semibold text-lg text-black capitalize">
                       {person.name}
                     </h3>
                     <p className="text-gray-500 text-sm">
@@ -108,7 +108,7 @@ export default function StaffCards() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={16} className="text-gray-500" />
-                  {person.phone}
+                  {person.phone || "XXXXXXXXXX"}
                 </div>
               </div>
 

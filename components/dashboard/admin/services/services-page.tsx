@@ -1,40 +1,65 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import DynamicHeader from "../../dynamic-header";
+import { useState } from "react";
 import StatsCard from "../../stats-card";
 import AllClientsTable from "../clients/all-clients";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { UserPlus } from "lucide-react";
+import { AddServiceDialog } from "@/lib/modal/add-service-dialog";
+import { useGetServiceStatsQuery } from "@/redux/features/service/serviceApis";
+import AllServicesTable from "./all-services-table";
 
 export default function ServicesPage() {
+  const [open, setOpen] = useState(false);
+
+  const { data, isLoading } = useGetServiceStatsQuery(undefined);
+  console.log(data);
   const stats = [
     {
-      title: "Total Staff",
-      value: "15",
+      title: "Total Services",
+      value: data?.totalServices,
     },
     {
-      title: "Active Today",
-      value: "10",
+      title: "Active Services",
+      value: data?.activeServices,
     },
     {
-      title: "Avg Rating",
-      value: "4.8⭐",
+      title: "Total Bookings",
+      value: data?.totalBookings,
     },
     {
-      title: "Services This Month",
-      value: "350",
+      title: "Avg Price",
+      value: data?.averagePrice,
     },
   ];
   return (
     <div className="space-y-6">
-      <DynamicHeader
-        title={"Service Management"}
-        des="Manage your service offerings"
-        button="Add Service"
-        link="#"
-        icon={Plus}
-      />
+      <div className="mb-6 flex items-center justify-between gap-2">
+        <div>
+          <SidebarTrigger className="lg:hidden" />
+          <div className="border-l pl-3 lg:border-l-0 lg:pl-0">
+            <h3 className="text-xl md:text-2xl font-semibold leading-snug capitalize">
+              Service Management
+            </h3>
+            <p className="text-base md:text-xl text-slate-300">
+              Manage your service offerings
+            </p>
+          </div>
+        </div>
+
+        {/* OPEN MODAL */}
+        <button
+          onClick={() => setOpen(true)}
+          className="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary/90 flex items-center gap-2"
+        >
+          <UserPlus className="size-6" />
+          Add Service
+        </button>
+      </div>
+
       <StatsCard stats={stats} />
-      <AllClientsTable />
+      <AllServicesTable />
+      <AddServiceDialog open={open} onOpenChange={setOpen} />
     </div>
   );
 }

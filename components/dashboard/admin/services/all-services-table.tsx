@@ -56,7 +56,7 @@ const services = [
 
 export default function AllServicesTable() {
   return (
-    <Card className="bg-white shadow-sm rounded-xl p-6">
+    <Card className="bg-white shadow-sm rounded-xl p-6 w-full text-black">
       {/* Title */}
       <div className="mb-6">
         <h2 className="text-xl font-semibold">All Services</h2>
@@ -65,17 +65,29 @@ export default function AllServicesTable() {
         </p>
       </div>
 
-      <CardContent className="p-0">
+      <CardContent className="p-0 border rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-100 ">
             <TableRow>
-              <TableHead className="text-gray-700">Service Name</TableHead>
-              <TableHead className="text-gray-700">Description</TableHead>
-              <TableHead className="text-gray-700">Price</TableHead>
-              <TableHead className="text-gray-700">Duration</TableHead>
-              <TableHead className="text-gray-700">Bookings</TableHead>
-              <TableHead className="text-gray-700">Status</TableHead>
-              <TableHead className="text-gray-700 text-right">
+              <TableHead className="text-gray-700 font-semibold">
+                Service Name
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold">
+                Description
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold">
+                Price
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold">
+                Duration
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold">
+                Bookings
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold">
+                Status
+              </TableHead>
+              <TableHead className="text-gray-700 font-semibold text-right">
                 Actions
               </TableHead>
             </TableRow>

@@ -64,7 +64,7 @@ export default function ServiceSection() {
 
               return (
                 <Card
-                  key={`${service._id}-${idx}`}
+                  key={`${service?._id}`}
                   className={`
                       transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
                       ${
