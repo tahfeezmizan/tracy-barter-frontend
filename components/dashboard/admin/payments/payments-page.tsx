@@ -4,27 +4,32 @@ import { Briefcase, DollarSign, Download, User, UserCog } from "lucide-react";
 import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import TransactionsTable from "./transactions-table";
+import { useGetPaymentStatsQuery } from "@/redux/features/payments/paymentsApis";
 
 export default function PaymentsPage() {
+  const { data, isLoading } = useGetPaymentStatsQuery(undefined);
+
+  console.log(data);
+
   const stats = [
     {
-      title: "Total Clients",
-      value: "245",
+      title: "Total Revenue",
+      value: data?.totalRevenue,
       icon: User,
     },
     {
-      title: "Active Services",
-      value: "80",
+      title: "Completed Payments",
+      value: data?.completedPayments,
       icon: Briefcase,
     },
     {
-      title: "Total Revenew",
-      value: "$8500",
+      title: "Pending Payments",
+      value: data?.pendingPayments,
       icon: DollarSign,
     },
     {
       title: "Total Staff",
-      value: "20",
+      value: data?.refundRequests,
       icon: UserCog,
     },
   ];

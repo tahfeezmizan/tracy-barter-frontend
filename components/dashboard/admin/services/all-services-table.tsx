@@ -10,55 +10,15 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
-
-const services = [
-  {
-    name: "Home Cleaning",
-    description: "Professional home cleaning service",
-    price: "$125",
-    duration: "2-3 hours",
-    bookings: 45,
-    status: "Active",
-  },
-  {
-    name: "Grocery Shopping",
-    description: "Personal grocery shopping and delivery",
-    price: "$35",
-    duration: "1-2 hours",
-    bookings: 67,
-    status: "Active",
-  },
-  {
-    name: "Home Maintenance",
-    description: "General home repairs and maintenance",
-    price: "$150",
-    duration: "2-4 hours",
-    bookings: 28,
-    status: "Active",
-  },
-  {
-    name: "Snow Removal",
-    description: "Driveway and walkway snow clearing",
-    price: "$75",
-    duration: "1 hour",
-    bookings: 12,
-    status: "Active",
-  },
-  {
-    name: "Lawn Care",
-    description: "Lawn mowing and yard maintenance",
-    price: "$85",
-    duration: "1-2 hours",
-    bookings: 0,
-    status: "Inactive",
-  },
-];
+import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
 
 export default function AllServicesTable() {
+  const { data, isLoading } = useGetServiceQuery(undefined);
+
   return (
     <Card className="bg-white shadow-sm rounded-xl p-6 w-full text-black">
       {/* Title */}
-      <div className="mb-6">
+      <div className="">
         <h2 className="text-xl font-semibold">All Services</h2>
         <p className="text-gray-500 text-sm">
           View and manage your service catalog
@@ -78,9 +38,9 @@ export default function AllServicesTable() {
               <TableHead className="text-gray-700 font-semibold">
                 Price
               </TableHead>
-              <TableHead className="text-gray-700 font-semibold">
+              {/* <TableHead className="text-gray-700 font-semibold">
                 Duration
-              </TableHead>
+              </TableHead> */}
               <TableHead className="text-gray-700 font-semibold">
                 Bookings
               </TableHead>
@@ -94,17 +54,17 @@ export default function AllServicesTable() {
           </TableHeader>
 
           <TableBody>
-            {services.map((service, i) => (
+            {data?.data?.map((service, i) => (
               <TableRow key={i} className="hover:bg-gray-50">
                 <TableCell className="font-medium">{service.name}</TableCell>
 
                 <TableCell>{service.description}</TableCell>
-                <TableCell>{service.price}</TableCell>
-                <TableCell>{service.duration}</TableCell>
-                <TableCell>{service.bookings}</TableCell>
+                <TableCell>{service.price || "0"}</TableCell>
+                {/* <TableCell>{service.duration}</TableCell> */}
+                <TableCell>{service.bookings || "0"}</TableCell>
 
                 <TableCell>
-                  {service.status === "Active" ? (
+                  {service.status === "active" ? (
                     <span className="px-3 py-1 text-sm bg-green-500 text-white rounded-full">
                       Active
                     </span>
