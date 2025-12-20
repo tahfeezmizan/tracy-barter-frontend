@@ -27,7 +27,7 @@ The project includes a modern **Next.js + TypeScript** frontend styled with **sh
 - Secure environment variable configuration  
 
 ## **Deployment**
-- **Vercel** → Frontend  
+- **Vercel & VPS** → Frontend  
 - **Render / Railway / VPS (depending on your actual choice)** → Backend  
 - **MongoDB Atlas** for cloud database
 
