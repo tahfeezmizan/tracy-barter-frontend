@@ -137,7 +137,7 @@ export default function EditProfilePage({ isEditing, setIsEditing, onSave }: Edi
                 ) : (
                   <div>
                     <p className="text-sm text-gray-600">
-                      Click the "Edit Profile" button above to update your profile photo.
+                      Click the Edit Profile button above to update your profile photo.
                     </p>
                   </div>
                 )}
