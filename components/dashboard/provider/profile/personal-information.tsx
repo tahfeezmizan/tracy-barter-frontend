@@ -85,7 +85,7 @@ export default function PersonalInformation() {
         </div>
 
         {/* BUTTON */}
-        <Button className="mt-4" type="submit">
+        <Button className="mt-4 bg-[#F4C542]" type="submit">
           Save Changes
         </Button>
       </form>

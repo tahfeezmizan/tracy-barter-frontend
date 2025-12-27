@@ -52,8 +52,7 @@ export function SignInForm() {
         // Redirect based on role
         router.push("/");
       } else if (res?.error) {
-        console.log("error", res?.error?.data?.message);
-        toast.error(res?.error?.data?.message || "Something went wrong");
+        toast.error("Something went wrong");
       }
       console.log(res);
     } catch (error) {
@@ -156,7 +155,7 @@ export function SignInForm() {
       </form>
 
       <div className="text-center">
-        <p className="text-sm text-muted-foreground">Don't have an account? </p>
+        <p className="text-sm text-muted-foreground">Dont have an account? </p>
         <Link href="/signup">
           <Button variant="outline" size="sm">
             Sign up

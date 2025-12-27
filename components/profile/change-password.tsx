@@ -85,7 +85,7 @@ export default function ChangePassword() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          className="w-full py-3 bg-[#F4C542] text-white font-medium rounded-lg hover:bg-[#F4C542]/90 transition-colors"
         >
           Update Password
         </button>

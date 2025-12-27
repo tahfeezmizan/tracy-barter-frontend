@@ -1,18 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Camera, Edit, Star } from "lucide-react";
-import { useState } from "react";
-export default function UserProfile() {
-  const [file, setFile] = useState<File | null>(null);
+import { Star, User, X, Save } from "lucide-react";
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0] ?? null;
-    setFile(selectedFile);
+interface UserProfileProps {
+  isEditing: boolean;
+  setIsEditing: (editing: boolean) => void;
+}
+
+export default function UserProfile({ isEditing, setIsEditing }: UserProfileProps) {
+  const handleSave = () => {
+    // Handle save logic here or pass to parent
+    setIsEditing(false);
   };
+
   return (
     <Card className="w-full p-4 flex flex-col md:flex-row items-center justify-between bg-[#1A2332] rounded-xl gap-4">
       {/* LEFT SECTION */}
@@ -52,58 +55,35 @@ export default function UserProfile() {
         </div>
       </div>
 
-      {/* RIGHT SECTION - Change Photo button */}
-      {/* <Button variant="outline" className="flex items-center gap-2">
-        <Image
-          src="/camera-icon.png" // replace with your icon path
-          alt="camera icon"
-          width={16}
-          height={16}
-        />
-        Change Photo
-      </Button> */}
-      {/* <div className="flex items-center space-x-2 text-white">
-        <label
-          htmlFor="file-upload"
-          className="flex items-center cursor-pointer"
-        >
-          <Button className="flex items-center space-x-2 px-4 py-2 border rounded-md bg-white hover:bg-gray-100">
-            <Camera className="w-5 h-5" />
-            <span>Change Photo</span>
+      {/* RIGHT SECTION - Edit Button */}
+      <div className="flex gap-3">
+        {isEditing ? (
+          <>
+            <Button
+              onClick={() => setIsEditing(false)}
+              variant="outline"
+              className="flex items-center gap-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              <X className="w-4 h-4" />
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              className="flex items-center gap-2 bg-[#F4C542] hover:bg-[#F4C542]/90"
+            >
+              <Save className="w-4 h-4" />
+              Save Changes
+            </Button>
+          </>
+        ) : (
+          <Button
+            onClick={() => setIsEditing(true)}
+            className="flex items-center gap-2 bg-[#F4C542] hover:bg-[#F4C542]/90"
+          >
+            <User className="w-4 h-4" />
+            Edit Profile
           </Button>
-        </label>
-        <input
-          id="file-upload"
-          type="file"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        {file && <div className="text-gray-600 text-sm">{file.name}</div>}
-      </div> */}
-      <div className="flex items-center space-x-2 text-black">
-        {/* The entire box is now the clickable label */}
-        <label
-          htmlFor="file-upload"
-          className="
-      flex items-center space-x-2 
-      px-4 py-2 
-      rounded-lg 
-      bg-[#F4C542] hover:bg-[#F4C542]/90
-      cursor-pointer
-    "
-        >
-          <Edit className="w-5 h-5" />
-          <span>Edit Profile</span>
-        </label>
-
-        {/* <input
-          id="file-upload"
-          type="file"
-          className="hidden"
-          onChange={handleFileChange} */} 
-        {/* /> */}
-
-        {/* {file && <div className="text-gray-600 text-sm">{file.name}</div>} */}
+        )}
       </div>
     </Card>
   );
