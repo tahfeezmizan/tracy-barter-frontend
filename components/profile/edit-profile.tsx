@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
 import { 
   User, 
   MapPin, 
-  Briefcase
+  Briefcase,
+  Camera
 } from "lucide-react";
 import ChangePassword from "./change-password";
 
@@ -47,6 +49,20 @@ export default function EditProfilePage({ isEditing, setIsEditing, onSave }: Edi
     }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileData(prev => ({
+          ...prev,
+          profileImage: reader.result as string
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   return (
     <div className=" pb-12">
@@ -55,6 +71,41 @@ export default function EditProfilePage({ isEditing, setIsEditing, onSave }: Edi
         
 
         <div className="space-y-6">
+          {/* Profile Image Section */}
+          <div className="bg-white rounded-xl shadow-sm border p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <Camera className="w-5 h-5" />
+              Profile Image
+            </h3>
+            
+            <div className="flex flex-col items-center gap-6">
+              <div className="relative">
+                <img 
+                  src={profileData.profileImage} 
+                  alt="Profile" 
+                  className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
+                />
+                {isEditing && (
+                  <label className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full cursor-pointer transition">
+                    <Camera className="w-4 h-4" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
+              
+              {isEditing && (
+                <p className="text-sm text-gray-500 text-center">
+                  Click the camera icon to upload a new profile picture
+                </p>
+              )}
+            </div>
+          </div>
+
           {/* Personal Information Section */}
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
