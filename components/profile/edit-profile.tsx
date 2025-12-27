@@ -11,9 +11,10 @@ import ChangePassword from "./change-password";
 interface EditProfilePageProps {
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
+  onSave?: (data: any) => void;
 }
 
-export default function EditProfilePage({ isEditing, setIsEditing }: EditProfilePageProps) {
+export default function EditProfilePage({ isEditing, setIsEditing, onSave }: EditProfilePageProps) {
   const [profileData, setProfileData] = useState({
     // Personal Information
     firstName: "John",

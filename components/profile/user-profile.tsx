@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Card } from "@/components/ui/card";
@@ -8,11 +9,13 @@ import { Star, User, X, Save } from "lucide-react";
 interface UserProfileProps {
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
+  profileData?: any;
 }
 
-export default function UserProfile({ isEditing, setIsEditing }: UserProfileProps) {
+export default function UserProfile({ isEditing, setIsEditing, profileData }: UserProfileProps) {
   const handleSave = () => {
-    // Handle save logic here or pass to parent
+    // Log all profile data to console
+    console.log("All Profile Data:", profileData);
     setIsEditing(false);
   };
 
