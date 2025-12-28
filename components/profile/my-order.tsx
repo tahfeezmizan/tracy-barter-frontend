@@ -1,4 +1,5 @@
 import { CheckCircle, Clock, XCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function MyOrder() {
   const orders = [
@@ -49,7 +50,7 @@ export default function MyOrder() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">All Orders</h1>
         <div className="flex flex-wrap gap-4">
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium">
+          <button className="px-4 py-2 bg-[#F4C542] text-white rounded-lg font-medium">
             All Orders
           </button>
           <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200">
@@ -113,7 +114,7 @@ export default function MyOrder() {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   <div
-                    className="bg-blue-600 h-2.5 rounded-full"
+                    className="bg-[#F4C542] h-2.5 rounded-full"
                     style={{ width: `${order.progress}%` }}
                   ></div>
                 </div>
@@ -139,9 +140,11 @@ export default function MyOrder() {
             <div className="flex gap-3 pt-4 border-t">
               {order.status === "Completed" && (
                 <>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                  <Link href={`/user-profile/review/${order.id}`} >
+                    <button className="px-4 py-2 bg-[#F4C542] text-white rounded-lg font-medium hover:bg-[#F4C542]/90">
                     Review
                   </button>
+                  </Link>
                   <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">
                     Report
                   </button>
@@ -157,9 +160,11 @@ export default function MyOrder() {
               
               {order.status === "Cancelled" && (
                 <>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                 <Link href={`/user-profile/review/${order.id}`} >
+                    <button className="px-4 py-2 bg-[#F4C542] text-white rounded-lg font-medium hover:bg-[#F4C542]/90">
                     Review
                   </button>
+                  </Link>
                   <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">
                     Report
                   </button>
