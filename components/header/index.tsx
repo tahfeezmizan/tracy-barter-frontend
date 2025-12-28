@@ -132,11 +132,23 @@ export default function Header() {
                         className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
                       >
                         <Link
-                          href="/profile"
+                          href="/user-profile"
                           className="flex items-center space-x-2"
                         >
                           <User className="h-4 w-4" />
                           <span>Profile</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        asChild
+                        className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                      >
+                        <Link
+                          href="/user-profile/my-order"
+                          className="flex items-center space-x-2"
+                        >
+                          <User className="h-4 w-4" />
+                          <span>Order</span>
                         </Link>
                       </DropdownMenuItem>
 
