@@ -5,7 +5,6 @@ import {
   Star,
   MessageSquare,
 } from "lucide-react";
-import { Card } from "../ui/card";
 const Review = () => {
       const params = useParams();
   const orderId = params?.orderId;
