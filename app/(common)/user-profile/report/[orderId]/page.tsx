@@ -2,14 +2,16 @@
 
 import Report from "@/components/report/Report";
 
-const Page = () => {
-
-
+/**
+ * Report Page
+ * Allows users to submit reports for specific orders
+ *
+ * @component
+ */
+export default function Page() {
   return (
-   <div className="overflow-hidden max-w-7xl pt-24 lg:pt-16 mx-auto">
-        <Report></Report>
+    <div className="overflow-hidden max-w-7xl pt-24 lg:pt-16 mx-auto">
+      <Report />
     </div>
   );
-};
-
-export default Page;
+}

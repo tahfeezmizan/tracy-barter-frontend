@@ -1,34 +1,55 @@
-'use client';
+"use client";
+
+import { memo, useCallback, useState } from "react";
 import { KeyRound } from "lucide-react";
-import { useState } from "react";
+import type { PasswordFormData, FormInputChangeEvent, FormSubmitEvent } from "./types";
 
-export default function ChangePassword() {
-  const [formData, setFormData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
-  });
+/** Default password form state */
+const DEFAULT_FORM_STATE: PasswordFormData = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: ""
+};
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+/**
+ * ChangePassword Component
+ * Provides a secure form for users to update their password
+ * Includes validation for password confirmation
+ *
+ * @component
+ */
+function ChangePassword() {
+  const [formData, setFormData] = useState<PasswordFormData>(DEFAULT_FORM_STATE);
+
+  const handleInputChange = useCallback((e: FormInputChangeEvent) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: FormSubmitEvent) => {
     e.preventDefault();
+    
+    // Validate passwords match
+    if (formData.newPassword !== formData.confirmPassword) {
+      console.error("Passwords do not match");
+      return;
+    }
+
     console.log("Updating password:", formData);
-  };
+    // Reset form on successful submission
+    setFormData(DEFAULT_FORM_STATE);
+  }, [formData]);
 
   return (
-    <div className="w-full mx-auto bg-white rounded-xl shadow-lg p-8">
+    <section className="w-full bg-white rounded-xl shadow-lg p-8">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <KeyRound className="w-8 h-8 text-blue-600" />
-          <h1 className="text-2xl font-bold text-gray-800">Change Password</h1>
+          <KeyRound className="w-8 h-8 text-blue-600" aria-hidden="true" />
+          <h2 className="text-2xl font-bold text-gray-800">Change Password</h2>
         </div>
         <p className="text-gray-600">
           Update your password to keep your account secure
@@ -36,11 +57,14 @@ export default function ChangePassword() {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Current Password */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-gray-700">Current Password</h3>
+          <label htmlFor="currentPassword" className="text-sm font-semibold text-gray-700">
+            Current Password
+          </label>
           <input
+            id="currentPassword"
             type="password"
             name="currentPassword"
             value={formData.currentPassword}
@@ -48,13 +72,17 @@ export default function ChangePassword() {
             placeholder="Enter your current password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             required
+            aria-required="true"
           />
         </div>
 
         {/* New Password */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-gray-700">New Password</h3>
+          <label htmlFor="newPassword" className="text-sm font-semibold text-gray-700">
+            New Password
+          </label>
           <input
+            id="newPassword"
             type="password"
             name="newPassword"
             value={formData.newPassword}
@@ -62,13 +90,17 @@ export default function ChangePassword() {
             placeholder="Enter your new password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             required
+            aria-required="true"
           />
         </div>
 
         {/* Confirm New Password */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-gray-700">Confirm New Password</h3>
+          <label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700">
+            Confirm New Password
+          </label>
           <input
+            id="confirmPassword"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
@@ -76,6 +108,7 @@ export default function ChangePassword() {
             placeholder="Confirm your new password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             required
+            aria-required="true"
           />
         </div>
 
@@ -85,11 +118,14 @@ export default function ChangePassword() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-3 bg-[#F4C542] text-white font-medium rounded-lg hover:bg-[#F4C542]/90 transition-colors"
+          className="w-full py-3 bg-[#F4C542] text-white font-medium rounded-lg hover:bg-[#F4C542]/90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          aria-label="Update password"
         >
           Update Password
         </button>
       </form>
-    </div>
+    </section>
   );
 }
+
+export default memo(ChangePassword);
