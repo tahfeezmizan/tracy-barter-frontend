@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { CircleUserRound, LogOut, Menu, User, X } from "lucide-react";
+import { CircleUserRound, ListOrdered, LogOut, Menu, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -147,7 +147,7 @@ export default function Header() {
                           href="/user-profile/my-order"
                           className="flex items-center space-x-2"
                         >
-                          <User className="h-4 w-4" />
+                          <ListOrdered className="h-4 w-4" />
                           <span>Order</span>
                         </Link>
                       </DropdownMenuItem>

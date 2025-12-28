@@ -1,23 +1,33 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { memo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, User, X, Save } from "lucide-react";
+import type { UserProfileProps } from "./types";
 
-interface UserProfileProps {
-  isEditing: boolean;
-  setIsEditing: (editing: boolean) => void;
-  profileData?: any;
-}
-
-export default function UserProfile({ isEditing, setIsEditing, profileData }: UserProfileProps) {
-  const handleSave = () => {
+/**
+ * UserProfile Component
+ * Displays user profile header with personal information and action buttons
+ * Supports edit/save and cancel operations
+ *
+ * @component
+ */
+function UserProfile({ isEditing, setIsEditing, profileData }: UserProfileProps) {
+  const handleSave = useCallback(() => {
     // Log all profile data to console
     console.log("All Profile Data:", profileData);
     setIsEditing(false);
-  };
+  }, [profileData, setIsEditing]);
+
+  const handleCancel = useCallback(() => {
+    setIsEditing(false);
+  }, [setIsEditing]);
+
+  const handleEdit = useCallback(() => {
+    setIsEditing(true);
+  }, [setIsEditing]);
 
   return (
     <Card className="w-full p-4 flex flex-col md:flex-row items-center justify-between bg-[#1A2332] rounded-xl gap-4">
@@ -63,27 +73,30 @@ export default function UserProfile({ isEditing, setIsEditing, profileData }: Us
         {isEditing ? (
           <>
             <Button
-              onClick={() => setIsEditing(false)}
+              onClick={handleCancel}
               variant="outline"
               className="flex items-center gap-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+              aria-label="Cancel profile editing"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4" aria-hidden="true" />
               Cancel
             </Button>
             <Button
               onClick={handleSave}
               className="flex items-center gap-2 bg-[#F4C542] hover:bg-[#F4C542]/90"
+              aria-label="Save profile changes"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-4 h-4" aria-hidden="true" />
               Save Changes
             </Button>
           </>
         ) : (
           <Button
-            onClick={() => setIsEditing(true)}
+            onClick={handleEdit}
             className="flex items-center gap-2 bg-[#F4C542] hover:bg-[#F4C542]/90"
+            aria-label="Edit profile information"
           >
-            <User className="w-4 h-4" />
+            <User className="w-4 h-4" aria-hidden="true" />
             Edit Profile
           </Button>
         )}
@@ -91,3 +104,5 @@ export default function UserProfile({ isEditing, setIsEditing, profileData }: Us
     </Card>
   );
 }
+
+export default memo(UserProfile);
