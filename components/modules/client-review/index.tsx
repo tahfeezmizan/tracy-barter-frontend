@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ReviewTypes } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { useGetReviewQuery } from "@/redux/features/review/reviewApis";
 import { ChevronLeft, ChevronRight, CircleUserRound } from "lucide-react";
@@ -132,14 +131,13 @@ export default function ClientReview() {
         >
           <ChevronLeft className="size-7" />
         </Button>
-        {reviews.map(({ _, index }: { _: ReviewTypes; index: number }) => (
+        {reviews.map(({ _, index }: { _: string; index: number }) => (
           <button
-            key={index}
+            key={index} // Unique key for navigation button
             onClick={() => goToSlide(index)}
-            className={`
-                transition-all duration-300 rounded-full bg-white
-                ${index === currentIndex ? "w-12 h-3 " : "w-3 h-3"}
-              `}
+            className={`transition-all duration-300 rounded-full bg-white ${
+              index === currentIndex ? "w-12 h-3" : "w-3 h-3"
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

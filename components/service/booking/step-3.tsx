@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 
 interface Step3Props {
   formData: BookingFormData;
-   updateFormData: <K extends keyof BookingFormData>(
+  updateFormData: <K extends keyof BookingFormData>(
     field: K,
     value: BookingFormData[K]
   ) => void;
@@ -31,6 +31,11 @@ export default function Step3({ formData, updateFormData }: Step3Props) {
 
         {isLoading ? (
           <LoadingSpinner />
+        ) : staffProvider?.staffs?.length === 0 ? (
+          <p className="mt-5 text-base text-gray-600">
+            No service providers are available at the moment. Please proceed to
+            the next step — a provider will be assigned automatically.
+          </p>
         ) : (
           <div className="">
             <RadioGroup
