@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
@@ -11,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Pencil, Search } from "lucide-react";
 import { useGetClientsQuery } from "@/config/Types/admin/clientApis";
+import { Client } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AllClientsTable() {
@@ -49,7 +51,7 @@ export default function AllClientsTable() {
               <LoadingSpinner />
             ) : (
               <tbody>
-                {data?.data?.map((client, index) => (
+                {data?.data?.map((client: Client, index: number) => (
                   <tr key={index} className="border-t">
                     <td className="p-4 capitalize">{client.name || "-"}</td>
                     <td className="p-4">{client.email || "-"}</td>
@@ -70,7 +72,7 @@ export default function AllClientsTable() {
 
                     <td className="p-4">
                       {client.services && client.services.length > 0 ? (
-                        client.services.map((service, index) => (
+                        client.services.map((service: string, index: number) => (
                           <Badge
                             key={index}
                             className="px-3 py-1 rounded-full bg-blue-100 text-blue-700"

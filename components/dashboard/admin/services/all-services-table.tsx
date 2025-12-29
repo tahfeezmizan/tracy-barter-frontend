@@ -11,6 +11,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
 import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+import { ServiceItem } from "@/config/Types/types";
 
 export default function AllServicesTable() {
   const { data, isLoading } = useGetServiceQuery(undefined);
@@ -54,7 +55,7 @@ export default function AllServicesTable() {
           </TableHeader>
 
           <TableBody>
-            {data?.data?.map((service, i) => (
+            {data?.data?.map((service: ServiceItem, i: number) => (
               <TableRow key={i} className="hover:bg-gray-50">
                 <TableCell className="font-medium">{service.name}</TableCell>
 

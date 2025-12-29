@@ -113,7 +113,7 @@ export default function ServiceSection() {
           <ChevronLeft className="size-7" />
         </Button>
         {servicesCards.map(
-          ({ _, index }: { _: ServiceItem; index: number }) => (
+          (service: ServiceItem, index: number) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}

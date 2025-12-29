@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface PricingPlanType {
   _id: string;
   title: string;
@@ -25,6 +26,8 @@ export interface ServiceItem {
   name: string;
   description: string;
   image: string;
+  price?: number | string;
+  bookings?: number | string;
 
   status: "active" | "inactive";
 
@@ -81,4 +84,27 @@ export interface FAQTypes {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
   __v: number;
+}
+
+export interface Client {
+  _id?: string;
+  name: string;
+  email: string;
+  phone: string;
+  status: string;
+  services: string[];
+  totalSpent: string | number;
+}
+
+export interface Staff {
+  _id?: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  profile?: string;
+  role: string;
+  service?: string;
+  services?: string[];
+  rating?: number;
+  status?: string;
 }

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { BookingFormData } from '@/app/(common)/service/booking/page';
+import { BookingFormData } from '@/config/Types/serviceTypes';
 
 interface Step4Props {
   formData: BookingFormData;

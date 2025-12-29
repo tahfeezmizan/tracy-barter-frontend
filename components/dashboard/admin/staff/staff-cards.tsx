@@ -3,7 +3,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone } from "lucide-react";
-import { useGetClientsQuery } from "@/config/Types/admin/clientApis";
+import { useGetStaffQuery } from "@/config/Types/admin/clientApis";
+import { Staff } from "@/config/Types/types";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/utils";
 
@@ -47,12 +48,12 @@ const providers = [
 ];
 
 export default function StaffCards() {
-  const { data, isLoading } = useGetClientsQuery("staff");
-  console.log("useGetClientsQuery", data?.data);
+  const { data, isLoading } = useGetStaffQuery();
+  console.log("useGetStaffQuery", data?.data);
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data?.map((person, i) => (
+        {data?.data?.map((person: Staff, i: number) => (
           <Card key={i} className="p-6 rounded-xl shadow-sm bg-white">
             <CardContent className="p-0 space-y-4">
               {/* Header */}
@@ -60,14 +61,15 @@ export default function StaffCards() {
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full border text-white flex items-center justify-center font-semibold">
                     {person?.profile ? (
-                      ""
-                    ) : (
                       <Image
-                        src={getImageUrl(person?.profile) || person?.profile}
+                        src={getImageUrl(person?.profile) || person?.profile || ""}
                         alt={person?.name}
                         width={200}
                         height={200}
+                        className="w-full h-full rounded-full"
                       />
+                    ) : (
+                      <span>{person?.name?.charAt(0).toUpperCase()}</span>
                     )}
                   </div>
                   <div>
@@ -96,7 +98,7 @@ export default function StaffCards() {
               <div className="flex items-center justify-between text-sm">
                 <div className="text-gray-600">Completed</div>
                 <div className="text-gray-800">
-                  {person.services.length} services
+                  {person.services?.length || 0} services
                 </div>
               </div>
 
