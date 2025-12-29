@@ -82,3 +82,23 @@ export interface FAQTypes {
   updatedAt: string; // ISO date string
   __v: number;
 }
+
+interface SignUpSuccess {
+  success: boolean;
+  message: string;
+}
+
+interface SignUpErrorMessage {
+  path: string;
+  message: string;
+}
+
+export interface SignUpError {
+  data?: {
+    success: boolean;
+    message: string;
+    errorMessages?: SignUpErrorMessage[];
+  };
+  status?: number;
+  message?: string;
+}

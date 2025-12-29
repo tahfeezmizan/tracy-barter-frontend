@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -52,7 +54,7 @@ export default function StaffCards() {
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data?.map((person, i) => (
+        {data?.data?.map(({ person, i }: any) => (
           <Card key={i} className="p-6 rounded-xl shadow-sm bg-white">
             <CardContent className="p-0 space-y-4">
               {/* Header */}

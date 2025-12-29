@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import {
@@ -54,7 +56,7 @@ export default function AllServicesTable() {
           </TableHeader>
 
           <TableBody>
-            {data?.data?.map((service, i) => (
+            {data?.data?.map(({service, i}: any) => (
               <TableRow key={i} className="hover:bg-gray-50">
                 <TableCell className="font-medium">{service.name}</TableCell>
 

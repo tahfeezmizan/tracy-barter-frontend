@@ -133,7 +133,7 @@ export default function ClientReview() {
         </Button>
         {reviews.map(({ _, index }: { _: string; index: number }) => (
           <button
-            key={index} // Unique key for navigation button
+            key={`dot-${index}`}
             onClick={() => goToSlide(index)}
             className={`transition-all duration-300 rounded-full bg-white ${
               index === currentIndex ? "w-12 h-3" : "w-3 h-3"
@@ -141,6 +141,7 @@ export default function ClientReview() {
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+
         <Button
           onClick={nextSlide}
           variant="outline"

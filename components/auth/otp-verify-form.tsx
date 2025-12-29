@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { setUser } from "@/redux/slice/userSlice";
+import { SignUpError } from "@/config/Types/types";
 
 export default function OtpVerify() {
   const [otp, setOtp] = useState(Array(6).fill(""));
@@ -138,8 +139,13 @@ export default function OtpVerify() {
       if (res?.data?.success) {
         toast.success(res?.data?.message || "OTP resent sucessfully");
       } else if (res?.error) {
-        console.log("error", res?.error?.data?.message);
-        toast.error(res?.error?.data?.message || "Something went wrong");
+        const error = res.error as SignUpError;
+        const message =
+          error?.data?.message ||
+          error?.message ||
+          "Something went wrong during signup";
+        toast.error(message);
+        console.log("Signup error:", error);
       }
     } catch (error) {
       console.log(error);
