@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type React from "react";
@@ -55,8 +56,8 @@ export function SignupForm() {
           )}&authType=createAccount`
         );
       } else if (res?.error) {
-        console.log("error", res?.error?.data?.message);
-        toast.error(res?.error?.data?.message || "Something went wrong");
+        console.log("error", (res.error as any)?.data?.message);
+        toast.error((res.error as any)?.data?.message || (res.error as any)?.message || "Something went wrong");
       }
 
       console.log(res);
@@ -181,7 +182,7 @@ export function SignupForm() {
             onCheckedChange={handleCheckboxChange}
           />
           <Label className="text-md font-semibold" htmlFor="terms">
-            I have read and agree to roqit's Terms and conditions
+            I have read and agree to roqits Terms and conditions
           </Label>
         </div>
 

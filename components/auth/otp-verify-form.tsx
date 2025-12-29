@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -138,8 +139,7 @@ export default function OtpVerify() {
       if (res?.data?.success) {
         toast.success(res?.data?.message || "OTP resent sucessfully");
       } else if (res?.error) {
-        console.log("error", res?.error?.data?.message);
-        toast.error(res?.error?.data?.message || "Something went wrong");
+        toast.error((res.error as any)?.data?.message || (res.error as any)?.message || "Something went wrong");
       }
     } catch (error) {
       console.log(error);

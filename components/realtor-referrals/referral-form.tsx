@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -51,8 +52,8 @@ export function ReferralForm() {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         reset();
-      } else {
-        toast.error(res?.error?.data?.message);
+      } else if (res?.error) {
+        toast.error((res.error as any)?.data?.message || (res.error as any)?.message || "Something went wrong");
       }
     } catch {}
   };
