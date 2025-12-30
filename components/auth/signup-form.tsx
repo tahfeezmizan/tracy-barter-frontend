@@ -15,6 +15,26 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+interface SignUpSuccess {
+  success: boolean;
+  message: string;
+}
+
+interface SignUpErrorMessage {
+  path: string;
+  message: string;
+}
+
+interface SignUpError {
+  data?: {
+    success: boolean;
+    message: string;
+    errorMessages?: SignUpErrorMessage[];
+  };
+  status?: number;
+  message?: string;
+}
+
 export function SignupForm() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -56,8 +76,13 @@ export function SignupForm() {
           )}&authType=createAccount`
         );
       } else if (res?.error) {
-        console.log("error", (res.error as any)?.data?.message);
-        toast.error((res.error as any)?.data?.message || (res.error as any)?.message || "Something went wrong");
+        const error = res.error as SignUpError;
+        const message =
+          error?.data?.message ||
+          error?.message ||
+          "Something went wrong during signup";
+        toast.error(message);
+        console.log("Signup error:", error);
       }
 
       console.log(res);
@@ -181,8 +206,11 @@ export function SignupForm() {
             checked={formData.agreeToTerms}
             onCheckedChange={handleCheckboxChange}
           />
-          <Label className="text-md font-semibold" htmlFor="terms">
-            I have read and agree to roqits Terms and conditions
+          <Label className="text-sm " htmlFor="terms">
+            I have read and agree to happy valley{" "}
+            <Link href={"/terms-conditions"} className="hover:underline">
+              Terms and conditions
+            </Link>
           </Label>
         </div>
 
@@ -197,7 +225,10 @@ export function SignupForm() {
       <div className="text-center">
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/signin" className="text-green-600 hover:underline">
+          <Link
+            href="/signin"
+            className="text-primary font-bold hover:underline"
+          >
             Sign In
           </Link>
         </p>
