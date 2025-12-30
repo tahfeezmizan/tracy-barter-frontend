@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface PricingPlanType {
   _id: string;
   title: string;
@@ -25,6 +26,8 @@ export interface ServiceItem {
   name: string;
   description: string;
   image: string;
+  price?: number | string;
+  bookings?: number | string;
 
   status: "active" | "inactive";
 

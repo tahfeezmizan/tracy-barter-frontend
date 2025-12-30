@@ -13,6 +13,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
 import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+import { ServiceItem } from "@/config/Types/types";
 
 export default function AllServicesTable() {
   const { data, isLoading } = useGetServiceQuery(undefined);

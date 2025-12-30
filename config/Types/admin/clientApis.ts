@@ -1,4 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "@/redux/features/baseApi";
+import { Client, Staff } from "../types";
+
+interface ClientsResponse {
+  data: Client[];
+  message: string;
+  success: boolean;
+}
+
+interface StaffResponse {
+  data: Staff[];
+  message: string;
+  success: boolean;
+}
 
 const clientApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +25,7 @@ const clientApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
-    getClients: builder.query({
+    getClients: builder.query<ClientsResponse, string>({
       query: (role) => ({
         url: "/user",
         method: "GET",
@@ -21,8 +35,18 @@ const clientApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+    getStaff: builder.query<StaffResponse, void>({
+      query: () => ({
+        url: "/user",
+        method: "GET",
+        params: { role: "staff" },
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetClientsQuery, useGetClientStatsQuery } = clientApis;
+export const { useGetClientsQuery, useGetClientStatsQuery, useGetStaffQuery } = clientApis;
