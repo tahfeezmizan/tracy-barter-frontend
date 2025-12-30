@@ -86,25 +86,22 @@ export interface FAQTypes {
   __v: number;
 }
 
-export interface Client {
-  _id?: string;
-  name: string;
-  email: string;
-  phone: string;
-  status: string;
-  services: string[];
-  totalSpent: string | number;
+interface SignUpSuccess {
+  success: boolean;
+  message: string;
 }
 
-export interface Staff {
-  _id?: string;
-  name: string;
-  email?: string;
-  phone?: string;
-  profile?: string;
-  role: string;
-  service?: string;
-  services?: string[];
-  rating?: number;
-  status?: string;
+interface SignUpErrorMessage {
+  path: string;
+  message: string;
+}
+
+export interface SignUpError {
+  data?: {
+    success: boolean;
+    message: string;
+    errorMessages?: SignUpErrorMessage[];
+  };
+  status?: number;
+  message?: string;
 }

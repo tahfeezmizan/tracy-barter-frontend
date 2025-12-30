@@ -41,8 +41,6 @@ export default function ServiceSection() {
 
   const visibleCards = getVisibleCards();
 
-  // console.log(servicesCards);
-
   return (
     <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
       <div className="max-w-full mx-auto ">
@@ -112,23 +110,18 @@ export default function ServiceSection() {
         >
           <ChevronLeft className="size-7" />
         </Button>
-        {servicesCards.map(
-          (service: ServiceItem, index: number) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`
-                transition-all duration-300 rounded-full
-                ${
-                  index === currentIndex
-                    ? "w-12 h-3 bg-secondary"
-                    : "w-3 h-3 bg-neutral-400"
-                }
-              `}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          )
-        )}
+        {servicesCards.map((service: ServiceItem, index: number) => (
+          <button
+            key={service._id} // ✅ Unique key here as well
+            onClick={() => goToSlide(index)}
+            className={`transition-all duration-300 rounded-full ${
+              index === currentIndex
+                ? "w-12 h-3 bg-secondary"
+                : "w-3 h-3 bg-neutral-400"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
         <Button
           onClick={nextSlide}
           variant="outline"

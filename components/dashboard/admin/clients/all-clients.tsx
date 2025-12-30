@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 "use client";
 
 import {
@@ -17,7 +19,7 @@ import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AllClientsTable() {
   const { data, isLoading } = useGetClientsQuery("client");
-  console.log(data?.data);
+  console.log("client", data?.data);
 
   return (
     <Card className="w-full bg-white text-black">
@@ -51,7 +53,7 @@ export default function AllClientsTable() {
               <LoadingSpinner />
             ) : (
               <tbody>
-                {data?.data?.map((client: Client, index: number) => (
+                {data?.data?.map(({ client, index }: any) => (
                   <tr key={index} className="border-t">
                     <td className="p-4 capitalize">{client.name || "-"}</td>
                     <td className="p-4">{client.email || "-"}</td>
@@ -72,7 +74,7 @@ export default function AllClientsTable() {
 
                     <td className="p-4">
                       {client.services && client.services.length > 0 ? (
-                        client.services.map((service: string, index: number) => (
+                        client.services.map(({service, index}: any) => (
                           <Badge
                             key={index}
                             className="px-3 py-1 rounded-full bg-blue-100 text-blue-700"

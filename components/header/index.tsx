@@ -8,7 +8,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { CircleUserRound, ListOrdered, LogOut, Menu, User, X } from "lucide-react";
+import {
+  CircleUserRound,
+  ListOrdered,
+  LogOut,
+  Menu,
+  User,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
