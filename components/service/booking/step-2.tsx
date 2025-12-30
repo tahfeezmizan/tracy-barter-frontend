@@ -42,11 +42,10 @@ export default function Step2({ formData, updateFormData }: Step2Props) {
           </div>
 
           {/* Right: Time Selection */}
-          <div>
+          {/* <div>
             <Label className="text-sm font-medium">Select Time</Label>
 
             <div className="grid grid-cols-2 gap-6 mt-4">
-              {/* Start Time */}
               <div className="space-y-2">
                 <Label className="text-sm">Starting Time</Label>
                 <Input
@@ -57,7 +56,6 @@ export default function Step2({ formData, updateFormData }: Step2Props) {
                 />
               </div>
 
-              {/* End Time */}
               <div className="space-y-2">
                 <Label className="text-sm">End Time</Label>
                 <Input
@@ -68,7 +66,7 @@ export default function Step2({ formData, updateFormData }: Step2Props) {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

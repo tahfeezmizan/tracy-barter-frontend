@@ -6,7 +6,7 @@ import StatsCard from "../../stats-card";
 import AllClientsTable from "./all-clients";
 
 export default function ClientsPage() {
-  const { data, isLoading } = useGetClientStatsQuery(undefined);
+  const { data } = useGetClientStatsQuery(undefined);
 
   const stats = [
     {

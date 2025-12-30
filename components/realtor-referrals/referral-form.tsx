@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useCreateReferralMutation } from "@/redux/features/referral/referralApis";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
+import { SignUpError } from "@/config/Types/types";
 
 interface ReferralFormData {
   name: string;
@@ -52,8 +53,14 @@ export function ReferralForm() {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         reset();
-      } else if (res?.error) {
-        toast.error((res.error as any)?.data?.message || (res.error as any)?.message || "Something went wrong");
+      } else {
+        const error = res.error as SignUpError;
+        const message =
+          error?.data?.message ||
+          error?.message ||
+          "Something went wrong during signup";
+        toast.error(message);
+        console.log("Signup error:", error);
       }
     } catch {}
   };
