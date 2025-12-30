@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Pencil, Search } from "lucide-react";
 import { useGetClientsQuery } from "@/config/Types/admin/clientApis";
-import { Client } from "@/config/Types/types";
+// import { Client } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AllClientsTable() {

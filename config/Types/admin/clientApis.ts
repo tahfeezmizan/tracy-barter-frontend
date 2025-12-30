@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "@/redux/features/baseApi";
-import { Client, Staff } from "../types";
+// import { Client, Staff } from "../types";
 
 interface ClientsResponse {
-  data: Client[];
+  data: any[];
   message: string;
   success: boolean;
 }
 
 interface StaffResponse {
-  data: Staff[];
+  data: any[];
   message: string;
   success: boolean;
 }

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone } from "lucide-react";
 import { useGetStaffQuery } from "@/config/Types/admin/clientApis";
-import { Staff } from "@/config/Types/types";
+// import { Staff } from "@/config/Types/types";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/utils";
 
