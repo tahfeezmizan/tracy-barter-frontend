@@ -15,6 +15,7 @@ export default function ServiceSection() {
 
   const { data, isLoading } = useGetServiceQuery(undefined);
   const servicesCards = data?.data || [];
+  console.log("this is services", servicesCards);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % servicesCards.length);

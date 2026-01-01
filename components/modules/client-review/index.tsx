@@ -11,7 +11,7 @@ import { useState } from "react";
 export default function ClientReview() {
   const { data, isLoading } = useGetReviewQuery(undefined);
   const reviews = data?.data || [];
-  // console.log(data?.data);
+  console.log("Revieew", data?.data);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -131,9 +131,9 @@ export default function ClientReview() {
         >
           <ChevronLeft className="size-7" />
         </Button>
-        {reviews.map(({ _, index }: { _: string; index: number }) => (
+        {reviews.map(({ review, index }: { review: any; index: number }) => (
           <button
-            key={`dot-${index}`}
+            key={review?._id}
             onClick={() => goToSlide(index)}
             className={`transition-all duration-300 rounded-full bg-white ${
               index === currentIndex ? "w-12 h-3" : "w-3 h-3"
