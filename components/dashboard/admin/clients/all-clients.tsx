@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
 "use client";
 
 import {
@@ -13,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Pencil, Search } from "lucide-react";
-import { useGetClientsQuery } from "@/config/Types/admin/clientApis";
+import { useGetClientsQuery } from "@/redux/features/service/clientApis";
 // import { Client } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 
@@ -49,37 +48,42 @@ export default function AllClientsTable() {
               </tr>
             </thead>
 
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : (
-              <tbody>
-                {data?.data?.map(({ client, index }: any) => (
-                  <tr key={index} className="border-t">
-                    <td className="p-4 capitalize">{client.name || "-"}</td>
-                    <td className="p-4">{client.email || "-"}</td>
-                    <td className="p-4">{client.phone || "-"}</td>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={7} className="py-8">
+                    <LoadingSpinner />
+                  </td>
+                </tr>
+              ) : (
+                data?.data?.map((client: any, index: number) => (
+                  <tr key={client?._id || index} className="border-t">
+                    <td className="p-4 capitalize">{client?.name || "-"}</td>
+                    <td className="p-4">{client?.email || "-"}</td>
+                    <td className="p-4">{client?.phone || "-"}</td>
 
-                    {/* subscribe Badge */}
                     <td className="p-4">
                       <Badge
                         className={`px-3 py-1 rounded-full ${
-                          client.status === "false"
+                          client?.subscribe
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {client.status}
+                        {client?.subscribe ? "Subscribed" : "Not Subscribed"}
                       </Badge>
                     </td>
 
                     <td className="p-4">
-                      {client.services && client.services.length > 0 ? (
-                        client.services.map(({service, index}: any) => (
+                      {client?.services?.length > 0 ? (
+                        client?.services.map((service: any, i: number) => (
                           <Badge
-                            key={index}
-                            className="px-3 py-1 rounded-full bg-blue-100 text-blue-700"
+                            key={i}
+                            className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 mr-1"
                           >
-                            {service}
+                            {typeof service === "object"
+                              ? service.name || service.service
+                              : service}
                           </Badge>
                         ))
                       ) : (
@@ -88,7 +92,8 @@ export default function AllClientsTable() {
                         </span>
                       )}
                     </td>
-                    <td className="p-4">{client.totalSpent || "0"}</td>
+
+                    <td className="p-4">${client?.totalSpent || "0"}</td>
 
                     <td className="p-4 text-center flex items-center justify-center gap-3">
                       <button>
@@ -99,9 +104,9 @@ export default function AllClientsTable() {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            )}
+                ))
+              )}
+            </tbody>
           </table>
         </div>
       </CardContent>

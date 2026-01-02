@@ -2,60 +2,22 @@
 
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone } from "lucide-react";
-import { useGetStaffQuery } from "@/config/Types/admin/clientApis";
+import { Card, CardContent } from "@/components/ui/card";
+import { useGetStaffQuery } from "@/redux/features/service/clientApis";
+import { CircleUser, Mail, Phone } from "lucide-react";
 // import { Staff } from "@/config/Types/types";
 import Image from "next/image";
-import { getImageUrl } from "@/lib/utils";
 
-const providers = [
-  {
-    initials: "MJ",
-    name: "Maria Johnson",
-    service: "Home Cleaning",
-    rating: 4.9,
-    completed: 156,
-    email: "maria@concierge.com",
-    phone: "(555) 111-2222",
-  },
-  {
-    initials: "DL",
-    name: "David Lee",
-    service: "Grocery Shopping",
-    rating: 4.8,
-    completed: 203,
-    email: "david@concierge.com",
-    phone: "(555) 222-3333",
-  },
-  {
-    initials: "SW",
-    name: "Sarah Williams",
-    service: "Home Maintenance",
-    rating: 4.7,
-    completed: 89,
-    email: "sarah@concierge.com",
-    phone: "(555) 333-4444",
-  },
-  {
-    initials: "JB",
-    name: "James Brown",
-    service: "General Services",
-    rating: 4.6,
-    completed: 124,
-    email: "james@concierge.com",
-    phone: "(555) 444-5555",
-  },
-];
+
 
 export default function StaffCards() {
   const { data, isLoading } = useGetStaffQuery();
-  console.log("useGetStaffQuery", data?.data);
+  // console.log("useGetStaffQuery", data?.data);
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data?.map(({ person, i }: any) => (
+        {data?.data?.map((person: any, i: number) => (
           <Card key={i} className="p-6 rounded-xl shadow-sm bg-white">
             <CardContent className="p-0 space-y-4">
               {/* Header */}
@@ -64,22 +26,22 @@ export default function StaffCards() {
                   <div className="w-12 h-12 rounded-full border text-white flex items-center justify-center font-semibold">
                     {person?.profile ? (
                       <Image
-                        src={getImageUrl(person?.profile) || person?.profile || ""}
+                        src={person?.profile}
                         alt={person?.name}
                         width={200}
                         height={200}
                         className="w-full h-full rounded-full"
                       />
                     ) : (
-                      <span>{person?.name?.charAt(0).toUpperCase()}</span>
+                      <CircleUser className="text-black size-12" />
                     )}
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg text-black capitalize">
-                      {person.name}
+                      {person?.name}
                     </h3>
                     <p className="text-gray-500 text-sm">
-                      {person.service || person?.role}
+                      {person?.service || person?.role}
                     </p>
                   </div>
                 </div>
@@ -93,14 +55,14 @@ export default function StaffCards() {
               <div className="flex items-center justify-between text-sm">
                 <div className="text-gray-600">Rating</div>
                 <div className="flex items-center gap-1 text-gray-800">
-                  {person.rating || 0} ⭐
+                  {person?.rating || 0} ⭐
                 </div>
               </div>
 
               <div className="flex items-center justify-between text-sm">
                 <div className="text-gray-600">Completed</div>
                 <div className="text-gray-800">
-                  {person.services?.length || 0} services
+                  {person?.services?.length || 0} services
                 </div>
               </div>
 
@@ -108,11 +70,11 @@ export default function StaffCards() {
               <div className="space-y-2 text-sm text-gray-700">
                 <div className="flex items-center gap-2">
                   <Mail size={16} className="text-gray-500" />
-                  {person.email}
+                  {person?.email}
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={16} className="text-gray-500" />
-                  {person.phone || "XXXXXXXXXX"}
+                  {person?.phone || "XXXXXXXXXX"}
                 </div>
               </div>
 

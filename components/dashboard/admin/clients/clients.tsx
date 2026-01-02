@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetClientStatsQuery } from "@/config/Types/admin/clientApis";
+import { useGetClientStatsQuery } from "@/redux/features/service/clientApis";
 import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import AllClientsTable from "./all-clients";

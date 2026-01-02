@@ -10,15 +10,35 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { menuItems, useUserRole } from "@/config/menuConfig";
 import { LogOut } from "lucide-react";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { removeUser } from "@/redux/slice/userSlice";
+import { useEffect, useState } from "react";
 
 export function AppSidebar() {
+  const dispatch = useDispatch();
   const pathname = usePathname();
   const { role } = useUserRole();
   const items = menuItems[role];
+  const router = useRouter();
+
+  const [token, setToken] = useState<boolean>(false);
+
+  useEffect(() => {
+    // setIsMounted(true);
+    setToken(!!Cookies.get("token"));
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    dispatch(removeUser());
+    setToken(false); // instant UI update
+    router.push("/");
+  };
 
   return (
     <Sidebar className="border-none flex flex-col h-screen px-6">
@@ -83,7 +103,10 @@ export function AppSidebar() {
         </SidebarContent>
 
         <SidebarFooter className="mb-14 px-0">
-          <div className="flex items-center justify-start gap-4 px-4 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 ">
+          <div
+            onClick={handleLogout}
+            className="flex items-center justify-start gap-4 px-4 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 cursor-pointer"
+          >
             <LogOut />
             Logout
           </div>

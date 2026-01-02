@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "../ui/card";
 
 export default function StatsCard({ stats }: { stats: any }) {

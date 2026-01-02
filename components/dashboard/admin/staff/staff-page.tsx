@@ -1,7 +1,7 @@
 "use client";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useGetStaffStatsQuery } from "@/config/Types/admin/staffApis";
+import { useGetStaffStatsQuery } from "@/redux/features/service/staffApis";
 import { UserPlus } from "lucide-react";
 import Link from "next/link";
 import DynamicHeader from "../../dynamic-header";

@@ -38,6 +38,8 @@ export function SignInForm() {
         rememberMe: formData.rememberMe,
       });
 
+      console.log(res?.data?.data?.role);
+
       if (res?.data?.success) {
         // store token on redux
         dispatch(
@@ -48,9 +50,12 @@ export function SignInForm() {
             },
           })
         );
-
+        if (res?.data?.data?.role === "admin" || "staff") {
+          router.push("/dashboard");
+        } else {
+          router.push("/prifle");
+        }
         // Redirect based on role
-        router.push("/");
       } else if (res?.error) {
         toast.error("Something went wrong");
       }
