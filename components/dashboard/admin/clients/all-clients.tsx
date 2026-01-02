@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import {
@@ -13,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Pencil, Search } from "lucide-react";
 import { useGetClientsQuery } from "@/redux/features/service/clientApis";
-// import { Client } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 
 export default function AllClientsTable() {
