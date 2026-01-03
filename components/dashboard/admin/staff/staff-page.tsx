@@ -1,14 +1,12 @@
 "use client";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { AddStaffDialog } from "@/lib/modal/add-staff-dialog";
 import { useGetStaffStatsQuery } from "@/redux/features/service/staffApis";
 import { UserPlus } from "lucide-react";
-import Link from "next/link";
-import DynamicHeader from "../../dynamic-header";
+import { useState } from "react";
 import StatsCard from "../../stats-card";
 import StaffCards from "./staff-cards";
-import { useState } from "react";
-import { AddStaffDialog } from "@/lib/modal/add-staff-dialog";
 
 export default function StaffPage() {
   const [open, setOpen] = useState(false);

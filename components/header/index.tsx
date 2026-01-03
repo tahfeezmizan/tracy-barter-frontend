@@ -20,14 +20,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { removeUser } from "@/redux/slice/userSlice";
+import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const role = useSelector(selectUserRole);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -136,15 +137,25 @@ export default function Header() {
                     >
                       <DropdownMenuItem
                         asChild
-                        className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
-                        <Link
-                          href="/user-profile"
-                          className="flex items-center space-x-2"
-                        >
-                          <User className="h-4 w-4" />
-                          <span>Profile</span>
-                        </Link>
+                        {role === "admin" || "staff" ? (
+                          <Link
+                            href={"/dashboard"}
+                            className="flex items-center space-x-2"
+                          >
+                            <User className="h-4 w-4" />
+                            Dashboard
+                          </Link>
+                        ) : (
+                          <Link
+                            href="/user-profile"
+                            className="flex items-center space-x-2"
+                          >
+                            <User className="h-4 w-4" />
+                            <span>Profile</span>
+                          </Link>
+                        )}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         asChild

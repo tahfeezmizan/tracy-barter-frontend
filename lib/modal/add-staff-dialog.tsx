@@ -1,35 +1,43 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { UserPlus } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  useCreateStaffMutation,
+  useGetStaffSpecialtyServicesQuery,
+} from "@/redux/features/service/staffApis";
+import { toast } from "sonner";
+
+type SelectedItem = {
+  _id: string;
+  name: string;
+};
 
 type StaffFormValues = {
   fullName: string;
   email: string;
   phone: string;
-  specialty: string;
+  specialty: string[];
   bio?: string;
 };
 
@@ -40,11 +48,55 @@ export function AddStaffDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { register, handleSubmit, setValue, reset } =
-    useForm<StaffFormValues>();
+  const { register, handleSubmit, watch, setValue, reset } =
+    useForm<StaffFormValues>({
+      defaultValues: {
+        specialty: [],
+      },
+    });
 
-  const onSubmit = (data: StaffFormValues) => {
+  const { data = [] } = useGetStaffSpecialtyServicesQuery(undefined);
+  const selectedSpecialties = watch("specialty");
+
+  const [AddStaff] = useCreateStaffMutation({});
+
+  console.log(data);
+
+  const toggleSpecialty = (id: string) => {
+    setValue(
+      "specialty",
+      selectedSpecialties.includes(id)
+        ? selectedSpecialties.filter((v) => v !== id)
+        : [...selectedSpecialties, id],
+      { shouldValidate: true }
+    );
+  };
+
+  // 🔹 Map selected IDs → names
+  const selectedNames = data
+    .filter((item: SelectedItem) => selectedSpecialties.includes(item._id))
+    .map((item: SelectedItem) => item.name)
+    .join(", ");
+
+  const onSubmit = async (data: StaffFormValues) => {
     console.log(data);
+
+    try {
+      const res = await AddStaff({
+        name: data?.fullName,
+        email: data?.email,
+        services: data?.specialty,
+        bio: data?.bio,
+      });
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      }
+      console.log("Api Res", res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+
     reset();
     onOpenChange(false);
   };
@@ -64,8 +116,8 @@ export function AddStaffDialog({
             <div className="space-y-2">
               <Label>Full Name *</Label>
               <Input
-                placeholder="Enter full name"
                 {...register("fullName", { required: true })}
+                placeholder="Enter full name"
               />
             </div>
 
@@ -73,48 +125,61 @@ export function AddStaffDialog({
               <Label>Email *</Label>
               <Input
                 type="email"
-                placeholder="email@example.com"
                 {...register("email", { required: true })}
+                placeholder="email@example.com"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Phone Number *</Label>
+              <Label>Phone *</Label>
               <Input
-                placeholder="(555) 123-4567"
                 {...register("phone", { required: true })}
+                placeholder="(555) 123-4567"
               />
             </div>
 
-            <div className="space-y-2 !w-full">
+            <div className="space-y-2">
               <Label>Specialty *</Label>
-              <Select onValueChange={(v) => setValue("specialty", v)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select specialty" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="barber">Barber</SelectItem>
-                  <SelectItem value="stylist">Stylist</SelectItem>
-                  <SelectItem value="therapist">Therapist</SelectItem>
-                </SelectContent>
-              </Select>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start truncate"
+                  >
+                    {selectedNames || "Select specialty"}
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="bg-white">
+                  {data.map((item: SelectedItem) => (
+                    <DropdownMenuCheckboxItem
+                      key={item._id}
+                      checked={selectedSpecialties.includes(item._id)}
+                      onCheckedChange={() => toggleSpecialty(item._id)}
+                    >
+                      {item.name}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>Bio</Label>
             <Textarea
-              rows={4}
-              placeholder="Enter staff member bio and expertise..."
               {...register("bio")}
+              placeholder="Enter staff member bio and expertise..."
             />
           </div>
 
-          <DialogFooter className="gap-2">
+          <DialogFooter>
             <Button type="submit" className="flex items-center gap-2">
               <UserPlus className="size-4" />
               Add Staff Member
             </Button>
+
             <Button
               type="button"
               variant="outline"

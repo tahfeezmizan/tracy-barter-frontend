@@ -44,9 +44,11 @@ const clientApis = baseApi.injectEndpoints({
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["staff"],
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetClientsQuery, useGetClientStatsQuery, useGetStaffQuery } = clientApis;
+export const { useGetClientsQuery, useGetClientStatsQuery, useGetStaffQuery } =
+  clientApis;
