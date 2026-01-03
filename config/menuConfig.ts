@@ -10,7 +10,6 @@ import {
   UserCog,
   Users,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export interface MenuItem {
   title: string;
@@ -56,7 +55,7 @@ export const menuItems: Record<string, MenuItem[]> = {
       icon: Users,
     },
   ],
-  provider: [
+  staff: [
     {
       title: "Dashboard",
       url: "/dashboard",
@@ -79,31 +78,4 @@ export const menuItems: Record<string, MenuItem[]> = {
     },
   ],
   user: [],
-};
-
-export const useUserRole = () => {
-  const [role, setRole] = useState<string>("admin");
-
-  useEffect(() => {
-    // Load role from localStorage on client side
-    const savedRole = localStorage.getItem("userRole");
-    if (savedRole) {
-      setRole(savedRole);
-    }
-  }, []);
-
-  const setUserRole = (newRole: string) => {
-    setRole(newRole);
-    localStorage.setItem("userRole", newRole);
-  };
-
-  return { role, setUserRole };
-};
-
-// Default role fallback
-export const getDefaultRole = (): string => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("userRole") || "admin";
-  }
-  return "admin";
 };

@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import {
   Sidebar,
   SidebarContent,
@@ -10,21 +9,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import { menuItems, useUserRole } from "@/config/menuConfig";
-import { LogOut } from "lucide-react";
+import { menuItems } from "@/config/menuConfig";
+import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { removeUser } from "@/redux/slice/userSlice";
+import { LogOut } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export function AppSidebar() {
   const dispatch = useDispatch();
+  const role = useSelector(selectUserRole);
   const pathname = usePathname();
-  const { role } = useUserRole();
+  // const { role } = useUserRole();
   const items = menuItems[role];
   const router = useRouter();
+
+  // console.log(userRole);
 
   const [token, setToken] = useState<boolean>(false);
 
