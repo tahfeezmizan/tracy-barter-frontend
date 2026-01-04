@@ -55,7 +55,7 @@ export default function ClientReview() {
 
               return (
                 <Card
-                  key={`${service?.id}-${idx}`}
+                  key={`${service?._id}-${idx}`}
                   className={`
                       flex items-center justify-center transition-all duration-500 ease-out p-0
                       ${

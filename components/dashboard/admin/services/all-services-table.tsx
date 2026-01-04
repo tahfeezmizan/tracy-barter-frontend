@@ -59,15 +59,15 @@ export default function AllServicesTable() {
           <TableBody>
             {data?.data?.map(({service, i}: any) => (
               <TableRow key={i} className="hover:bg-gray-50">
-                <TableCell className="font-medium">{service.name}</TableCell>
+                <TableCell className="font-medium">{service?.name}</TableCell>
 
-                <TableCell>{service.description}</TableCell>
-                <TableCell>{service.price || "0"}</TableCell>
-                {/* <TableCell>{service.duration}</TableCell> */}
-                <TableCell>{service.bookings || "0"}</TableCell>
+                <TableCell>{service?.description}</TableCell>
+                <TableCell>{service?.price || "0"}</TableCell>
+                {/* <TableCell>{service?.duration}</TableCell> */}
+                <TableCell>{service?.bookings || "0"}</TableCell>
 
                 <TableCell>
-                  {service.status === "active" ? (
+                  {service?.status === "active" ? (
                     <span className="px-3 py-1 text-sm bg-green-500 text-white rounded-full">
                       Active
                     </span>
