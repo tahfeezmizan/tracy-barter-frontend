@@ -32,6 +32,25 @@ const staffApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["staff"],
     }),
+
+    getSingleStaff: builder.query({
+      query: (id) => ({
+        url: `/user/staff/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["staff"],
+    }),
+
+    deleteStaff: builder.mutation({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["staff"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -40,4 +59,6 @@ export const {
   useGetStaffStatsQuery,
   useGetStaffSpecialtyServicesQuery,
   useCreateStaffMutation,
+  useGetSingleStaffQuery,
+  useDeleteStaffMutation,
 } = staffApis;

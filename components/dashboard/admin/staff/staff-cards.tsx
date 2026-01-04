@@ -4,15 +4,59 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { StaffDetailsDialog } from "@/lib/modal/staff-details-dialog";
 import { useGetStaffQuery } from "@/redux/features/service/clientApis";
+import { useDeleteStaffMutation } from "@/redux/features/service/staffApis";
 import { CircleUser, Mail, Phone } from "lucide-react";
+import Swal from "sweetalert2";
 // import { Staff } from "@/config/Types/types";
 import Image from "next/image";
-
-
+import { useState } from "react";
 
 export default function StaffCards() {
+  const [open, setOpen] = useState(false);
+  const [staffId, setStaffId] = useState<string | null>(null);
+
   const { data, isLoading } = useGetStaffQuery();
+
+  const [deleteStaff] = useDeleteStaffMutation();
+
+  const handleDelete = async (id: string) => {
+    // Step 1: Ask for confirmation
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        // Step 2: Perform delete
+        const res: any = await deleteStaff(id);
+        console.log("deleteStaff", res);
+
+        // Step 3: Show success message
+        Swal.fire("Deleted!", "Staff has been deleted.", "success");
+      } catch (error) {
+        console.log(error);
+        Swal.fire(
+          "Error!",
+          "Something went wrong while deleting staff.",
+          "error"
+        );
+      }
+    }
+  };
+
+  const openModal = (id: string) => {
+    setStaffId(id);
+    setOpen(true);
+  };
   // console.log("useGetStaffQuery", data?.data);
   return (
     <div className="">
@@ -79,13 +123,31 @@ export default function StaffCards() {
               </div>
 
               {/* Button */}
-              <Button className="w-full mt-2 bg-gray-100 text-gray-800 hover:bg-gray-200">
-                View Details
-              </Button>
+              <div className="flex items-center justify-center gap-4 mt-2">
+                <Button
+                  onClick={() => openModal(person?._id)}
+                  className="flex-1  bg-gray-100 text-gray-800 hover:bg-gray-200"
+                >
+                  View Details
+                </Button>
+                <Button
+                  onClick={() => handleDelete(person?._id)}
+                  className="flex-1 bg-red-400 text-white hover:bg-red-500"
+                >
+                  Delete Staff
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
+      {staffId && (
+        <StaffDetailsDialog
+          open={open}
+          onOpenChange={setOpen}
+          staffId={staffId}
+        />
+      )}
     </div>
   );
 }
