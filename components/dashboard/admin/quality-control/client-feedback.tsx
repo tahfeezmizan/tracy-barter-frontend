@@ -1,16 +1,20 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SupportItem } from "@/lib/types/support.types";
 import {
-  Star,
-  MessageCircle,
-  CheckCircle,
-  AlertCircle,
-  FilePlus2,
-} from "lucide-react";
+  useGetSupportQuery,
+  useUpdateSupportStatusMutation,
+} from "@/redux/features/quality-control/qualityControlApi";
+import {
+  useGetReviewQuery,
+  useUpdateReviewStatusMutation,
+} from "@/redux/features/review/reviewApis";
+import { AlertCircle, CheckCircle, MessageCircle, Star } from "lucide-react";
+import { toast } from "sonner";
 
 // -----------------------------
 // FEEDBACK DATA
@@ -60,48 +64,22 @@ const feedbackData = [
 
 const statusColor = (status: string) => {
   switch (status) {
-    case "Approved":
+    case "approved":
       return "bg-blue-100 text-blue-700";
-    case "Pending":
+    case "pending":
       return "bg-yellow-100 text-yellow-700";
-    case "Under Review":
-      return "bg-gray-200 text-gray-700";
+    case "rejected":
+      return "bg-red-200 text-red-700";
     default:
       return "bg-gray-100 text-gray-600";
   }
 };
 
-// -----------------------------
-// ISSUES & REPORTS DATA
-// -----------------------------
-const issuesData = [
-  {
-    name: "Jane Cooper",
-    priority: "high priority",
-    status: "open",
-    service: "Home Cleaning",
-    provider: "Maria Johnson",
-    date: "2025-10-18",
-    issue: "Client reported damaged vase during cleaning",
-    actions: true,
-  },
-  {
-    name: "Robert Taylor",
-    priority: "medium priority",
-    status: "resolved",
-    service: "Grocery Shopping",
-    provider: "David Lee",
-    date: "2025-10-17",
-    issue: "Wrong items purchased",
-    actions: false,
-  },
-];
-
 const priorityStyle = (priority: string) => {
   switch (priority) {
-    case "high priority":
-      return "bg-red-100 text-red-700";
-    case "medium priority":
+    case "high":
+      return "bg-red-200 text-red-700";
+    case "medium":
       return "bg-blue-100 text-blue-700";
     default:
       return "bg-gray-100 text-gray-700";
@@ -110,9 +88,9 @@ const priorityStyle = (priority: string) => {
 
 const statusStyle = (status: string) => {
   switch (status) {
-    case "open":
+    case "in_progress":
       return "bg-gray-100 text-gray-600";
-    case "resolved":
+    case "solved":
       return "bg-green-100 text-green-700";
     default:
       return "bg-gray-200 text-gray-700";
@@ -123,6 +101,46 @@ const statusStyle = (status: string) => {
 // MAIN COMPONENT
 // -----------------------------
 export default function ClientFeedback() {
+  const { data } = useGetSupportQuery(undefined);
+  const { data: review } = useGetReviewQuery(undefined);
+
+  console.log("useGetSupportQuery", review);
+
+  const [updateSupportStatus, { isLoading }] = useUpdateSupportStatusMutation();
+  const [updateReviewStatus, { isLoading: isReviewLoading }] =
+    useUpdateReviewStatusMutation();
+
+  // ISSUES & REPORTS TAB - Handle status update
+  const handleUpdateStatus = async (id: string) => {
+    try {
+      const res = await updateSupportStatus({
+        id,
+        status: "solved",
+      }).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleUpdateReviewStatus = async (id: string) => {
+    try {
+      const res = await updateReviewStatus({
+        id,
+        status: "solved",
+      }).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Tabs defaultValue="feedback" className="w-full space-y-2">
@@ -139,24 +157,30 @@ export default function ClientFeedback() {
           </p>
 
           <div className="space-y-6">
-            {feedbackData.map((item, index) => (
-              <Card key={index} className="border rounded-xl bg-gray-50">
+            {review?.data?.map((item) => (
+              <Card
+                key={item?._id}
+                className="border rounded-xl bg-gray-50 p-0"
+              >
                 <CardContent className="p-6 space-y-4">
                   {/* Header */}
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-gray-900">
-                          {item.name}
+                        <h3 className="font-semibold text-gray-900 capitalize">
+                          {item?.reviewer?.name || "Anonymous"}
                         </h3>
                         <Badge className={statusColor(item.status)}>
-                          {item.status}
+                          <span className="capitalize">{item.status}</span>
                         </Badge>
                       </div>
                       <p className="text-sm text-gray-600">
                         {item.service} by {item.provider}
                       </p>
-                      <p className="text-xs text-gray-400">{item.date}</p>
+                      <p className="text-xs text-gray-400">
+                        {" "}
+                        {new Date(item.createdAt).toISOString().slice(0, 10)}
+                      </p>
                     </div>
 
                     {/* rating */}
@@ -169,22 +193,26 @@ export default function ClientFeedback() {
 
                   {/* comment */}
                   <div className="text-sm bg-gray-200/70 p-3 rounded-lg text-gray-700">
-                    {item.comment}
+                    {item.review}
                   </div>
 
                   {/* actions */}
-                  {item.actions && (
-                    <div className="flex gap-3">
-                      <Button variant="outline" size="sm" className="text-black">
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        Respond
-                      </Button>
-
-                      <Button size="sm">
-                        <CheckCircle className="h-4 w-4 mr-1" />
-                        Approve
-                      </Button>
-                    </div>
+                  {item.status === "pending" && (
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        handleUpdateReviewStatus(item?._id);
+                      }}
+                    >
+                      {isReviewLoading ? (
+                        "Approveing..."
+                      ) : (
+                        <>
+                          <CheckCircle className="h-4 w-4 mr-1" />
+                          Approve
+                        </>
+                      )}
+                    </Button>
                   )}
                 </CardContent>
               </Card>
@@ -201,18 +229,21 @@ export default function ClientFeedback() {
           </p>
 
           <div className="space-y-6">
-            {issuesData.map((item, index) => (
-              <Card key={index} className="border rounded-xl bg-gray-50">
+            {data?.data?.map((item: SupportItem) => (
+              <Card
+                key={item?._id}
+                className="border rounded-xl bg-gray-50 p-0"
+              >
                 <CardContent className="p-6 space-y-4">
                   {/* Header */}
                   <div>
                     <div className="flex items-center gap-3">
-                      <h3 className="font-semibold text-gray-900">
-                        {item.name}
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {item.userId?.name}
                       </h3>
 
                       <Badge className={priorityStyle(item.priority)}>
-                        {item.priority}
+                        <span className="capitalize">{item.priority}</span>
                       </Badge>
 
                       <Badge className={statusStyle(item.status)}>
@@ -220,31 +251,39 @@ export default function ClientFeedback() {
                       </Badge>
                     </div>
 
-                    <p className="text-sm text-gray-600">
-                      {item.service} by {item.provider}
+                    <p className="text-base text-gray-700">
+                      {item.bookingId?.serviceType?.title} by{" "}
+                      <span className="font-medium">
+                        {item.bookingId?.staff?.name}
+                      </span>
                     </p>
-                    <p className="text-xs text-gray-400">{item.date}</p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(item.createdAt).toISOString().slice(0, 10)}
+                    </p>
                   </div>
 
                   {/* Issue description */}
-                  <div className="flex items-start gap-2 text-sm text-gray-700 bg-gray-200/60 p-3 rounded-lg">
-                    <AlertCircle className="h-4 w-4 text-red-500 mt-0.5" />
-                    {item.issue}
+                  <div className="flex items-start gap-2 text-lg text-gray-700 bg-gray-200/60 p-3 rounded-lg">
+                    <AlertCircle className="size-5 text-red-500 mt-0.5" />
+                    {item.message}
                   </div>
 
                   {/* Action buttons */}
-                  {item.actions && (
-                    <div className="flex gap-3 pt-2">
-                      <Button variant="outline" size="sm" className="text-black">
-                        <FilePlus2 className="h-4 w-4 mr-1" />
-                        Add Note
-                      </Button>
-
-                      <Button size="sm" className="text-white bg-black">
-                        <CheckCircle className="h-4 w-4 mr-1" />
-                        Resolve
-                      </Button>
-                    </div>
+                  {item.status === "in_progress" && (
+                    <Button
+                      size="sm"
+                      className="text-white bg-black"
+                      onClick={() => handleUpdateStatus(item?._id)}
+                    >
+                      {isLoading ? (
+                        "Resolveing..."
+                      ) : (
+                        <>
+                          <CheckCircle className="h-4 w-4 mr-1" />
+                          Resolve
+                        </>
+                      )}
+                    </Button>
                   )}
                 </CardContent>
               </Card>

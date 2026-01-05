@@ -1,12 +1,7 @@
 "use client";
 
 import { useGetQualityControlStatsQuery } from "@/redux/features/quality-control/qualityControlApi";
-import {
-  CircleAlert,
-  CircleCheckBig,
-  MessageSquare,
-  Star
-} from "lucide-react";
+import { CircleAlert, CircleCheckBig, MessageSquare, Star } from "lucide-react";
 import DynamicHeader from "../../dynamic-header";
 import StatsCard from "../../stats-card";
 import ClientFeedback from "./client-feedback";

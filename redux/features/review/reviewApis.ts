@@ -11,7 +11,15 @@ const reviewApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+
+    updateReviewStatus: builder.mutation<any, { id: string; status: string }>({
+      query: ({ id, status }) => ({
+        url: `/review/${id}/status`,
+        method: "PATCH",
+        body: { status },
+      }),
+    }),
   }),
 });
 
-export const { useGetReviewQuery } = reviewApis;
+export const { useGetReviewQuery, useUpdateReviewStatusMutation } = reviewApis;
