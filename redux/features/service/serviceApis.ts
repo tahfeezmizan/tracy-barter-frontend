@@ -16,7 +16,7 @@ const serviceApis = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: any) => {
-        return response?.data;
+        return response?.data?.data;
       },
     }),
 

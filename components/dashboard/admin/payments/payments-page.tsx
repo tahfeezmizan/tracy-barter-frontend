@@ -7,9 +7,7 @@ import TransactionsTable from "./transactions-table";
 import { useGetPaymentStatsQuery } from "@/redux/features/payments/paymentsApis";
 
 export default function PaymentsPage() {
-  const { data, isLoading } = useGetPaymentStatsQuery(undefined);
-
-  console.log(data);
+  const { data } = useGetPaymentStatsQuery(undefined);
 
   const stats = [
     {

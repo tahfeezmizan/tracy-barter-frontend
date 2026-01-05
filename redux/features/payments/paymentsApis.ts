@@ -2,9 +2,9 @@ import { baseApi } from "../baseApi";
 
 const paymentsApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getPayment: builder.query({
+    getAllPayment: builder.query({
       query: () => ({
-        url: "/service",
+        url: "/payment",
         method: "GET",
       }),
       transformResponse: (response: any) => {
@@ -35,4 +35,4 @@ const paymentsApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetPaymentQuery, useGetPaymentStatsQuery } = paymentsApis;
+export const { useGetAllPaymentQuery, useGetPaymentStatsQuery } = paymentsApis;

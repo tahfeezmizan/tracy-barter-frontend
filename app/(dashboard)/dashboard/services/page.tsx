@@ -1,8 +1,9 @@
-import ServicesPage from '@/components/dashboard/admin/services/services-page'
-import React from 'react'
+import ServicesPage from "@/components/dashboard/admin/services/services-page";
 
 export default function page() {
   return (
-    <div><ServicesPage /></div>
-  )
+    <div>
+      <ServicesPage />
+    </div>
+  );
 }

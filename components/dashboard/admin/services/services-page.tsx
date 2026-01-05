@@ -1,37 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import StatsCard from "../../stats-card";
-import AllClientsTable from "../clients/all-clients";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { UserPlus } from "lucide-react";
 import { AddServiceDialog } from "@/lib/modal/add-service-dialog";
 import { useGetServiceStatsQuery } from "@/redux/features/service/serviceApis";
+import { UserPlus } from "lucide-react";
+import { useState } from "react";
+import StatsCard from "../../stats-card";
 import AllServicesTable from "./all-services-table";
 
 export default function ServicesPage() {
   const [open, setOpen] = useState(false);
 
-  const { data, isLoading } = useGetServiceStatsQuery(undefined);
-  console.log(data);
+  const { data: statsData } = useGetServiceStatsQuery(undefined);
+
   const stats = [
     {
       title: "Total Services",
-      value: data?.totalServices,
+      value: statsData?.totalServices,
     },
     {
       title: "Active Services",
-      value: data?.activeServices,
+      value: statsData?.activeServices,
     },
     {
       title: "Total Bookings",
-      value: data?.totalBookings,
+      value: statsData?.totalBookings,
     },
     {
       title: "Avg Price",
-      value: data?.averagePrice,
+      value: statsData?.averagePrice,
     },
   ];
+  
   return (
     <div className="space-y-6">
       <div className="mb-6 flex items-center justify-between gap-2">

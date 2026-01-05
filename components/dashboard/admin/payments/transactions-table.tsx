@@ -12,6 +12,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Download, Search } from "lucide-react";
+import { useGetAllPaymentQuery } from "@/redux/features/payments/paymentsApis";
+import { Booking } from "@/lib/types/payment.types";
 
 const transactions = [
   {
@@ -57,6 +59,9 @@ const transactions = [
 ];
 
 export default function TransactionsTable() {
+  const { data } = useGetAllPaymentQuery(undefined);
+  console.log("useGetAllPaymentQuery", data);
+
   return (
     <Card className="bg-white shadow-sm rounded-xl p-6">
       {/* Title */}
@@ -82,30 +87,30 @@ export default function TransactionsTable() {
           <TabsTrigger value="pending" className="rounded-full px-4 py-1">
             Pending
           </TabsTrigger>
-          <TabsTrigger value="refunds" className="rounded-full px-4 py-1">
-            Refunds
+          <TabsTrigger value="failed" className="rounded-full px-4 py-1">
+            Failed
           </TabsTrigger>
         </TabsList>
       </Tabs>
 
       {/* Search */}
-      <div className="relative mb-6">
+      <div className="relative">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
         <Input
           placeholder="Search by client or service..."
-          className="pl-9 bg-gray-100 border-none"
+          className="pl-9 bg-gray-100 border-none text-black"
         />
       </div>
 
       {/* Table */}
-      <CardContent className="p-0 text-black">
+      <CardContent className="p-0 border text-black rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-100 ">
             <TableRow>
               <TableHead>Date</TableHead>
-              <TableHead>Client</TableHead>
-              <TableHead>Service</TableHead>
-              <TableHead>Method</TableHead>
+              <TableHead>Email</TableHead>
+              {/* <TableHead>Service</TableHead> */}
+              <TableHead>Payment Type</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Action</TableHead>
@@ -113,16 +118,16 @@ export default function TransactionsTable() {
           </TableHeader>
 
           <TableBody>
-            {transactions.map((tx, i) => (
-              <TableRow key={i} className="hover:bg-gray-50">
-                <TableCell>{tx.date}</TableCell>
-                <TableCell>{tx.client}</TableCell>
-                <TableCell>{tx.service}</TableCell>
-                <TableCell>{tx.method}</TableCell>
-                <TableCell>{tx.amount}</TableCell>
+            {data?.data?.map((payment: Booking) => (
+              <TableRow key={payment?._id } className="hover:bg-gray-50">
+                <TableCell>{payment?.createdAt}</TableCell>
+                <TableCell>{payment?.user?.email}</TableCell>
+                {/* <TableCell>{payment?.services || "0"}</TableCell> */}
+                <TableCell>{payment?.paymentType}</TableCell>
+                <TableCell>{payment?.amount}</TableCell>
 
                 <TableCell>
-                  {tx.status === "completed" ? (
+                  {payment.status === "completed" ? (
                     <span className="px-3 py-1 bg-green-200 text-green-800 rounded-full text-sm">
                       completed
                     </span>

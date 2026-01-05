@@ -2,21 +2,22 @@
 
 "use client";
 
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent } from "@/components/ui/card";
-import { Pencil, Trash2 } from "lucide-react";
 import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
-import { ServiceItem } from "@/config/Types/types";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function AllServicesTable() {
   const { data, isLoading } = useGetServiceQuery(undefined);
+
+  console.log("All SErvice", data);
 
   return (
     <Card className="bg-white shadow-sm rounded-xl p-6 w-full text-black">
@@ -57,13 +58,47 @@ export default function AllServicesTable() {
           </TableHeader>
 
           <TableBody>
-            {data?.data?.map(({service, i}: any) => (
-              <TableRow key={i} className="hover:bg-gray-50">
+            {data?.map((service) => (
+              <TableRow key={service?._id} className="">
+                <TableCell>{service?.name}</TableCell>
+                <TableCell>{service?.description}</TableCell>
+                <TableCell>${service?.price || "0"}</TableCell>
+                <TableCell>{service?.bookings || "0"}</TableCell>
+                <TableCell>
+                  {service?.status === "active" ? (
+                    <span className="px-3 py-1 text-sm bg-green-500 text-white rounded-full">
+                      Active
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-full">
+                      Inactive
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell className="text-right">
+                  <div className="flex items-center justify-end gap-3">
+                    <Pencil
+                      size={18}
+                      className="cursor-pointer text-gray-700 hover:text-black"
+                    />
+                    <Trash2
+                      size={18}
+                      className="cursor-pointer text-red-500 hover:text-red-600"
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+          {/* <TableBody>
+            {data?.map(({ service, i }: any) => (
+              <TableRow key={service?._id} className="hover:bg-gray-50">
                 <TableCell className="font-medium">{service?.name}</TableCell>
 
                 <TableCell>{service?.description}</TableCell>
                 <TableCell>{service?.price || "0"}</TableCell>
-                {/* <TableCell>{service?.duration}</TableCell> */}
+                <TableCell>{service?.duration}</TableCell> 
                 <TableCell>{service?.bookings || "0"}</TableCell>
 
                 <TableCell>
@@ -92,7 +127,7 @@ export default function AllServicesTable() {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody> */}
         </Table>
       </CardContent>
     </Card>
