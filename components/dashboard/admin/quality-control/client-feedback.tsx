@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ReviewItem } from "@/lib/types/review.types";
 import { SupportItem } from "@/lib/types/support.types";
 import {
   useGetSupportQuery,
@@ -157,7 +158,7 @@ export default function ClientFeedback() {
           </p>
 
           <div className="space-y-6">
-            {review?.data?.map((item) => (
+            {review?.data?.map((item: ReviewItem) => (
               <Card
                 key={item?._id}
                 className="border rounded-xl bg-gray-50 p-0"
@@ -175,9 +176,12 @@ export default function ClientFeedback() {
                         </Badge>
                       </div>
                       <p className="text-sm text-gray-600">
-                        {item.service} by {item.provider}
+                        {item.bookingId?.serviceType?.title} by
+                        <span className="font-medium">
+                          {item.reviewer?.name}
+                        </span>
                       </p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xm text-gray-400">
                         {" "}
                         {new Date(item.createdAt).toISOString().slice(0, 10)}
                       </p>
@@ -192,7 +196,7 @@ export default function ClientFeedback() {
                   </div>
 
                   {/* comment */}
-                  <div className="text-sm bg-gray-200/70 p-3 rounded-lg text-gray-700">
+                  <div className="text-sm  bg-gray-200/70 p-3 rounded-lg text-gray-800">
                     {item.review}
                   </div>
 

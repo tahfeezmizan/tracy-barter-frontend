@@ -2,15 +2,24 @@ import { baseApi } from "../baseApi";
 
 const referralApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // getReferral: builder.query({
+    //   query: () => ({
+    //     url: "/referral",
+    //     method: "GET",
+    //   }),
+    //   transformResponse: (response: any) => {
+    //     return response?.data;
+    //   },
+    // }),
     getReferral: builder.query({
-      query: () => ({
-        url: "/referral",
-        method: "GET",
-      }),
-      transformResponse: (response: any) => {
-        return response?.data;
-      },
-    }),
+  query: ({ page = 1, limit = 10 }) => ({
+    url: `/referral?page=${page}&limit=${limit}`,
+    method: "GET",
+  }),
+  transformResponse: (response: any) => {
+    return response?.data;
+  },
+}),
 
     createReferral: builder.mutation({
       query: (data) => ({
