@@ -1,30 +1,39 @@
-import React from "react";
-import ClientFeedback from "./client-feedback";
-import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
-import StatsCard from "../../stats-card";
+"use client";
+
+import { useGetQualityControlStatsQuery } from "@/redux/features/quality-control/qualityControlApi";
+import {
+  CircleAlert,
+  CircleCheckBig,
+  MessageSquare,
+  Star
+} from "lucide-react";
 import DynamicHeader from "../../dynamic-header";
+import StatsCard from "../../stats-card";
+import ClientFeedback from "./client-feedback";
 
 export default function QualityControlPage() {
+  const { data } = useGetQualityControlStatsQuery(undefined);
+
   const stats = [
     {
-      title: "Total Clients",
-      value: "245",
-      icon: User,
+      title: "Avg Rating",
+      value: data?.averageRating,
+      icon: Star,
     },
     {
-      title: "Active Services",
-      value: "80",
-      icon: Briefcase,
+      title: "Pending Reviews",
+      value: data?.pendingReviews,
+      icon: MessageSquare,
     },
     {
-      title: "Total Revenew",
-      value: "$8500",
-      icon: DollarSign,
+      title: "Open Issues",
+      value: data?.openIssues,
+      icon: CircleAlert,
     },
     {
-      title: "Total Staff",
-      value: "20",
-      icon: UserCog,
+      title: "Satisfaction Rate",
+      value: data?.satisfactionRate,
+      icon: CircleCheckBig,
     },
   ];
 

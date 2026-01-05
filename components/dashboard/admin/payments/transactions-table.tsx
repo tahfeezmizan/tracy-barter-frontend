@@ -119,7 +119,7 @@ export default function TransactionsTable() {
 
           <TableBody>
             {data?.data?.map((payment: Booking) => (
-              <TableRow key={payment?._id } className="hover:bg-gray-50">
+              <TableRow key={payment?._id} className="hover:bg-gray-50">
                 <TableCell>{payment?.createdAt}</TableCell>
                 <TableCell>{payment?.user?.email}</TableCell>
                 {/* <TableCell>{payment?.services || "0"}</TableCell> */}
