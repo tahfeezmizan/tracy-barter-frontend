@@ -14,54 +14,8 @@ import {
   useGetReviewQuery,
   useUpdateReviewStatusMutation,
 } from "@/redux/features/review/reviewApis";
-import { AlertCircle, CheckCircle, MessageCircle, Star } from "lucide-react";
+import { AlertCircle, CheckCircle, Star } from "lucide-react";
 import { toast } from "sonner";
-
-// -----------------------------
-// FEEDBACK DATA
-// -----------------------------
-const feedbackData = [
-  {
-    name: "John Smith",
-    status: "Approved",
-    service: "Home Cleaning",
-    provider: "Maria Johnson",
-    date: "2025-10-20",
-    rating: 5,
-    comment: "Excellent service! Very thorough and professional.",
-    actions: false,
-  },
-  {
-    name: "Sarah Davis",
-    status: "Pending",
-    service: "Grocery Shopping",
-    provider: "David Lee",
-    date: "2025-10-20",
-    rating: 4,
-    comment: "Good service, but forgot one item.",
-    actions: true,
-  },
-  {
-    name: "Mike Wilson",
-    status: "Approved",
-    service: "Home Maintenance",
-    provider: "Sarah Williams",
-    date: "2025-10-19",
-    rating: 5,
-    comment: "Fixed the issue perfectly. Very skilled!",
-    actions: false,
-  },
-  {
-    name: "Emily Brown",
-    status: "Under Review",
-    service: "Home Cleaning",
-    provider: "Maria Johnson",
-    date: "2025-10-19",
-    rating: 3,
-    comment: "Service was okay, but some areas were missed.",
-    actions: false,
-  },
-];
 
 const statusColor = (status: string) => {
   switch (status) {
