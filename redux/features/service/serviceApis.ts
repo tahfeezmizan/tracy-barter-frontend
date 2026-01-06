@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ServicesResponse } from "@/lib/types/service.types";
 import { baseApi } from "../baseApi";
 import { ServiceItem } from "@/config/Types/types";
 
-interface ServicesResponse {
-  data: ServiceItem[];
-  message: string;
-  success: boolean;
-}
-
 const serviceApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getService: builder.query<ServicesResponse, void>({
-      query: () => ({
-        url: "/service",
+    getService: builder.query<
+      ServicesResponse,
+      { page: number; limit: number }
+    >({
+      query: ({ page = 1, limit = 10 }) => ({
+        url: `/service?page=${page}&limit=${limit}`,
         method: "GET",
       }),
-      transformResponse: (response: any) => {
-        return response?.data?.data;
+      transformResponse: (response: any): ServicesResponse => {
+        return response?.data;
       },
     }),
 

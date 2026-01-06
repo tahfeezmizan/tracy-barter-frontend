@@ -10,8 +10,6 @@ export const getImageUrl = (path?: string) => {
 
   const baseURL = process.env.NEXT_PUBLIC_BASEURL as string;
 
-  console.log(baseURL, path)
-
   // Prevent double slashes
   return `${baseURL}${path}`;
 };

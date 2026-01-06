@@ -18,7 +18,7 @@ import { useState } from "react";
 
 export default function ReferralTable() {
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); // You can make this configurable if needed
+  const [limit] = useState(10); 
 
   const { data, isLoading, isFetching } = useGetReferralQuery({ page, limit });
   console.log(data);

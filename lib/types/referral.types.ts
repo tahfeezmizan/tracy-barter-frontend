@@ -3,7 +3,7 @@ export interface ReferralItem {
   yourName: string;
   referralName: string;
   referralEmail: string;
-  referralPhone: string; // empty string আসতে পারে
+  referralPhone: string; 
   notes: string;
   referredBy: string | null;
   status: "pending" | "approved" | "rejected";
