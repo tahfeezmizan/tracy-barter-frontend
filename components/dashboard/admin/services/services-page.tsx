@@ -31,7 +31,7 @@ export default function ServicesPage() {
       value: statsData?.averagePrice,
     },
   ];
-  
+
   return (
     <div className="space-y-6">
       <div className="mb-6 flex items-center justify-between gap-2">

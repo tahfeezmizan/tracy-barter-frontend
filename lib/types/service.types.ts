@@ -12,7 +12,7 @@ export interface Service {
   occasions: string[];
   serviceType: ServiceType[];
   servicesProvided: string[];
-  staff: any[]; // You can refine this type if you have a better structure for staff
+  staff: any[];
 }
 
 export interface ServiceType {

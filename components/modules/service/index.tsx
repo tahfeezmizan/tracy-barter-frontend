@@ -2,10 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ServiceItem } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { Service } from "@/lib/types/service.types";
 import { getImageUrl } from "@/lib/utils";
-import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+import {
+  useGetServiceHomeQuery
+} from "@/redux/features/service/serviceApis";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -13,7 +15,7 @@ import { useState } from "react";
 export default function ServiceSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data, isLoading } = useGetServiceQuery(undefined);
+  const { data, isLoading } = useGetServiceHomeQuery(undefined);
   const servicesCards = data?.data || [];
   console.log("this is services", servicesCards);
 
@@ -57,7 +59,7 @@ export default function ServiceSection() {
           <LoadingSpinner />
         ) : (
           <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
-            {visibleCards?.map((service: ServiceItem, idx: number) => {
+            {visibleCards?.map((service: Service, idx: number) => {
               const isCenter = idx === 2;
               const isEdge = idx === 0 || idx === 4;
 
@@ -65,11 +67,9 @@ export default function ServiceSection() {
                 <Card
                   key={`${service?._id}`}
                   className={`
-                      transition-all duration-500 ease-out border-yellow-500 !bg-[#fefce894] p-0
+                      transition-all duration-500 ease-out border-yellow-500 bg-[#fefce894] p-0
                       ${
-                        isCenter
-                          ? "scale-100 z-10 !w-full md:!w-96"
-                          : "scale-90 "
+                        isCenter ? "scale-100 z-10 w-full md:w-96" : "scale-90 "
                       }
                       ${isEdge ? "hidden lg:block" : ""}
                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
@@ -111,7 +111,7 @@ export default function ServiceSection() {
         >
           <ChevronLeft className="size-7" />
         </Button>
-        {servicesCards.map((service: ServiceItem, index: number) => (
+        {servicesCards.map((service: Service, index: number) => (
           <button
             key={service._id} // ✅ Unique key here as well
             onClick={() => goToSlide(index)}

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ServicesResponse } from "@/lib/types/service.types";
 import { baseApi } from "../baseApi";
-import { ServiceItem } from "@/config/Types/types";
 
 const serviceApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,6 +10,16 @@ const serviceApis = baseApi.injectEndpoints({
     >({
       query: ({ page = 1, limit = 10 }) => ({
         url: `/service?page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+      transformResponse: (response: any): ServicesResponse => {
+        return response?.data;
+      },
+    }),
+
+    getServiceHome: builder.query({
+      query: () => ({
+        url: `/service`,
         method: "GET",
       }),
       transformResponse: (response: any): ServicesResponse => {
@@ -37,12 +46,22 @@ const serviceApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+
+    createService: builder.mutation({
+      query: (data) => ({
+        url: "/service",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
   overrideExisting: true,
 });
 
 export const {
   useGetServiceQuery,
+  useGetServiceHomeQuery,
   useGetSingleServiceQuery,
   useGetServiceStatsQuery,
+  useCreateServiceMutation,
 } = serviceApis;
