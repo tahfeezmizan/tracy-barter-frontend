@@ -108,9 +108,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+import {
+  useDeleteServiceMutation,
+  useGetServiceQuery,
+} from "@/redux/features/service/serviceApis";
 import { ChevronLeft, ChevronRight, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function AllServicesTable() {
   const [page, setPage] = useState(1);
@@ -120,6 +124,8 @@ export default function AllServicesTable() {
     page,
     limit: pageSize,
   });
+
+  const [deleteService] = useDeleteServiceMutation();
 
   console.log("All Service", data);
 
@@ -190,6 +196,35 @@ export default function AllServicesTable() {
     }
 
     return pageNumbers;
+  };
+
+  const handleDelete = async (id: string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res: any = await deleteService(id);
+        console.log("deleteService", res);
+
+        Swal.fire("Deleted!", "Service has been deleted.", "success");
+      } catch (error) {
+        console.log(error);
+        Swal.fire(
+          "Error!",
+          "Something went wrong while deleting service.",
+          "error"
+        );
+      }
+    }
   };
 
   return (
@@ -271,6 +306,7 @@ export default function AllServicesTable() {
                         />
                         <Trash2
                           size={18}
+                          onClick={() => handleDelete(service?._id)}
                           className="cursor-pointer text-red-500 hover:text-red-600"
                         />
                       </div>

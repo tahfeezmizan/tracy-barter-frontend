@@ -15,6 +15,7 @@ const serviceApis = baseApi.injectEndpoints({
       transformResponse: (response: any): ServicesResponse => {
         return response?.data;
       },
+      providesTags: ["Service"],
     }),
 
     getServiceHome: builder.query({
@@ -25,6 +26,7 @@ const serviceApis = baseApi.injectEndpoints({
       transformResponse: (response: any): ServicesResponse => {
         return response?.data;
       },
+      providesTags: ["Service"],
     }),
 
     getServiceStats: builder.query({
@@ -35,6 +37,7 @@ const serviceApis = baseApi.injectEndpoints({
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["Service"],
     }),
 
     getSingleService: builder.query({
@@ -45,6 +48,7 @@ const serviceApis = baseApi.injectEndpoints({
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["Service"],
     }),
 
     createService: builder.mutation({
@@ -53,6 +57,15 @@ const serviceApis = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Service"],
+    }),
+
+    deleteService: builder.mutation({
+      query: (id) => ({
+        url: `/service/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Service"],
     }),
   }),
   overrideExisting: true,
@@ -64,4 +77,5 @@ export const {
   useGetSingleServiceQuery,
   useGetServiceStatsQuery,
   useCreateServiceMutation,
+  useDeleteServiceMutation
 } = serviceApis;

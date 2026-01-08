@@ -10,7 +10,7 @@ import StaffCards from "./staff-cards";
 
 export default function StaffPage() {
   const [open, setOpen] = useState(false);
-  const { data, isLoading } = useGetStaffStatsQuery(undefined);
+  const { data } = useGetStaffStatsQuery(undefined);
 
   const stats = [
     {
