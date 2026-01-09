@@ -19,21 +19,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+
 export function AppSidebar() {
   const dispatch = useDispatch();
   const role = useSelector(selectUserRole);
   const pathname = usePathname();
-  // const { role } = useUserRole();
   const items = menuItems[role];
   const router = useRouter();
-
-  // console.log(userRole);
-
   const [token, setToken] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // setIsMounted(true);
     setToken(!!Cookies.get("token"));
+    setMounted(true);
   }, []);
 
   const handleLogout = () => {
@@ -42,6 +40,11 @@ export function AppSidebar() {
     setToken(false); // instant UI update
     router.push("/");
   };
+
+  // Prevent hydration mismatch by only rendering after mount and when role is available
+  if (!mounted || !role) {
+    return null;
+  }
 
   return (
     <Sidebar className="border-none flex flex-col h-screen px-6">
@@ -94,7 +97,7 @@ export function AppSidebar() {
                         href={item.url}
                         className="flex items-center gap-3 hover:text-white p-0! bg-transparent! !hover:bg-transparent focus-visible:shadow-none active:text-white"
                       >
-                        <item.icon className="!size-6" />
+                        <item.icon className="size-6!" />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>

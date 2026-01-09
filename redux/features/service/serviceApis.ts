@@ -60,6 +60,15 @@ const serviceApis = baseApi.injectEndpoints({
       invalidatesTags: ["Service"],
     }),
 
+    updateService: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/service/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Service"],
+    }),
+
     deleteService: builder.mutation({
       query: (id) => ({
         url: `/service/${id}`,
@@ -77,5 +86,6 @@ export const {
   useGetSingleServiceQuery,
   useGetServiceStatsQuery,
   useCreateServiceMutation,
-  useDeleteServiceMutation
+  useUpdateServiceMutation,
+  useDeleteServiceMutation,
 } = serviceApis;

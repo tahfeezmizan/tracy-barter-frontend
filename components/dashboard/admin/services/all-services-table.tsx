@@ -108,6 +108,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { UpdateServiceDialog } from "@/lib/modal/update-service-dialog";
 import {
   useDeleteServiceMutation,
   useGetServiceQuery,
@@ -119,6 +120,8 @@ import Swal from "sweetalert2";
 export default function AllServicesTable() {
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { data, isLoading } = useGetServiceQuery({
     page,
@@ -126,8 +129,6 @@ export default function AllServicesTable() {
   });
 
   const [deleteService] = useDeleteServiceMutation();
-
-  console.log("All Service", data);
 
   // Pagination handlers
   const handlePrevPage = () => {
@@ -196,6 +197,11 @@ export default function AllServicesTable() {
     }
 
     return pageNumbers;
+  };
+
+  const handleEdit = (id: string) => {
+    setSelectedId(id);
+    setEditOpen(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -302,6 +308,7 @@ export default function AllServicesTable() {
                       <div className="flex items-center justify-end gap-3">
                         <Pencil
                           size={18}
+                          onClick={() => handleEdit(service._id)}
                           className="cursor-pointer text-gray-700 hover:text-black"
                         />
                         <Trash2
@@ -380,6 +387,12 @@ export default function AllServicesTable() {
           </div>
         )}
       </CardContent>
+
+      <UpdateServiceDialog
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        serviceId={selectedId}
+      />
     </Card>
   );
 }

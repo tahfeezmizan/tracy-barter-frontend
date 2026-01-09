@@ -17,7 +17,7 @@ export default function StaffCards() {
   const [open, setOpen] = useState(false);
   const [staffId, setStaffId] = useState<string | null>(null);
 
-  const { data, isLoading } = useGetStaffQuery();
+  const { data } = useGetStaffQuery();
 
   const [deleteStaff] = useDeleteStaffMutation();
 
