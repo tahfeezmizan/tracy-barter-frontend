@@ -347,9 +347,14 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
                 <input
                   type="file"
                   hidden
-                  ref={fileInputRef}
-                  {...register("image")}
-                  onChange={handleImageChange}
+                  {...register("image", {
+                    onChange: handleImageChange,
+                  })}
+                  ref={(e) => {
+                    fileInputRef.current = e;
+                    // @ts-ignore
+                    register("image").ref(e);
+                  }}
                 />
               </label>
             )}

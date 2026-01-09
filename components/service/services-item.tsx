@@ -1,12 +1,12 @@
 "use client";
 
-import { ServiceItem } from "@/config/Types/types";
+import { Service } from "@/lib/types/service.types";
 import { getImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface ServicesItemProps {
-  service: ServiceItem;
+  service: Service;
   imagePosition: "left" | "right";
 }
 

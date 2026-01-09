@@ -133,7 +133,7 @@ export default function ClientReview() {
         </Button>
         {reviews.map(({ review, index }: { review: any; index: number }) => (
           <button
-            key={review?._id}
+            key={index}
             onClick={() => goToSlide(index)}
             className={`transition-all duration-300 rounded-full bg-white ${
               index === currentIndex ? "w-12 h-3" : "w-3 h-3"

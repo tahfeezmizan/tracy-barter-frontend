@@ -11,10 +11,18 @@ const adminStatsApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+
+    getStaffStats: builder.query({
+      query: () => ({
+        url: "/stats/provider/dashboard",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+    }),
   }),
   overrideExisting: true,
 });
 
-export const {
-  useGetAdminStatsQuery,
-} = adminStatsApis;
+export const { useGetAdminStatsQuery, useGetStaffStatsQuery } = adminStatsApis;

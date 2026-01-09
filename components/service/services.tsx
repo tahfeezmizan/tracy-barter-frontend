@@ -2,12 +2,14 @@
 
 import ServicesItem from "./services-item";
 
-import { ServiceItem } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
-import { useGetServiceQuery } from "@/redux/features/service/serviceApis";
+import { Service } from "@/lib/types/service.types";
+import {
+  useGetServiceHomeQuery
+} from "@/redux/features/service/serviceApis";
 
 export default function ServicesPage() {
-  const { data, isLoading } = useGetServiceQuery(undefined);
+  const { data, isLoading } = useGetServiceHomeQuery(undefined);
   const servicesData = data?.data;
   console.log(servicesData);
 
@@ -17,7 +19,7 @@ export default function ServicesPage() {
         <LoadingSpinner />
       ) : (
         <>
-          {servicesData?.map((service: ServiceItem, index: number) => (
+          {servicesData?.map((service: Service, index: number) => (
             <ServicesItem
               key={service?._id}
               service={service}

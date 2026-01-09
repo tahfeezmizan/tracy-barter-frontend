@@ -1,6 +1,5 @@
-import React from "react";
-import StatsCard from "../../stats-card";
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
+import StatsCard from "../../stats-card";
 import ServiceList from "./service-list";
 
 export default function MyServicesPage() {
