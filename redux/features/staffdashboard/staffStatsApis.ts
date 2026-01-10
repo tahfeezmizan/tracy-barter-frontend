@@ -1,20 +1,21 @@
 import { baseApi } from "../baseApi";
 
-const adminStatsApis = baseApi.injectEndpoints({
+const staffStatsApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAdminStats: builder.query({
+    getStaffStats: builder.query({
       query: () => ({
-        url: "/stats/admin/dashboard",
+        url: "/stats/provider/dashboard",
         method: "GET",
       }),
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["staff"],
     }),
 
-    getAdminRecentService: builder.query({
+    getStaffRecentService: builder.query({
       query: () => ({
-        url: "/stats/admin/recent-services",
+        url: "/stats/provider/recent-services",
         method: "GET",
       }),
       transformResponse: (response: any) => {
@@ -25,5 +26,5 @@ const adminStatsApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetAdminStatsQuery, useGetAdminRecentServiceQuery } =
-  adminStatsApis;
+export const { useGetStaffStatsQuery, useGetStaffRecentServiceQuery } =
+  staffStatsApis;

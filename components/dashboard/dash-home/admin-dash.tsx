@@ -2,8 +2,8 @@ import { StatsCardItem } from "@/config/Types/admin/adminType";
 
 import LoadingSpinner from "@/lib/loading-spinner";
 import {
+  useGetAdminRecentServiceQuery,
   useGetAdminStatsQuery,
-  useGetStaffStatsQuery,
 } from "@/redux/features/admindashboard/adminStatsApis";
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
 import RecentServices from "../admin/recent-services";
@@ -13,15 +13,27 @@ import DynamicHeader from "../dynamic-header";
 import StatsCard from "../stats-card";
 import { useSelector } from "react-redux";
 import { selectUserRole } from "@/redux/slice/userSlice";
+import {
+  useGetStaffRecentServiceQuery,
+  useGetStaffStatsQuery,
+} from "@/redux/features/staffdashboard/staffStatsApis";
+import { TodaysSchedule } from "../provider/today-schedule";
 
 export default function AdminDash() {
   const role = useSelector(selectUserRole);
   console.log(role);
-
+  // admin
   const { data, isLoading } = useGetAdminStatsQuery(undefined);
+  const { data: adminRecentService, isLoading: adminRecentLoading } =
+    useGetAdminRecentServiceQuery(undefined);
 
+  // staff
   const { data: staffData, isLoading: staffLoading } =
     useGetStaffStatsQuery(undefined);
+  const { data: staffRecentService, isLoading: staffRecentLoading } =
+    useGetStaffRecentServiceQuery(undefined);
+
+  // console.log("staffRecentService", staffRecentService);
 
   const statsAdmin: StatsCardItem[] = [
     {
@@ -72,8 +84,12 @@ export default function AdminDash() {
   return (
     <div className="space-y-6">
       <DynamicHeader
-        title={"Admin Dashboard"}
-        des="Overview of your concierge business"
+        title={role === "admin" ? "Admin Dashboard" : "Staff Portal"}
+        des={
+          role === "admin"
+            ? "Overview of your concierge business"
+            : "Here's your schedule for today"
+        }
       />
       {isLoading || staffLoading ? (
         <LoadingSpinner />
@@ -81,13 +97,20 @@ export default function AdminDash() {
         <>
           <StatsCard stats={role === "admin" ? statsAdmin : statsStaff} />
 
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            <ServiceRequestChart data={data?.serviceRequests} />
-            <RevenueChart data={data?.revenueTrend} />
-          </div>
+          {role === "admin" && (
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              <ServiceRequestChart data={data?.serviceRequests} />
+              <RevenueChart data={data?.revenueTrend} />
+            </div>
+          )}
         </>
       )}
-      <RecentServices />
+
+      {role === "staff" && <TodaysSchedule />}
+
+      <RecentServices
+        data={role === "admin" ? adminRecentService : staffRecentService}
+      />
     </div>
   );
 }

@@ -2,17 +2,6 @@ import { baseApi } from "@/redux/features/baseApi";
 
 const staffApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getStaffStats: builder.query({
-      query: () => ({
-        url: "/stats/admin/staff-stats",
-        method: "GET",
-      }),
-      transformResponse: (response: any) => {
-        return response?.data;
-      },
-      providesTags: ["staff"],
-    }),
-
     getStaffSpecialtyServices: builder.query({
       query: () => ({
         url: "/service/get-services-for-add-staff",
@@ -56,7 +45,6 @@ const staffApis = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetStaffStatsQuery,
   useGetStaffSpecialtyServicesQuery,
   useCreateStaffMutation,
   useGetSingleStaffQuery,
