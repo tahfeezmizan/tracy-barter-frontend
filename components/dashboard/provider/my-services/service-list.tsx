@@ -86,11 +86,15 @@ const serviceData: ServiceItem[] = [
   },
 ];
 
-
-const statusIcon = {
-  Scheduled: <Clock className="size-5 text-blue-500" />,
-  Completed: <CircleCheckBig className="size-5 text-green-500/80" />,
-  Cancelled: <CircleX className="size-5 text-red-500/80" />,
+const getStatusIcon = (status: ServiceItem["status"]) => {
+  switch (status) {
+    case "Scheduled":
+      return <Clock className="size-5 text-blue-500" />;
+    case "Completed":
+      return <CircleCheckBig className="size-5 text-green-500/80" />;
+    case "Cancelled":
+      return <CircleX className="size-5 text-red-500/80" />;
+  }
 };
 
 export default function ServiceList() {
@@ -165,7 +169,7 @@ export default function ServiceList() {
               </div>
 
               <div className="flex items-center gap-2">
-                {statusIcon[service.status]}
+                {getStatusIcon(service.status)}
                 <Badge className={statusColor[service.status]}>
                   {service.status}
                 </Badge>
