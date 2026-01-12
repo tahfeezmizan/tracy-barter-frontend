@@ -9,7 +9,7 @@ import {
 import { recentService } from "@/lib/types/recentServiceTypes";
 
 export default function RecentServices(data: any) {
-  console.log("staffRecentService", data);
+  // console.log("staffRecentService", data);
 
   const statusColor = {
     confirmed: "bg-green-100 text-green-700",
