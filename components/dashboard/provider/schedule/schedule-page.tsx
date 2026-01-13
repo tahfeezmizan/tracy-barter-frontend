@@ -47,7 +47,7 @@ export default function SchedulePage() {
         </div>
 
         <div className="flex-1">
-          <AppointmentList data={data} date={date} loading={isLoading} />
+          <AppointmentList data={data} date={date ?? new Date()} loading={isLoading} />
         </div>
       </div>
 

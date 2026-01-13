@@ -13,3 +13,16 @@ export const getImageUrl = (path?: string) => {
   // Prevent double slashes
   return `${baseURL}${path}`;
 };
+
+export const formatDateOnly = (date?: string) => {
+  if (!date) return "";
+  return date.split("T")[0];
+};
+
+export const formatDate = (date: string | Date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};
