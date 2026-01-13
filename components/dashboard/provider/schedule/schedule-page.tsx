@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useGetScheduledBookingsByDateQuery } from "@/redux/features/staff/staffApis";
+import React from "react";
 import AppointmentList from "./appointment-list";
 import WeeklyOverview from "./weekly-overview";
-import { useGetScheduledBookingsByDateQuery } from "@/redux/features/staff/staffApis";
 
 export default function SchedulePage() {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -13,16 +13,13 @@ export default function SchedulePage() {
 
   const formattedDate = React.useMemo(() => {
     if (!date) return "";
-    return date.toLocaleDateString("en-CA"); // YYYY-MM-DD
+    return date.toLocaleDateString("en-CA");
   }, [date]);
 
   const { data, isLoading } = useGetScheduledBookingsByDateQuery(
     formattedDate,
     { skip: !formattedDate }
   );
-
-  // console.log(date);
-  // console.log(data);
 
   return (
     <div className="space-y-6">
