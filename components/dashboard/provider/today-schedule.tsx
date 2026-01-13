@@ -5,12 +5,7 @@ import {
   useGetUpcomingScheduleQuery,
   useUpdateBookingStatusMutation,
 } from "@/redux/features/staffdashboard/staffStatsApis";
-import {
-  CheckCircle,
-  Clock,
-  MapPin,
-  Play
-} from "lucide-react";
+import { CheckCircle, Clock, MapPin, Play } from "lucide-react";
 import { toast } from "sonner";
 
 export function TodaysSchedule() {
@@ -66,11 +61,11 @@ export function TodaysSchedule() {
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div>
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <div className="">
+          <div className="space-y-4">
             {data?.map((item: any, index: number) => (
               <Card key={index} className="w-full py-2">
                 <CardContent className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">

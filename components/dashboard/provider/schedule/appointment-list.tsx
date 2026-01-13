@@ -49,15 +49,29 @@ const mockAppointments: Appointment[] = [
   },
 ];
 
-export default function AppointmentList() {
-  const date = "Tuesday, October 28, 2025";
+export default function AppointmentList({
+  data,
+  date,
+  loading,
+}: {
+  data: any;
+  date: Date | undefined;
+  loading: boolean;
+}) {
+  const formatDate = (date: string | Date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   return (
     <div className="p-6 bg-white rounded-xl">
       <div className="max-w-3xl mx-auto">
         <header className="mb-6">
           <h1 className="text-xl font-semibold text-gray-900">
-            Appointments for {date}
+            Appointments for {formatDate(date)}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
             {mockAppointments.length} appointments scheduled

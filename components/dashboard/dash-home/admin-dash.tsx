@@ -110,6 +110,7 @@ export default function AdminDash() {
 
       <RecentServices
         data={role === "admin" ? adminRecentService : staffRecentService}
+        loading={role === "admin" ? adminRecentLoading : staffRecentLoading}
       />
     </div>
   );
