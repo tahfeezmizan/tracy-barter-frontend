@@ -1,12 +1,13 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useGetMyServicesStaffQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { CircleCheckBig, CircleX, Clock } from "lucide-react";
 import { useState } from "react";
-import { Check, CircleCheckBig, CircleX, Clock, X } from "lucide-react";
 
 type ServiceItem = {
   id: number;
@@ -112,6 +113,9 @@ export default function ServiceList() {
     Completed: "bg-green-200 text-green-700",
     Cancelled: "bg-red-200 text-red-700",
   };
+
+  const { data } = useGetMyServicesStaffQuery(undefined);
+  console.log(data?.data);
 
   return (
     <div className="w-full  rounded-xl">

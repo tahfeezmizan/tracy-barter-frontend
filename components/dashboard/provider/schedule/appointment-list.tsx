@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { AppointmentDetailsModal } from "@/lib/modal/appointment-details-modal";
+
 import { AppointmentsBooking } from "@/lib/types/schedule.types";
 import { formatDate, formatDateOnly } from "@/lib/utils";
 import { useUpdateBookingStatusMutation } from "@/redux/features/staffdashboard/staffStatsApis";
@@ -14,7 +16,7 @@ import {
   Phone,
   Play,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 const AvatarBlock: React.FC<{
@@ -54,9 +56,8 @@ export default function AppointmentList({
   data: AppointmentsBooking[];
   date: Date | string;
   loading: boolean;
-  
 }) {
-  console.log("data", data);
+  const [openId, setOpenId] = useState<string | null>(null);
   const [updateBookingStatus, { isLoading }] = useUpdateBookingStatusMutation();
 
   const handleUpdateStatus = async (
@@ -65,16 +66,12 @@ export default function AppointmentList({
   ) => {
     let nextStatus = "";
 
-    if (currentStatus === "scheduled") {
-      nextStatus = "inProgress";
-    } else if (currentStatus === "inProgress") {
-      nextStatus = "completed";
-    } else {
-      return;
-    }
+    if (currentStatus === "scheduled") nextStatus = "inProgress";
+    else if (currentStatus === "inProgress") nextStatus = "completed";
+    else return;
 
     try {
-      const res = await updateBookingStatus({
+      await updateBookingStatus({
         bookingId,
         status: nextStatus,
       }).unwrap();
@@ -84,8 +81,6 @@ export default function AppointmentList({
           ? "Service started successfully"
           : "Service completed successfully"
       );
-
-      console.log("API Response", res);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update booking status");
     }
@@ -174,7 +169,13 @@ export default function AppointmentList({
                   <div className="my-5 border-t border-gray-100"></div>
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <button className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200">
+                    <button
+                      className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200"
+                      onClick={() => {
+                        setOpenId(appointment._id);
+                        console.log("Clicked appointment ID:", appointment._id);
+                      }}
+                    >
                       <Eye size={16} />
                       View Details
                     </button>
@@ -189,7 +190,7 @@ export default function AppointmentList({
                             appointment?.status
                           )
                         }
-                        className="flex-1 flex items-center gap-1 px-4 py-2 rounded-lg text-sm text-white bg-secondary hover:bg-primary"
+                        className="w-full flex-1 flex items-center gap-1 px-4 py-2 rounded-lg text-sm text-white bg-secondary hover:bg-primary"
                       >
                         {appointment?.status === "scheduled" ? (
                           <Play size={16} />
@@ -203,6 +204,15 @@ export default function AppointmentList({
                       </Button>
                     )}
                   </div>
+
+                  {/* MODAL */}
+                  <AppointmentDetailsModal
+                    open={openId === appointment._id}
+                    onOpenChange={(open) => {
+                      if (!open) setOpenId(null);
+                    }}
+                    serviceId={appointment._id}
+                  />
                 </div>
               ))}
             </div>

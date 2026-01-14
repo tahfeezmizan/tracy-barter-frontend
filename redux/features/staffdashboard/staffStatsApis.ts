@@ -13,6 +13,17 @@ const staffStatsApis = baseApi.injectEndpoints({
       providesTags: ["staff"],
     }),
 
+    getMyServicesStaff: builder.query({
+      query: () => ({
+        url: "/booking/my-services",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["staff"],
+    }),
+
     getUpcomingSchedule: builder.query({
       query: () => ({
         url: "/booking/my-upcoming",
@@ -48,7 +59,8 @@ const staffStatsApis = baseApi.injectEndpoints({
 
 export const {
   useGetStaffStatsQuery,
-  useGetStaffRecentServiceQuery,
+  useGetMyServicesStaffQuery,
   useGetUpcomingScheduleQuery,
-  useUpdateBookingStatusMutation
+  useGetStaffRecentServiceQuery,
+  useUpdateBookingStatusMutation,
 } = staffStatsApis;

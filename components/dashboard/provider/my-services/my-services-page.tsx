@@ -3,27 +3,30 @@
 import { Briefcase, DollarSign, User, UserCog } from "lucide-react";
 import StatsCard from "../../stats-card";
 import ServiceList from "./service-list";
+import { useGetStaffStatsQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 export default function MyServicesPage() {
+  const { data } = useGetStaffStatsQuery(undefined);
+
   const stats = [
     {
-      title: "Total Clients",
-      value: "245",
+      title: "Total Services",
+      value: data?.totalServices,
       icon: User,
     },
     {
-      title: "Active Services",
+      title: "Scheduled",
       value: "80",
       icon: Briefcase,
     },
     {
-      title: "Total Revenew",
-      value: "$8500",
+      title: "Completed",
+      value: data?.completedServices,
       icon: DollarSign,
     },
     {
-      title: "Total Staff",
-      value: "20",
+      title: "Earnings",
+      value: data?.totalEarnings,
       icon: UserCog,
     },
   ];
