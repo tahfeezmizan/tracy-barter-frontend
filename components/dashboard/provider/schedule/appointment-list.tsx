@@ -19,10 +19,10 @@ import {
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-const AvatarBlock: React.FC<{
+export const AvatarBlock: React.FC<{
   name?: string;
   colorClass?: string;
-}> = ({ name, colorClass = "bg-slate-700" }) => {
+}> = ({ name }) => {
   const getInitials = (name?: string) => {
     if (!name) return "";
     const parts = name.trim().split(" ");
@@ -32,7 +32,7 @@ const AvatarBlock: React.FC<{
 
   return (
     <div
-      className={`flex h-10 w-10 items-center justify-center rounded-full ${colorClass} text-white font-semibold text-sm mr-4 shrink-0`}
+      className={`flex w-12 h-12 items-center justify-center rounded-full bg-[#0B1F3A] text-white font-semibold text-sm mr-4 shrink-0`}
     >
       {getInitials(name)}
     </div>

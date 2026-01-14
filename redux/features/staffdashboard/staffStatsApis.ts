@@ -2,6 +2,17 @@ import { baseApi } from "../baseApi";
 
 const staffStatsApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getStaffProfile: builder.query({
+      query: () => ({
+        url: "/user/profile",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["staff"],
+    }),
+
     getStaffStats: builder.query({
       query: () => ({
         url: "/stats/provider/dashboard",
@@ -13,13 +24,35 @@ const staffStatsApis = baseApi.injectEndpoints({
       providesTags: ["staff"],
     }),
 
+    // getMyServicesStaff: builder.query({
+    //   query: () => ({
+    //     url: "/booking/my-services",
+    //     method: "GET",
+    //   }),
+    //   transformResponse: (response: any) => {
+    //     return response?.data;
+    //   },
+    //   providesTags: ["staff"],
+    // }),
+
     getMyServicesStaff: builder.query({
-      query: () => ({
+      query: (params: {
+        page?: number;
+        limit?: number;
+        search?: string;
+        status?: string;
+      }) => ({
         url: "/booking/my-services",
         method: "GET",
+        params: {
+          page: params?.page || 1,
+          limit: params?.limit || 10,
+          ...(params?.search && { search: params.search }),
+          ...(params?.status && { status: params.status }),
+        },
       }),
       transformResponse: (response: any) => {
-        return response?.data;
+        return response?.data; // This should already contain both data and meta
       },
       providesTags: ["staff"],
     }),
@@ -58,6 +91,7 @@ const staffStatsApis = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetStaffProfileQuery,
   useGetStaffStatsQuery,
   useGetMyServicesStaffQuery,
   useGetUpcomingScheduleQuery,
