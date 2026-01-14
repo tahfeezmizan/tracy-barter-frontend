@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { formatDateOnly } from "@/lib/utils";
 import { useGetMyServicesStaffQuery } from "@/redux/features/staffdashboard/staffStatsApis";
-import { CircleCheckBig, CircleX, Clock } from "lucide-react";
+import { CircleCheckBig, CircleX, Clock, Clock9, MapPin } from "lucide-react";
 import { useState } from "react";
 
 type ServiceItem = {
@@ -42,49 +43,6 @@ const serviceData: ServiceItem[] = [
     address: "456 Maple Avenue, Springfield",
     status: "Scheduled",
   },
-  {
-    id: 3,
-    initials: "JS",
-    title: "Home Cleaning",
-    client: "John Smith",
-    date: "Fri, Oct 24",
-    time: "10:00 AM - 12:00 PM",
-    address: "321 Elm Street, Springfield",
-    rating: 5.0,
-    status: "Completed",
-  },
-  {
-    id: 4,
-    initials: "LB",
-    title: "Grocery Shopping",
-    client: "Lisa Brown",
-    date: "Thu, Oct 23",
-    time: "3:00 PM - 4:00 PM",
-    address: "654 Birch Lane, Springfield",
-    rating: 5.0,
-    status: "Completed",
-  },
-  {
-    id: 5,
-    initials: "DL",
-    title: "Home Maintenance",
-    client: "David Lee",
-    date: "Wed, Oct 22",
-    time: "9:00 AM - 11:00 AM",
-    address: "789 Pine Road, Springfield",
-    rating: 4.0,
-    status: "Completed",
-  },
-  {
-    id: 6,
-    initials: "EW",
-    title: "Home Cleaning",
-    client: "Emma Wilson",
-    date: "Mon, Oct 20",
-    time: "2:00 PM - 4:00 PM",
-    address: "147 Oak Avenue, Springfield",
-    status: "Cancelled",
-  },
 ];
 
 const getStatusIcon = (status: ServiceItem["status"]) => {
@@ -96,6 +54,15 @@ const getStatusIcon = (status: ServiceItem["status"]) => {
     case "Cancelled":
       return <CircleX className="size-5 text-red-500/80" />;
   }
+};
+
+const STATUS_COLOR = {
+  confirmed: "bg-purple-100 text-purple-700 border-purple-200",
+  scheduled: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  inProgress: "bg-blue-100 text-blue-700 border-blue-200",
+  completed: "bg-green-100 text-green-700 border-green-200",
+  cancelled: "bg-red-100 text-red-700 border-red-200",
+  requested: "bg-gray-100 text-gray-700 border-gray-300",
 };
 
 export default function ServiceList() {
@@ -122,7 +89,7 @@ export default function ServiceList() {
       {/* Search + Status Filter Row */}
       <div className="flex flex-col md:flex-row justify-between gap-3">
         <Input
-          placeholder="Search by client or service..."
+          placeholder="Search by client or service?._.."
           className="bg-white text-black"
         />
 
@@ -154,9 +121,9 @@ export default function ServiceList() {
 
       {/* Grid of Cards */}
       <div className="grid gap-4 mt-6 grid-cols-1 md:grid-cols-2">
-        {filteredList.map((service) => (
+        {data?.data?.slice(0, 6).map((service) => (
           <Card
-            key={service.id}
+            key={service?._id}
             className="p-5 bg-white text-black rounded-xl overflow-hidden gap-2"
           >
             <div className="flex items-center justify-between">
@@ -166,36 +133,43 @@ export default function ServiceList() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-black">
-                    {service?.title}
+                    {service?.serviceType?.title}
                   </h3>
-                  <p className="text-gray-500 text-sm">{service?.client}</p>
+                  <p className="text-gray-500 text-sm">{service?.user?.name}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                {getStatusIcon(service.status)}
-                <Badge className={statusColor[service.status]}>
-                  {service.status}
-                </Badge>
+                <span
+                  className={`text-xs px-2 py-1 rounded-full  border capitalize ${
+                    STATUS_COLOR[
+                      service?.status as keyof typeof STATUS_COLOR
+                    ] ?? "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {service?.status?.replace(/([A-Z])/g, " $1")}
+                </span>
               </div>
             </div>
 
             <p className="mt-3 text-sm flex items-center gap-2">
-              📅 {service.date} • {service.time}
+              <Clock9 size={16} />
+              <span className="truncate">{formatDateOnly(service?.date)}</span>
             </p>
             <p className="text-sm flex items-center gap-2">
-              📍 {service.address}
+              <MapPin size={16} />
+              <span className="truncate">{service?.address?.address}</span>
             </p>
 
-            {service.rating && (
+            {service?._rating && (
               <p className="mt-3 text-sm">
-                Client Rating: ⭐ <strong>{service.rating}</strong>
+                Client Rating: ⭐ <strong>{service?._rating}</strong>
               </p>
             )}
 
             {/* Buttons */}
             <div className="flex gap-2 mt-4">
-              {service.status === "Scheduled" ? (
+              {service?._status === "Scheduled" ? (
                 <>
                   <Button className="w-1/2 bg-gray-900 text-white">
                     Complete Service
