@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin } from "lucide-react";
 
-export default function PersonalInformation() {
+export default function PersonalInformation({ data }) {
+  console.log("PersonalInformation", data);
+
   return (
     <div className="w-full bg-white text-black p-6 rounded-xl">
       {/* Header */}
@@ -24,7 +26,11 @@ export default function PersonalInformation() {
           {/* FULL NAME */}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="fullName">Full Name</Label>
-            <Input id="fullName" placeholder="Maria Johnson" />
+            <Input
+              id="fullName"
+              defaultValue={data?.name}
+              placeholder="Maria Johnson"
+            />
           </div>
 
           {/* EMAIL */}
@@ -36,6 +42,7 @@ export default function PersonalInformation() {
                 id="email"
                 type="email"
                 className="pl-10"
+                defaultValue={data?.email}
                 placeholder="maria@concierge.com"
               />
             </div>
@@ -49,6 +56,7 @@ export default function PersonalInformation() {
               <Input
                 id="phone"
                 className="pl-10"
+                defaultValue={data?.phone}
                 placeholder="(555) 111-2222"
               />
             </div>
@@ -57,7 +65,11 @@ export default function PersonalInformation() {
           {/* SPECIALTY */}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="specialty">Specialty</Label>
-            <Input id="specialty" placeholder="Home Cleaning" />
+            <Input
+              id="specialty"
+              defaultValue={data?.role}
+              placeholder="Home Cleaning"
+            />
           </div>
         </div>
 
@@ -69,6 +81,11 @@ export default function PersonalInformation() {
             <Input
               id="address"
               className="pl-10"
+              defaultValue={
+                data?.location?.coordinates
+                  ? `Lat: ${data.location.coordinates[1]}, Lng: ${data.location.coordinates[0]}`
+                  : ""
+              }
               placeholder="Enter your address"
             />
           </div>
@@ -79,6 +96,7 @@ export default function PersonalInformation() {
           <Label htmlFor="bio">Bio</Label>
           <Textarea
             id="bio"
+            defaultValue={`${data?.description}`}
             placeholder="Tell clients about your experience and expertise..."
             rows={5}
           />

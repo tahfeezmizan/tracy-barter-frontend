@@ -1,14 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useStaffProfileUpdateMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { Camera, Star } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
+import { AvatarBlock } from "../schedule/appointment-list";
+import { getImageUrl } from "@/lib/utils";
 
-export default function ProviderProfile() {
+export default function ProviderProfile({ data }) {
   const [file, setFile] = useState<File | null>(null);
+
+  const [upload, { isLoading }] = useStaffProfileUpdateMutation();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] ?? null;
@@ -20,13 +24,26 @@ export default function ProviderProfile() {
       {/* LEFT SECTION */}
       <div className="flex items-center gap-4">
         {/* Profile Circle Initials */}
-        <div className="w-16 h-16 rounded-full bg-[#0F1C33] flex items-center justify-center">
-          <span className="text-white font-semibold text-xl">MJ</span>
+
+        <div className="">
+          {data?.profile ? (
+            <Image
+              src={getImageUrl(data.profile)}
+              alt={data?.name}
+              width={200}
+              height={200}
+              className="w-12 h-12 rounded-full bg-[#0B1F3A]"
+            />
+          ) : (
+            <AvatarBlock name={data?.name} />
+          )}
         </div>
 
         <div>
           {/* Name */}
-          <h2 className="font-medium text-black text-lg">Maria Johnson</h2>
+          <h2 className="capitalize font-medium text-black text-lg">
+            {data?.name}
+          </h2>
 
           {/* Tags */}
           <div className="flex items-center gap-2 mt-1">
@@ -34,7 +51,9 @@ export default function ProviderProfile() {
               Home Cleaning
             </Badge>
 
-            <Badge className="bg-green-500 text-white">Available</Badge>
+            <Badge className="bg-green-500 text-white capitalize">
+              {data?.status}
+            </Badge>
           </div>
 
           {/* Stats Row */}
@@ -42,12 +61,14 @@ export default function ProviderProfile() {
             {/* Rating */}
             <div className="flex items-center gap-1">
               <Star size={14} className="text-yellow-400 fill-yellow-400" />
-              <span>4.9 Rating</span>
+              <span>{data?.avgRating} Rating</span>
             </div>
 
             {/* Services Completed */}
             <div className="flex items-center gap-1">
-              <span className="font-semibold">156</span>
+              <span className="font-semibold">
+                {data?.completedServiceCount}
+              </span>
               <span>Services Completed</span>
             </div>
           </div>

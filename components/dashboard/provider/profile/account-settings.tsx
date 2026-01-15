@@ -13,7 +13,7 @@ const AccountSettings = () => {
   };
 
   return (
-    <div className="max-w-1/2 p-6 bg-white text-black rounded-xl shadow-md">
+    <div className="p-6 bg-white text-black rounded-xl shadow-md">
       <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
       <p className="text-gray-500 mb-6">Manage your account preferences</p>
 

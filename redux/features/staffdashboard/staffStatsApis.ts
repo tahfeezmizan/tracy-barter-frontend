@@ -86,6 +86,15 @@ const staffStatsApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["staff"],
     }),
+
+    staffProfileUpdate: builder.mutation({
+      query: (formData) => ({
+        url: "/user/profile",
+        method: "PATCH",
+        body: formData,
+      }),
+      invalidatesTags: ["staff"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -97,4 +106,5 @@ export const {
   useGetUpcomingScheduleQuery,
   useGetStaffRecentServiceQuery,
   useUpdateBookingStatusMutation,
+  useStaffProfileUpdateMutation,
 } = staffStatsApis;
