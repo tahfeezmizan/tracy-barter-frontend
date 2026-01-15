@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { useStaffProfileUpdateMutation } from "@/redux/features/staffdashboard/staffStatsApis";
+import { toast } from "sonner";
 
 export default function PersonalInformation({ data }: StaffProfileResponse) {
   const [updateProfile, { isLoading }] = useStaffProfileUpdateMutation();
@@ -45,12 +46,15 @@ export default function PersonalInformation({ data }: StaffProfileResponse) {
     try {
       const res = await updateProfile({
         name: formData.fullName,
-        description: formData.bio, // Changed from formData.description to formData.bio
+        description: formData.bio,
         specialty: formData.specialty,
         phone: formData.phone,
       });
 
       console.log(res);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      }
 
       console.log(res);
     } catch (error) {
@@ -150,7 +154,7 @@ export default function PersonalInformation({ data }: StaffProfileResponse) {
 
         {/* BUTTON */}
         <Button className="mt-4 bg-[#F4C542]" type="submit">
-          Save Changes
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
       </form>
     </div>

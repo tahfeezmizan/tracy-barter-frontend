@@ -1,6 +1,7 @@
+import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { Star } from "lucide-react";
 
-export function PerformanceStats({ data }) {
+export function PerformanceStats({ data }: StaffProfileResponse) {
   return (
     <div className="w-full p-6 bg-white text-black rounded-lg">
       {/* Heading */}

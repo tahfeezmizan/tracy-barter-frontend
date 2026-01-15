@@ -9,6 +9,7 @@ import { useState } from "react";
 import { AvatarBlock } from "../schedule/appointment-list";
 import { getImageUrl } from "@/lib/utils";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
+import { toast } from "sonner";
 
 export default function ProviderProfile({ data }: StaffProfileResponse) {
   const [file, setFile] = useState<File | null>(null);
@@ -23,14 +24,18 @@ export default function ProviderProfile({ data }: StaffProfileResponse) {
 
     setFile(selectedFile);
 
+    // Create FormData
     const formData = new FormData();
-    formData.append("profile", selectedFile);
+    formData.append("images", selectedFile); 
 
     console.log(selectedFile);
 
     try {
       const res = await upload(formData).unwrap();
-      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+      console.log("ProviderProfile", res);
     } catch (error) {
       console.error("Profile upload failed:", error);
     }
@@ -91,45 +96,10 @@ export default function ProviderProfile({ data }: StaffProfileResponse) {
         </div>
       </div>
 
-      {/* RIGHT SECTION - Change Photo button */}
-      {/* <Button variant="outline" className="flex items-center gap-2">
-        <Image
-          src="/camera-icon.png" // replace with your icon path
-          alt="camera icon"
-          width={16}
-          height={16}
-        />
-        Change Photo
-      </Button> */}
-      {/* <div className="flex items-center space-x-2 text-black">
-        <label
-          htmlFor="file-upload"
-          className="flex items-center cursor-pointer"
-        >
-          <Button className="flex items-center space-x-2 px-4 py-2 border rounded-md bg-white hover:bg-gray-100">
-            <Camera className="w-5 h-5" />
-            <span>Change Photo</span>
-          </Button>
-        </label>
-        <input
-          id="file-upload"
-          type="file"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        {file && <div className="text-gray-600 text-sm">{file.name}</div>}
-      </div> */}
       <div className="flex items-center space-x-2 text-black">
-        {/* The entire box is now the clickable label */}
         <label
           htmlFor="file-upload"
-          className="
-      flex items-center space-x-2 
-      px-4 py-2 
-      border rounded-lg 
-      bg-white hover:bg-gray-100 
-      cursor-pointer
-    "
+          className="flex items-center space-x-2 px-4 py-2 border rounded-lg bg-white hover:bg-gray-100 cursor-pointer"
         >
           <Camera className="w-5 h-5" />
           <span>Change Photo</span>
@@ -141,8 +111,6 @@ export default function ProviderProfile({ data }: StaffProfileResponse) {
           className="hidden"
           onChange={handleFileChange}
         />
-
-        {file && <div className="text-gray-600 text-sm">{file.name}</div>}
       </div>
     </Card>
   );
