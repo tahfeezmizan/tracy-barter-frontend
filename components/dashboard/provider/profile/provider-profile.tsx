@@ -8,15 +8,32 @@ import Image from "next/image";
 import { useState } from "react";
 import { AvatarBlock } from "../schedule/appointment-list";
 import { getImageUrl } from "@/lib/utils";
+import { StaffProfileResponse } from "@/lib/types/staff.types";
 
-export default function ProviderProfile({ data }) {
+export default function ProviderProfile({ data }: StaffProfileResponse) {
   const [file, setFile] = useState<File | null>(null);
 
-  const [upload, { isLoading }] = useStaffProfileUpdateMutation();
+  const [upload] = useStaffProfileUpdateMutation();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = event.target.files?.[0] ?? null;
+    if (!selectedFile) return;
+
     setFile(selectedFile);
+
+    const formData = new FormData();
+    formData.append("profile", selectedFile);
+
+    console.log(selectedFile);
+
+    try {
+      const res = await upload(formData).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.error("Profile upload failed:", error);
+    }
   };
 
   return (
@@ -24,7 +41,6 @@ export default function ProviderProfile({ data }) {
       {/* LEFT SECTION */}
       <div className="flex items-center gap-4">
         {/* Profile Circle Initials */}
-
         <div className="">
           {data?.profile ? (
             <Image
