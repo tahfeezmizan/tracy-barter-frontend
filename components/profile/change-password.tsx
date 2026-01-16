@@ -2,13 +2,17 @@
 
 import { memo, useCallback, useState } from "react";
 import { KeyRound } from "lucide-react";
-import type { PasswordFormData, FormInputChangeEvent, FormSubmitEvent } from "./types";
+import type {
+  PasswordFormData,
+  FormInputChangeEvent,
+  FormSubmitEvent,
+} from "./types";
 
 /** Default password form state */
 const DEFAULT_FORM_STATE: PasswordFormData = {
   currentPassword: "",
   newPassword: "",
-  confirmPassword: ""
+  confirmPassword: "",
 };
 
 /**
@@ -19,32 +23,36 @@ const DEFAULT_FORM_STATE: PasswordFormData = {
  * @component
  */
 function ChangePassword() {
-  const [formData, setFormData] = useState<PasswordFormData>(DEFAULT_FORM_STATE);
+  const [formData, setFormData] =
+    useState<PasswordFormData>(DEFAULT_FORM_STATE);
 
   const handleInputChange = useCallback((e: FormInputChangeEvent) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   }, []);
 
-  const handleSubmit = useCallback((e: FormSubmitEvent) => {
-    e.preventDefault();
-    
-    // Validate passwords match
-    if (formData.newPassword !== formData.confirmPassword) {
-      console.error("Passwords do not match");
-      return;
-    }
+  const handleSubmit = useCallback(
+    (e: FormSubmitEvent) => {
+      e.preventDefault();
 
-    console.log("Updating password:", formData);
-    // Reset form on successful submission
-    setFormData(DEFAULT_FORM_STATE);
-  }, [formData]);
+      // Validate passwords match
+      if (formData.newPassword !== formData.confirmPassword) {
+        console.error("Passwords do not match");
+        return;
+      }
+
+      console.log("Updating password:", formData);
+      // Reset form on successful submission
+      setFormData(DEFAULT_FORM_STATE);
+    },
+    [formData]
+  );
 
   return (
-    <section className="w-full bg-white rounded-xl shadow-lg p-8">
+    <section className="bg-white rounded-xl shadow-sm border p-6">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -60,7 +68,10 @@ function ChangePassword() {
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Current Password */}
         <div className="space-y-2">
-          <label htmlFor="currentPassword" className="text-sm font-semibold text-gray-700">
+          <label
+            htmlFor="currentPassword"
+            className="text-sm font-semibold text-gray-700"
+          >
             Current Password
           </label>
           <input
@@ -78,7 +89,10 @@ function ChangePassword() {
 
         {/* New Password */}
         <div className="space-y-2">
-          <label htmlFor="newPassword" className="text-sm font-semibold text-gray-700">
+          <label
+            htmlFor="newPassword"
+            className="text-sm font-semibold text-gray-700"
+          >
             New Password
           </label>
           <input
@@ -96,7 +110,10 @@ function ChangePassword() {
 
         {/* Confirm New Password */}
         <div className="space-y-2">
-          <label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700">
+          <label
+            htmlFor="confirmPassword"
+            className="text-sm font-semibold text-gray-700"
+          >
             Confirm New Password
           </label>
           <input

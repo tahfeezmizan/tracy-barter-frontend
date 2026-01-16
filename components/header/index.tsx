@@ -70,7 +70,7 @@ export default function Header() {
           pathname === "/" && "lg:top-12 left-0 ",
           pathname === "/" &&
             isScrolled &&
-            "bg-primary !top-0 border-b transition duration-300",
+            "bg-primary top-0! border-b transition duration-300",
           pathname !== "/" && isScrolled && "bg-primary"
         )}
       >
@@ -139,15 +139,7 @@ export default function Header() {
                         asChild
                         className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
-                        {role === "admin" || "staff" ? (
-                          <Link
-                            href={"/dashboard"}
-                            className="flex items-center space-x-2"
-                          >
-                            <User className="h-4 w-4" />
-                            Dashboard
-                          </Link>
-                        ) : (
+                        {role === "client" ? (
                           <Link
                             href="/user-profile"
                             className="flex items-center space-x-2"
@@ -155,11 +147,19 @@ export default function Header() {
                             <User className="h-4 w-4" />
                             <span>Profile</span>
                           </Link>
+                        ) : (
+                          <Link
+                            href="/dashboard"
+                            className="flex items-center space-x-2"
+                          >
+                            <User className="h-4 w-4" />
+                            Dashboard
+                          </Link>
                         )}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         asChild
-                        className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
                         <Link
                           href="/user-profile/my-order"

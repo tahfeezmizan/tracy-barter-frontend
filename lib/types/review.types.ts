@@ -1,4 +1,4 @@
-export interface ReviewItem {
+export interface ReviewItemType {
   _id: string;
   title: string;
   review: string;

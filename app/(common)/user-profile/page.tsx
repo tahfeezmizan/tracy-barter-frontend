@@ -32,7 +32,8 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
  */
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<ProfileData>(DEFAULT_PROFILE_DATA);
+  const [profileData, setProfileData] =
+    useState<ProfileData>(DEFAULT_PROFILE_DATA);
 
   const handleSaveProfile = useCallback((data: ProfileData) => {
     setProfileData(data);
@@ -42,15 +43,15 @@ export default function Page() {
   return (
     <div className="flex items-center overflow-hidden max-w-7xl pt-24 lg:pt-16 mx-auto">
       <div className="w-full pt-10">
-        <UserProfile 
-          isEditing={isEditing} 
-          setIsEditing={setIsEditing} 
-          profileData={profileData} 
+        <UserProfile
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          profileData={profileData}
         />
-        <EditProfilePage 
-          isEditing={isEditing} 
-          setIsEditing={setIsEditing} 
-          onSave={handleSaveProfile} 
+        <EditProfilePage
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          onSave={handleSaveProfile}
         />
       </div>
     </div>

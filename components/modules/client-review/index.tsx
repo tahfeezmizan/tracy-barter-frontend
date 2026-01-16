@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { ReviewItemType } from "@/lib/types/review.types";
 import { useGetReviewQuery } from "@/redux/features/review/reviewApis";
 import { ChevronLeft, ChevronRight, CircleUserRound } from "lucide-react";
 import Image from "next/image";
@@ -11,16 +12,16 @@ import { useState } from "react";
 export default function ClientReview() {
   const { data, isLoading } = useGetReviewQuery(undefined);
   const reviews = data?.data || [];
-  // console.log("Revieew", data?.data);
+  console.log("Revieew", data?.data);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews?.length);
+    setCurrentIndex((prev) => (prev + 1) % reviews.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews?.length) % reviews?.length);
+    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
 
   const goToSlide = (index: number) => {
@@ -28,9 +29,14 @@ export default function ClientReview() {
   };
 
   const getVisibleCards = () => {
+    if (reviews.length === 0) return [];
+
     const cards = [];
-    for (let i = 0; i < 5; i++) {
-      const index = (currentIndex + i) % reviews?.length;
+    const totalCards = reviews.length;
+
+    // We want to show 5 cards, with currentIndex as the center (index 2)
+    for (let i = -2; i <= 2; i++) {
+      const index = (currentIndex + i + totalCards) % totalCards;
       cards.push(reviews[index]);
     }
     return cards;
@@ -47,10 +53,10 @@ export default function ClientReview() {
 
         {isLoading ? (
           <LoadingSpinner />
-        ) : (
+        ) : reviews.length > 0 ? (
           <div className="flex gap-2 justify-center items-stretch px-0 lg:px-12">
             {visibleCards.map((service, idx) => {
-              const isCenter = idx === 2;
+              const isCenter = idx === 2; // The middle card (index 2) is the active/center card
               const isEdge = idx === 0 || idx === 4;
 
               return (
@@ -60,7 +66,7 @@ export default function ClientReview() {
                       flex items-center justify-center transition-all duration-500 ease-out p-0
                       ${
                         isCenter
-                          ? "scale-100 z-10 w-full md:!w-[500px] md:h-96 h-auto"
+                          ? "scale-100 z-10 w-full md:w-[500px]! md:h-96 h-auto"
                           : "scale-75 "
                       }
                       ${isEdge ? "hidden lg:block" : ""}
@@ -119,6 +125,10 @@ export default function ClientReview() {
               );
             })}
           </div>
+        ) : (
+          <div className="text-center text-white py-8">
+            No reviews available
+          </div>
         )}
       </div>
 
@@ -131,7 +141,8 @@ export default function ClientReview() {
         >
           <ChevronLeft className="size-7" />
         </Button>
-        {reviews.map(({ review, index }: { review: any; index: number }) => (
+
+        {reviews.map((review: ReviewItemType, index: number) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
