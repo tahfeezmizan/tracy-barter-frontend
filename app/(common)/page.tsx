@@ -1,3 +1,4 @@
+import { ChatWidget } from "@/components/ai-chat/chat-widget";
 import FAQSection from "@/components/faq";
 import AboutTracy from "@/components/modules/about-tracy";
 import ClientReview from "@/components/modules/client-review";
@@ -16,6 +17,7 @@ export default function Page() {
       <PricingPlan />
       <ClientReview />
       <FAQSection />
+      <ChatWidget />
     </div>
   );
 }
