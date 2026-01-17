@@ -1,6 +1,9 @@
+import { ShoppingListPage } from "@/components/shopping-with-ai/shopping-list-page";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <ShoppingListPage />
+    </div>
+  );
 }
