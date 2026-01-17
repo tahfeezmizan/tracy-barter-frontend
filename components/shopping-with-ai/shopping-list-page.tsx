@@ -50,8 +50,8 @@ export function ShoppingListPage() {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className=" py-8 px-4 " style={{ backgroundColor: "#fbf8f0" }}>
+      <div className="max-w-3xl mx-auto px-4 py-32">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-slate-900 mb-2">
@@ -64,9 +64,9 @@ export function ShoppingListPage() {
         </div>
 
         {/* Main Card */}
-        <Card className="p-8 shadow-lg mb-8">
+        <Card className="p-8 shadow-lg mb-8 bg-white">
           {/* Shopping List Section */}
-          <div className="mb-8">
+          <div className="">
             <h2 className="text-xl font-semibold text-slate-900 mb-2">
               Your Shopping List
             </h2>
@@ -115,11 +115,11 @@ export function ShoppingListPage() {
         </Card>
 
         {/* How It Works Section */}
-        <div className="bg-white rounded-lg p-8 shadow">
+        <div className="bg-white rounded-lg p-4 py-10 shadow-lg">
           <h3 className="text-xl font-semibold text-slate-900 mb-8 text-center">
             How It Works
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
                 step: 1,
