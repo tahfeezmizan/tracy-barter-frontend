@@ -11,13 +11,18 @@ import { getImageUrl } from "@/lib/utils";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { toast } from "sonner";
 
-export default function ProviderProfile({ data }: StaffProfileResponse) {
+interface ProviderProfileProps {
+  data?: StaffProfileResponse["data"];
+}
+
+export default function ProviderProfile({ data }: ProviderProfileProps) {
+  console.log("profile", data);
   const [file, setFile] = useState<File | null>(null);
 
   const [upload] = useStaffProfileUpdateMutation();
 
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const selectedFile = event.target.files?.[0] ?? null;
     if (!selectedFile) return;
@@ -26,7 +31,7 @@ export default function ProviderProfile({ data }: StaffProfileResponse) {
 
     // Create FormData
     const formData = new FormData();
-    formData.append("images", selectedFile); 
+    formData.append("images", selectedFile);
 
     console.log(selectedFile);
 
@@ -49,7 +54,7 @@ export default function ProviderProfile({ data }: StaffProfileResponse) {
         <div className="">
           {data?.profile ? (
             <Image
-              src={getImageUrl(data.profile)}
+              src={getImageUrl(data?.profile)}
               alt={data?.name}
               width={200}
               height={200}

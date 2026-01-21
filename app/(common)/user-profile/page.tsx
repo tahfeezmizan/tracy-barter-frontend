@@ -1,14 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import ChangePassword from "@/components/user-profile/change-password";
-import PersonalInformation from "@/components/user-profile/personal-information";
 import ContactBusinessInformation from "@/components/user-profile/contact-businessIn-formation";
+import PersonalInformation from "@/components/user-profile/personal-information";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 import { Edit2, Upload } from "lucide-react";
+import { useRef, useState } from "react";
 
 export default function Page() {
+  const { data } = useGetStaffProfileQuery(undefined);
+
+  console.log("User data", data);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
@@ -34,7 +38,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex items-center overflow-hidden max-w-7xl pt-24 lg:pt-16 mx-auto">
+    <div className="flex items-center overflow-hidden max-w-7xl py-20 pt-24 lg:pt-16 mx-auto">
       <div className="w-full pt-10 space-y-6">
         {/* HEADER */}
         <div className="bg-linear-to-r from-slate-800 to-slate-900 rounded-lg p-8">
@@ -51,9 +55,7 @@ export default function Page() {
               </Avatar>
 
               <div>
-                <h1 className="text-2xl font-bold text-white">
-                  {profileData.name}
-                </h1>
+                <h1 className="text-2xl font-bold text-white">{data?.name}</h1>
                 <p className="text-slate-300 text-lg">{profileData.company}</p>
               </div>
             </div>
@@ -92,7 +94,6 @@ export default function Page() {
         {/* SECTIONS */}
         <PersonalInformation />
         <ContactBusinessInformation />
-        <ChangePassword />
       </div>
     </div>
   );

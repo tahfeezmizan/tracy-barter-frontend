@@ -7,7 +7,11 @@ import { Lock } from "lucide-react";
 import { useUpdateAvailabilityMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
 
-const AccountSettings = ({ data }: StaffProfileResponse) => {
+interface AccountSettingsProps {
+  data?: StaffProfileResponse["data"];
+}
+
+const AccountSettings = ({ data }: AccountSettingsProps) => {
   // Initialize based on data?.status
   const [isAvailable, setIsAvailable] = useState(data?.status === "active");
   const [updateAvailability, { isLoading }] = useUpdateAvailabilityMutation();

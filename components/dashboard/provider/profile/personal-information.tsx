@@ -11,7 +11,13 @@ import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { useStaffProfileUpdateMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { toast } from "sonner";
 
-export default function PersonalInformation({ data }: StaffProfileResponse) {
+interface PersonalInformationProps {
+  data?: StaffProfileResponse["data"];
+}
+
+export default function PersonalInformation({
+  data,
+}: PersonalInformationProps) {
   const [updateProfile, { isLoading }] = useStaffProfileUpdateMutation();
 
   const { register, handleSubmit, reset } = useForm({

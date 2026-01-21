@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getImageUrl = (path?: string) => {
-  if (!path) return "/placeholder.png"; // fallback image
+  if (!path) return "/placeholder.png";
 
   const baseURL = process.env.NEXT_PUBLIC_BASEURL as string;
 
@@ -26,5 +26,3 @@ export const formatDate = (date: string | Date) => {
     year: "numeric",
   });
 };
-
-

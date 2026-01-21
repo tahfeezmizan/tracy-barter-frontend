@@ -8,16 +8,17 @@ import ProviderProfile from "./provider-profile";
 
 export default function ProfilePage() {
   const { data } = useGetStaffProfileQuery(undefined);
+
   return (
     <div className="space-y-10">
-      <ProviderProfile {...data} />
+      <ProviderProfile data={data} />
       <div className="flex items-start justify-center gap-10">
         <div className="flex-1">
-          <PersonalInformation {...data} />
+          <PersonalInformation data={data} />
         </div>
         <div className="flex-1 space-y-10">
-          <PerformanceStats {...data} />
-          <AccountSettings {...data} />
+          <PerformanceStats data={data} />
+          <AccountSettings data={data} />
         </div>
       </div>
       {/* <Achievements /> */}

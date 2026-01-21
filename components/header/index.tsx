@@ -13,6 +13,8 @@ import {
   ListOrdered,
   LogOut,
   Menu,
+  RotateCcwKey,
+  ShoppingBag,
   User,
   X,
 } from "lucide-react";
@@ -30,7 +32,7 @@ export default function Header() {
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
 
-  console.log(role)
+  console.log(role);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -167,8 +169,21 @@ export default function Header() {
                           href="/user-profile/my-order"
                           className="flex items-center space-x-2"
                         >
-                          <ListOrdered className="h-4 w-4" />
-                          <span>Order</span>
+                          <ShoppingBag className="h-4 w-4" />
+                          <span>My Order</span>
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        asChild
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
+                      >
+                        <Link
+                          href="/user-profile/change-password"
+                          className="flex items-center space-x-2"
+                        >
+                          <RotateCcwKey className="h-4 w-4" />
+                          <span>Change Password</span>
                         </Link>
                       </DropdownMenuItem>
 
