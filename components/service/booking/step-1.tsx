@@ -15,7 +15,7 @@ interface Step1Props {
 }
 
 export default function Step1({ formData, updateFormData, data }: Step1Props) {
-  // console.log("From Step 1", data);
+  console.log("From Step 1", data);
 
   return (
     <div className="space-y-6 border p-5 rounded-lg border-gray-300">

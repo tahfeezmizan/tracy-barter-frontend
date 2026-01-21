@@ -3,15 +3,15 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AddStaffDialog } from "@/lib/modal/add-staff-dialog";
 
+import { useGetStaffStatsOnAdminQuery } from "@/redux/features/admindashboard/adminStatsApis";
 import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import StatsCard from "../../stats-card";
 import StaffCards from "./staff-cards";
-import { useGetStaffStatsQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 export default function StaffPage() {
   const [open, setOpen] = useState(false);
-  const { data } = useGetStaffStatsQuery(undefined);
+  const { data } = useGetStaffStatsOnAdminQuery(undefined);
 
   const stats = [
     {

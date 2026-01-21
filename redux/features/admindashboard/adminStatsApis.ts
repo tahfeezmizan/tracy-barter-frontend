@@ -21,9 +21,23 @@ const adminStatsApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+
+    getStaffStatsOnAdmin: builder.query({
+      query: () => ({
+        url: "/stats/admin/staff-stats",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["staff"],
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetAdminStatsQuery, useGetAdminRecentServiceQuery } =
-  adminStatsApis;
+export const {
+  useGetAdminStatsQuery,
+  useGetAdminRecentServiceQuery,
+  useGetStaffStatsOnAdminQuery,
+} = adminStatsApis;

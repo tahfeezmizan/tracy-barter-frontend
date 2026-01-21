@@ -9,7 +9,7 @@ interface Step3Props {
   formData: BookingFormData;
   updateFormData: <K extends keyof BookingFormData>(
     field: K,
-    value: BookingFormData[K]
+    value: BookingFormData[K],
   ) => void;
 }
 
@@ -18,7 +18,7 @@ export default function Step3({ formData, updateFormData }: Step3Props) {
   const id = params.booking;
   const { data: staffProvider, isLoading } = useGetStaffsbyServiceQuery({ id });
 
-  console.log(staffProvider);
+  console.log("staffProvider", staffProvider);
 
   return (
     <div className="space-y-6">

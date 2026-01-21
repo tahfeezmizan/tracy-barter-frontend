@@ -2,14 +2,9 @@
 
 import { memo, useCallback, useState } from "react";
 import { KeyRound } from "lucide-react";
-import type {
-  PasswordFormData,
-  FormInputChangeEvent,
-  FormSubmitEvent,
-} from "./types";
 
 /** Default password form state */
-const DEFAULT_FORM_STATE: PasswordFormData = {
+const DEFAULT_FORM_STATE: PasswordFormData: any = {
   currentPassword: "",
   newPassword: "",
   confirmPassword: "",
@@ -48,7 +43,7 @@ function ChangePassword() {
       // Reset form on successful submission
       setFormData(DEFAULT_FORM_STATE);
     },
-    [formData]
+    [formData],
   );
 
   return (
