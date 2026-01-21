@@ -24,7 +24,7 @@ interface ChatbotModalProps {
   onAddItem: (
     name: string,
     quantity: number,
-    source: "manual" | "chatbot"
+    source: "manual" | "chatbot",
   ) => void;
 }
 

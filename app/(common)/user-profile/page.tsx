@@ -1,58 +1,98 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import EditProfilePage from "@/components/profile/edit-profile";
-import UserProfile from "@/components/profile/user-profile";
-import type { ProfileData } from "@/components/profile/types";
+import { useRef, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import ChangePassword from "@/components/user-profile/change-password";
+import PersonalInformation from "@/components/user-profile/personal-information";
+import ContactBusinessInformation from "@/components/user-profile/contact-businessIn-formation";
+import { Edit2, Upload } from "lucide-react";
 
-/** Default profile data for demonstration */
-const DEFAULT_PROFILE_DATA: ProfileData = {
-  firstName: "John",
-  lastName: "Doe",
-  email: "john.doe@example.com",
-  phone: "+1 (555) 123-4567",
-  streetAddress: "123 Main Street",
-  city: "New York",
-  state: "NY",
-  zipCode: "10001",
-  country: "United States",
-  businessName: "Quality Home Services",
-  website: "www.qualityhomeservices.com",
-  licenseNumber: "HS-2024-001234",
-  bio: "Professional service provider with 5+ years of experience in home services.",
-  profileImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-};
-
-/**
- * User Profile Page
- * Main layout component for user profile management
- * Integrates profile display and edit functionality
- *
- * @component
- */
 export default function Page() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] =
-    useState<ProfileData>(DEFAULT_PROFILE_DATA);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSaveProfile = useCallback((data: ProfileData) => {
-    setProfileData(data);
-    setIsEditing(false);
-  }, []);
+  const [isEditingAvatar, setIsEditingAvatar] = useState(false);
+  const [profileData, setProfileData] = useState({
+    name: "John",
+    company: "Quality Home Services",
+    avatar: "/images/john-avatar.jpg",
+  });
+
+  /* ---------- Handle Avatar Upload ---------- */
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileData((prev) => ({
+        ...prev,
+        avatar: reader.result as string,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="flex items-center overflow-hidden max-w-7xl pt-24 lg:pt-16 mx-auto">
-      <div className="w-full pt-10">
-        <UserProfile
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          profileData={profileData}
-        />
-        <EditProfilePage
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          onSave={handleSaveProfile}
-        />
+      <div className="w-full pt-10 space-y-6">
+        {/* HEADER */}
+        <div className="bg-linear-to-r from-slate-800 to-slate-900 rounded-lg p-8">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-6">
+              <Avatar className="h-24 w-24 border-4 border-yellow-400">
+                <AvatarImage
+                  src={profileData.avatar || "/placeholder.svg"}
+                  alt={profileData.name}
+                />
+                <AvatarFallback className="text-2xl bg-slate-700 text-white">
+                  {profileData.name.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+
+              <div>
+                <h1 className="text-2xl font-bold text-white">
+                  {profileData.name}
+                </h1>
+                <p className="text-slate-300 text-lg">{profileData.company}</p>
+              </div>
+            </div>
+
+            {/* ACTION BUTTON */}
+            {!isEditingAvatar ? (
+              <Button
+                onClick={() => setIsEditingAvatar(true)}
+                className="gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-semibold"
+              >
+                <Edit2 size={18} />
+                Edit Profile
+              </Button>
+            ) : (
+              <>
+                <Button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-semibold"
+                >
+                  <Upload size={18} />
+                  Upload Photo
+                </Button>
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleAvatarChange}
+                />
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* SECTIONS */}
+        <PersonalInformation />
+        <ContactBusinessInformation />
+        <ChangePassword />
       </div>
     </div>
   );

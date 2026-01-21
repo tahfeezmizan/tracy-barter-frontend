@@ -30,6 +30,8 @@ export default function Header() {
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
 
+  console.log(role)
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -71,7 +73,7 @@ export default function Header() {
           pathname === "/" &&
             isScrolled &&
             "bg-primary top-0! border-b transition duration-300",
-          pathname !== "/" && isScrolled && "bg-primary"
+          pathname !== "/" && isScrolled && "bg-primary",
         )}
       >
         <div className="max-w-7xl mx-auto px-3 py-1 lg:rounded-lg bg-primary">
@@ -92,7 +94,7 @@ export default function Header() {
             {/* Desktop Navigation */}
             <div
               className={cn(
-                "hidden lg:flex items-center space-x-2"
+                "hidden lg:flex items-center space-x-2",
                 // pathname === "/" ? "text-white" : "text-green-900",
                 // pathname === "/" && isScrolled && "text-green-900"
               )}
@@ -193,7 +195,7 @@ export default function Header() {
                     asChild
                     variant="outline"
                     className={cn(
-                      "bg-transparent px-4 py-2 text-base  rounded-lg border cursor-pointer text-secondary"
+                      "bg-transparent px-4 py-2 text-base  rounded-lg border cursor-pointer text-secondary",
                       // isScrolled && "text-green-900 "
                     )}
                   >
@@ -218,7 +220,7 @@ export default function Header() {
                       className={cn(
                         "size-9",
                         pathname === "/" ? "text-white" : "text-black",
-                        pathname === "/" && isScrolled && "text-black "
+                        pathname === "/" && isScrolled && "text-black ",
                       )}
                     />
                   ) : (
@@ -262,7 +264,7 @@ export default function Header() {
                         className={cn(
                           "size-9",
                           pathname === "/" ? "text-white" : "text-black",
-                          pathname === "/" && isScrolled && "text-black "
+                          pathname === "/" && isScrolled && "text-black ",
                         )}
                       />
                     </>
@@ -283,7 +285,7 @@ export default function Header() {
                     className={cn(
                       "px-3 py-2 text-base font-semibold transition-colors",
                       pathname === "/" ? "text-white" : "text-black",
-                      pathname === "/" && isScrolled && "text-green-900"
+                      pathname === "/" && isScrolled && "text-green-900",
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -304,7 +306,7 @@ export default function Header() {
                       asChild
                       variant="outline"
                       className={cn(
-                        "px-6 py-2 text-base text-secondary  font-medium rounded-lg border border-secondary cursor-pointer bg-transparent hover:bg-secondary hover:text-primary duration-300"
+                        "px-6 py-2 text-base text-secondary  font-medium rounded-lg border border-secondary cursor-pointer bg-transparent hover:bg-secondary hover:text-primary duration-300",
                         // pathname === "/"
                         //   ? "border-green-900  text-white hover:bg-white hover:border-white hover:text-black"
                         //   : "border-green-900 text-black hover:bg-green-900 hover:text-white",

@@ -1,4 +1,4 @@
-import MyOrder from "@/components/profile/my-order";
+import MyOrder from "@/components/user-profile/my-order";
 
 /**
  * My Orders Page
