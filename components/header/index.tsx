@@ -189,7 +189,7 @@ export default function Header() {
 
                       <DropdownMenuItem
                         onClick={handleLogout}
-                        className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer"
+                        className="flex items-center space-x-2 data-highlighted:bg-primary data-highlighted:text-white cursor-pointer"
                       >
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>

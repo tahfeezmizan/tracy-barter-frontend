@@ -10,6 +10,7 @@ import { AvatarBlock } from "../schedule/appointment-list";
 import { getImageUrl } from "@/lib/utils";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 
 interface ProviderProfileProps {
   data?: StaffProfileResponse["data"];
@@ -51,14 +52,14 @@ export default function ProviderProfile({ data }: ProviderProfileProps) {
       {/* LEFT SECTION */}
       <div className="flex items-center gap-4">
         {/* Profile Circle Initials */}
-        <div className="">
+        <div className="w-16 h-16 rounded-full">
           {data?.profile ? (
             <Image
               src={getImageUrl(data?.profile)}
               alt={data?.name}
-              width={200}
-              height={200}
-              className="w-12 h-12 rounded-full bg-[#0B1F3A]"
+              width={500}
+              height={500}
+              className="w-16 h-16 rounded-full bg-[#0B1F3A]"
             />
           ) : (
             <AvatarBlock name={data?.name} />
@@ -110,7 +111,7 @@ export default function ProviderProfile({ data }: ProviderProfileProps) {
           <span>Change Photo</span>
         </label>
 
-        <input
+        <Input
           id="file-upload"
           type="file"
           className="hidden"

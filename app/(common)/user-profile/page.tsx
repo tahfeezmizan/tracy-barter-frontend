@@ -2,43 +2,48 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import ContactBusinessInformation from "@/components/user-profile/contact-businessIn-formation";
+
 import PersonalInformation from "@/components/user-profile/personal-information";
-import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import {
+  useGetStaffProfileQuery,
+  useStaffProfileUpdateMutation,
+} from "@/redux/features/staffdashboard/staffStatsApis";
 import { Edit2, Upload } from "lucide-react";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { getImageUrl } from "@/lib/utils";
 
 export default function Page() {
   const { data } = useGetStaffProfileQuery(undefined);
+  console.log(data);
 
-  console.log("User data", data);
+  const [upload] = useStaffProfileUpdateMutation();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const [isEditingAvatar, setIsEditingAvatar] = useState(false);
-  const [profileData, setProfileData] = useState({
-    name: "John",
-    company: "Quality Home Services",
-    avatar: "/images/john-avatar.jpg",
-  });
 
-  /* ---------- Handle Avatar Upload ---------- */
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /* ---------- Handle Avatar Upload (API CONNECTED) ---------- */
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfileData((prev) => ({
-        ...prev,
-        avatar: reader.result as string,
-      }));
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("images", file);
+
+    try {
+      const res = await upload(formData).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+        setIsEditingAvatar(false);
+      }
+    } catch (error) {
+      console.error("Avatar upload failed:", error);
+      toast.error("Failed to update profile photo");
+    }
   };
 
   return (
-    <div className="flex items-center overflow-hidden max-w-7xl py-20 pt-24 lg:pt-16 mx-auto">
+    <div className="flex items-center overflow-hidden max-w-7xl mx-auto px-4 xl:px-0 py-10 md:py-20 md:pt-24 lg:pt-16">
       <div className="w-full pt-10 space-y-6">
         {/* HEADER */}
         <div className="bg-linear-to-r from-slate-800 to-slate-900 rounded-lg p-8">
@@ -46,17 +51,21 @@ export default function Page() {
             <div className="flex items-center gap-6">
               <Avatar className="h-24 w-24 border-4 border-yellow-400">
                 <AvatarImage
-                  src={profileData.avatar || "/placeholder.svg"}
-                  alt={profileData.name}
+                  src={
+                    data?.profile
+                      ? getImageUrl(data?.profile)
+                      : "/placeholder.svg"
+                  }
+                  alt={data?.name}
                 />
                 <AvatarFallback className="text-2xl bg-slate-700 text-white">
-                  {profileData.name.charAt(0)}
+                  {data?.name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
 
               <div>
                 <h1 className="text-2xl font-bold text-white">{data?.name}</h1>
-                <p className="text-slate-300 text-lg">{profileData.company}</p>
+                {/* <p className="text-slate-300 text-lg">Quality Home Services</p> */}
               </div>
             </div>
 
@@ -92,8 +101,7 @@ export default function Page() {
         </div>
 
         {/* SECTIONS */}
-        <PersonalInformation />
-        <ContactBusinessInformation />
+        <PersonalInformation data={data} />
       </div>
     </div>
   );
