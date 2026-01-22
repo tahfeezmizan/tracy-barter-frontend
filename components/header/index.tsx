@@ -32,7 +32,7 @@ export default function Header() {
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
 
-  console.log(role);
+  // console.log(role);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

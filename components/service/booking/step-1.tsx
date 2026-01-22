@@ -15,37 +15,8 @@
 // }
 
 // export default function Step1({ formData, updateFormData, data }: Step1Props) {
-//   console.log("From Step 1", data);
-
 //   return (
 //     <div className="space-y-6 border p-5 rounded-lg border-gray-300">
-//       {/* <div>
-//         <h3 className="text-2xl font-bold mb-4">Service Type</h3>
-//         <RadioGroup
-//           value={formData.serviceType}
-//           onValueChange={(value) => updateFormData("serviceType", value)}
-//         >
-//           {data?.serviceType?.map((type) => (
-//             <div className="flex items-center justify-center gap-5 p-4 py-3 border border-gray-400 rounded-lg hover:bg-gray-50 cursor-pointer">
-//               <Checkbox
-//                 value={type?._id}
-//                 id={type?._id}
-//                 className="border-black"
-//               />
-//               <Label
-//                 htmlFor={type?._id}
-//                 className="flex-1 flex-col items-start cursor-pointer"
-//               >
-//                 <p className="text-lg font-bold text-slate-900">
-//                   {type?.title}
-//                 </p>
-//                 <p className="text-base text-gray-600">{type?.description}</p>
-//               </Label>
-//             </div>
-//           ))}
-//         </RadioGroup>
-//       </div> */}
-
 //       {/* SERVICE TYPE */}
 //       <div>
 //         <h3 className="text-2xl font-bold mb-4">Service Type</h3>
@@ -152,13 +123,12 @@
 //           placeholder="Any special requests or notes"
 //           value={formData.note}
 //           onChange={(e) => updateFormData("note", e.target.value)}
-//           className="w-full h-20 border-none bg-gray-200 text-black !text-lg py-2 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+//           className="w-full h-20 border-none bg-gray-200 text-black text-lg! py-2 focus:ring-2 focus:ring-primary/75 focus:outline-none"
 //         />
 //       </div>
 //     </div>
 //   );
 // }
-
 
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -178,8 +148,20 @@ interface Step1Props {
 }
 
 export default function Step1({ formData, updateFormData, data }: Step1Props) {
-  console.log("From Step 1", data);
-  console.log("Current formData in Step1:", formData);
+    if (data?.fields) {
+    console.log("All field labels from API:");
+    const serviceDetails = data.fields.map((field, index) => {
+     return   {
+        name: field.label,
+        value : ''
+      }
+    })
+    // serviceDetails.push(single)
+
+    
+    // Also log as an array
+    console.log({serviceDetails});
+  }
 
   return (
     <div className="space-y-6 border p-5 rounded-lg border-gray-300">
@@ -187,23 +169,26 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
       <div>
         <h3 className="text-2xl font-bold mb-4">Service Type</h3>
 
-        <RadioGroup value={formData.serviceType}>
+        <RadioGroup value={formData.serviceType?.title || ""}>
           {data?.serviceType?.map((type: any) => (
             <div
               key={type._id}
               onClick={() => {
-                updateFormData("serviceType", type._id);
+                updateFormData("serviceType", {
+                  title: type.title,
+                  description: type.description,
+                });
               }}
               className={`flex items-center gap-5 p-4 py-3 border rounded-lg cursor-pointer
                 ${
-                  formData.serviceType === type._id
+                  formData.serviceType?.title === type.title
                     ? "border-primary bg-gray-100"
                     : "border-gray-400 hover:bg-gray-50"
                 }`}
             >
               {/* VISUAL CHECK ONLY */}
               <Checkbox
-                checked={formData.serviceType === type._id}
+                checked={formData.serviceType?.title === type.title}
                 className="border-black"
               />
 
@@ -216,7 +201,7 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
         </RadioGroup>
       </div>
 
-      {/* dynamic input fields */}
+      {/* dynamic input filed */}
       <div className="grid grid-cols-2 gap-4">
         {data?.fields?.map((field) => (
           <div key={field.name}>
@@ -232,16 +217,15 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
                 id={field?.name}
                 type={field?.type === "number" ? "number" : "text"}
                 placeholder={`Enter ${field?.label.toLowerCase()}`}
-                value={(formData as any)[field?.name] ?? ""}
-                onChange={(e) => {
-                  const value =
+                value={formData[field?.name] ?? ""}
+                onChange={(e) =>
+                  updateFormData(
+                    field?.name as keyof BookingFormData,
                     field.type === "number"
                       ? Number(e.target.value)
-                      : e.target.value;
-
-                  // Use type assertion to allow dynamic field names
-                  updateFormData(field?.label as any, value as any);
-                }}
+                      : e.target.value,
+                  )
+                }
                 className="border-none bg-gray-200 text-black text-xl! py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               />
             )}
@@ -249,14 +233,17 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
             {field.type === "boolean" && (
               <RadioGroup
                 value={
-                  (formData as any)[field.name] === true
+                  formData[field.name] === true
                     ? "yes"
-                    : (formData as any)[field.name] === false
+                    : formData[field.name] === false
                       ? "no"
                       : ""
                 }
                 onValueChange={(value) =>
-                  updateFormData(field.name as any, (value === "yes") as any)
+                  updateFormData(
+                    field.name as keyof BookingFormData,
+                    value === "yes",
+                  )
                 }
                 className="flex gap-6 mt-2"
               >
@@ -287,7 +274,7 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
           placeholder="Any special requests or notes"
           value={formData.note}
           onChange={(e) => updateFormData("note", e.target.value)}
-          className="w-full h-20 border-none bg-gray-200 text-black !text-lg py-2 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+          className="w-full h-20 border-none bg-gray-200 text-black text-lg! py-2 focus:ring-2 focus:ring-primary/75 focus:outline-none"
         />
       </div>
     </div>

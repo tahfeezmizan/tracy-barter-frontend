@@ -7,7 +7,7 @@ interface Step2Props {
   formData: BookingFormData;
   updateFormData: <K extends keyof BookingFormData>(
     field: K,
-    value: BookingFormData[K]
+    value: BookingFormData[K],
   ) => void;
 }
 
@@ -40,33 +40,6 @@ export default function Step2({ formData, updateFormData }: Step2Props) {
               />
             </div>
           </div>
-
-          {/* Right: Time Selection */}
-          {/* <div>
-            <Label className="text-sm font-medium">Select Time</Label>
-
-            <div className="grid grid-cols-2 gap-6 mt-4">
-              <div className="space-y-2">
-                <Label className="text-sm">Starting Time</Label>
-                <Input
-                  type="time"
-                  value={formData.startTime}
-                  onChange={(e) => updateFormData("startTime", e.target.value)}
-                  className="bg-gray-50 border rounded-lg h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm">End Time</Label>
-                <Input
-                  type="time"
-                  value={formData.endTime}
-                  onChange={(e) => updateFormData("endTime", e.target.value)}
-                  className="bg-gray-50 border rounded-lg h-11"
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

@@ -64,7 +64,7 @@
 
 //   // 🟢 LIVE CONSOLE (ALL DATA)
 //   useEffect(() => {
-//     // console.log("📦 FULL BOOKING FORM DATA:", formData);
+//     console.log("📦 FULL BOOKING FORM DATA:", formData);
 //   }, [formData]);
 
 //   // 🟢 API DATA CONSOLE
@@ -194,9 +194,9 @@ export default function BookingPage() {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  // 🔑 Single Source of Truth with dynamic fields
+  // Single Source of Truth
   const [formData, setFormData] = useState<BookingFormData>({
-    serviceType: "",
+    serviceType: null,
     note: "",
     isOutdoor: false,
 
@@ -215,46 +215,32 @@ export default function BookingPage() {
     phone: "",
   });
 
-  // Initialize dynamic fields from service data
-  useEffect(() => {
-    if (serviceData?.fields && serviceData.fields.length > 0) {
-      const dynamicFields: Record<string, any> = {};
-
-      serviceData.fields.forEach((field: any) => {
-        if (field.type === "boolean") {
-          dynamicFields[field.label] = false;
-        } else if (field.type === "number") {
-          dynamicFields[field.label] = 0;
-        } else {
-          dynamicFields[field.label] = "";
-        }
-      });
-
-      setFormData((prev) => ({
-        ...prev,
-        ...dynamicFields,
-      }));
-    }
-  }, [serviceData]);
-
-  const updateFormData = (field: string, value: any) => {
+  const updateFormData = <K extends keyof BookingFormData>(
+    field: K,
+    value: BookingFormData[K],
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  // 🟢 LIVE CONSOLE (ALL DATA)
+
+  // Live console for all form data
   useEffect(() => {
     console.log("📦 FULL BOOKING FORM DATA:", formData);
   }, [formData]);
 
-  // 🟢 API DATA CONSOLE
+  // Log serviceDetails and main formData on every step change (Continue click)
   useEffect(() => {
-    if (serviceData) {
-      console.log("🛠 SERVICE API DATA:", serviceData);
-    }
-  }, [serviceData]);
+    if (!serviceData) return;
+    const serviceDetails =
+      serviceData?.fields?.map((field) => ({
+        name: field.label,
+        value: formData[field.name],
+      })) || [];
+      formData.serviceDetails = serviceDetails
+  }, [currentStep, serviceData, formData]);
 
   const handleContinue = () => {
     if (currentStep < TOTAL_STEPS) {
@@ -275,9 +261,30 @@ export default function BookingPage() {
   };
 
   const handleSubmit = () => {
+    // Map dynamic fields into serviceDetails array
+    const serviceDetails =
+      serviceData?.fields?.map((field) => ({
+        name: field.label, // label instead of name
+        value: formData[field.name], // value from formData
+      })) || [];
+
     const payload = {
       serviceId: id,
-      ...formData,
+      serviceType: formData.serviceType,
+      note: formData.note,
+      serviceDetails,
+      // other formData fields
+      provider: formData.provider,
+      date: formData.date,
+      startTime: formData.startTime,
+      endTime: formData.endTime,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      zip: formData.zip,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
     };
 
     console.log("🚀 FINAL BOOKING PAYLOAD:", payload);
@@ -328,9 +335,7 @@ export default function BookingPage() {
               <Step4 formData={formData} updateFormData={updateFormData} />
             )}
 
-            {currentStep === 5 && (
-              <Step5 formData={formData} serviceData={serviceData} />
-            )}
+            {currentStep === 5 && <Step5 formData={formData} serviceData={serviceData} />}
 
             <div className="flex gap-4 mt-8">
               <Button variant="outline" onClick={handleBack} className="flex-1">
