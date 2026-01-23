@@ -130,7 +130,6 @@
 //   );
 // }
 
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,19 +147,18 @@ interface Step1Props {
 }
 
 export default function Step1({ formData, updateFormData, data }: Step1Props) {
-    if (data?.fields) {
+  if (data?.fields) {
     console.log("All field labels from API:");
     const serviceDetails = data.fields.map((field, index) => {
-     return   {
+      return {
         name: field.label,
-        value : ''
-      }
-    })
-    // serviceDetails.push(single)
+        value: "",
+      };
+    });
+    serviceDetails.push(serviceDetails);
 
-    
     // Also log as an array
-    console.log({serviceDetails});
+    console.log({ serviceDetails });
   }
 
   return (
@@ -175,7 +173,7 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
               key={type._id}
               onClick={() => {
                 updateFormData("serviceType", {
-                  title: type.title,
+                  title: type?.title,
                   description: type.description,
                 });
               }}
@@ -245,15 +243,23 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
                     value === "yes",
                   )
                 }
-                className="flex gap-6 mt-2"
+                className="flex gap-6 mt-2 "
               >
                 <div className="flex items-center gap-2">
-                  <RadioGroupItem value="yes" id={`${field.name}-yes`} />
+                  <RadioGroupItem
+                    className="bg-secondary size-5"
+                    value="yes"
+                    id={`${field.name}-yes`}
+                  />
                   <Label htmlFor={`${field.name}-yes`}>Yes</Label>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <RadioGroupItem value="no" id={`${field.name}-no`} />
+                  <RadioGroupItem
+                    className="bg-secondary size-5"
+                    value="no"
+                    id={`${field.name}-no`}
+                  />
                   <Label htmlFor={`${field.name}-no`}>No</Label>
                 </div>
               </RadioGroup>

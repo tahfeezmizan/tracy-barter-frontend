@@ -1,7 +1,7 @@
 export interface BookingFormData {
-  serviceType: string;
+  serviceType: string | null;
 
-  // Dynamic fields (keyed by field.name)
+  // 🔹 Dynamic fields (keyed by field.name from service config)
   [key: string]: any;
 
   provider: string;
@@ -9,15 +9,23 @@ export interface BookingFormData {
   startTime: string;
   endTime: string;
 
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
+  // ✅ Nested address (matches backend + avoids React warnings)
+  address: {
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
 
   name: string;
   email: string;
   phone: string;
   note: string;
+
+  serviceDetails?: {
+    name: string;
+    value: any;
+  }[];
 }
 
 export interface ServiceResponse {
