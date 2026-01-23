@@ -35,6 +35,7 @@ export default function BookingPage() {
     note: "",
     isOutdoor: false,
 
+    providerName: "",
     provider: "",
     date: undefined,
 
@@ -48,7 +49,6 @@ export default function BookingPage() {
     name: "",
     email: "",
     phone: "",
-
     serviceDetails: [],
   });
 
@@ -148,9 +148,7 @@ export default function BookingPage() {
               <Step4 formData={formData} updateFormData={updateFormData} />
             )}
 
-            {currentStep === 5 && (
-              <Step5 formData={formData} serviceData={serviceData} />
-            )}
+            {currentStep === 5 && <Step5 formData={formData} />}
 
             <div className="flex gap-4 mt-8">
               <Button variant="outline" onClick={handleBack} className="flex-1">

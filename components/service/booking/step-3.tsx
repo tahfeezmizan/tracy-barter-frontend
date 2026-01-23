@@ -83,7 +83,7 @@
 //   );
 // }
 
-
+"use client";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { BookingFormData } from "@/config/Types/serviceTypes";
@@ -127,12 +127,23 @@ export default function Step3({ formData, updateFormData, data }: Step3Props) {
           <div className="mt-5 space-y-3">
             <RadioGroup
               value={formData.provider}
-              onValueChange={(value) => updateFormData("provider", value)}
+              onValueChange={(value) => {
+                const selectedStaff = staffList.find(
+                  (s: any) => s._id === value,
+                );
+                if (selectedStaff) {
+                  updateFormData("provider", selectedStaff._id);
+                  updateFormData("providerName", selectedStaff.name);
+                }
+              }}
             >
               {staffList.map((staff: any) => (
                 <div
                   key={staff._id}
-                  onClick={() => updateFormData("provider", staff._id)}
+                  onClick={() => {
+                    updateFormData("provider", staff._id);
+                    updateFormData("providerName", staff.name); // store staff.name
+                  }}
                   className={`
                     flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer
                     ${
