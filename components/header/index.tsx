@@ -25,14 +25,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 export default function Header() {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
+  const {data}  = useGetStaffProfileQuery(undefined)
 
-  // console.log(role);
+  console.log("data", data)
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

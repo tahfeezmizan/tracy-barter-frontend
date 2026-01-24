@@ -14,7 +14,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 import { BookingFormData, ServiceResponse } from "@/config/Types/serviceTypes";
-import { useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
+import { useCreateBookingMutation, useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
+import { CloudCog } from "lucide-react";
+import { toast } from "sonner";
 
 const TOTAL_STEPS = 5;
 
@@ -26,6 +28,8 @@ export default function BookingPage() {
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;
   }>({ id });
+
+  const [createBooking] = useCreateBookingMutation();
 
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -95,14 +99,40 @@ export default function BookingPage() {
     }
   };
 
-  const handleSubmit = () => {
-    // Map dynamic fields into serviceDetails array
-    // const serviceDetails =
-    //   serviceData?.fields?.map((field) => ({
-    //     name: field.label, // label instead of name
-    //     value: formData[field.name], // value from formData
-    //   })) || [];
-    // router.push("/service/booking/confirmation");
+  const handleSubmit = async () => {
+    // console.log("📦 FULL BOOKING FORM DATA:", formData);
+
+    const payload = {
+      service: id, // From URL params
+      staff: formData.provider, // Mapped from provider
+      date: formData.date ? new Date(formData.date).toISOString().split('T')[0] : "", // Format YYYY-MM-DD
+      startTime: "10:00", // Defaulting for now as requested by user's example, or check requirements
+      endTime: "11:00",
+      address: formData.address,
+      serviceType: formData.serviceType,
+      serviceDetails: formData.serviceDetails,
+      notes: formData.note, // Mapped from note
+    };
+
+    console.log("🚀 Payload to be sent:", payload);
+
+    try {
+      const res: any = await createBooking(payload);
+      // console.log("Booking api response", res);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message || "Booking created successfully");
+        // Handle success (e.g., redirect)
+         router.push("/service/booking/confirmation");
+      } else {
+        // Handle RTK Query error response
+        const errorMessage = res?.error?.data?.message || res?.data?.message || "Failed to create booking";
+        toast.error(errorMessage);
+        console.log("Error response:", res);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.message || "Something went wrong");
+    }
   };
 
   const progress = (currentStep / TOTAL_STEPS) * 100;
