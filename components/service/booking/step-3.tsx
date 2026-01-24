@@ -1,4 +1,91 @@
-import { RadioGroup } from "@/components/ui/radio-group";
+// import { RadioGroup } from "@/components/ui/radio-group";
+// import { BookingFormData } from "@/config/Types/serviceTypes";
+// import LoadingSpinner from "@/lib/loading-spinner";
+// import { useGetStaffsbyServiceQuery } from "@/redux/features/staff/staffApis";
+// import { Star } from "lucide-react";
+// import { useParams } from "next/navigation";
+
+// interface Step3Props {
+//   formData: BookingFormData;
+//   updateFormData: <K extends keyof BookingFormData>(
+//     field: K,
+//     value: BookingFormData[K],
+//   ) => void;
+//   data?: any; // service data
+// }
+
+// export default function Step3({ formData, updateFormData, data }: Step3Props) {
+//   const params = useParams();
+//   const id = params.booking;
+//   const { data: staffProvider, isLoading } = useGetStaffsbyServiceQuery({ id });
+
+//   // Use API data or fallback to data passed as prop
+//   const staffList = staffProvider?.staff || data?.staff || [];
+
+//   return (
+//     <div className="space-y-6">
+//       {/* Service Provider */}
+//       <div className="border p-5 rounded-lg border-gray-300">
+//         <h3 className="text-lg font-semibold">Choose Your Service Provider</h3>
+//         <p className="text-base text-gray-600">
+//           Select your preferred concierge representative
+//         </p>
+
+//         {isLoading ? (
+//           <LoadingSpinner />
+//         ) : staffList.length === 0 ? (
+//           <p className="mt-5 text-base text-gray-600">
+//             No service providers are available at the moment. Please proceed to
+//             the next step — a provider will be assigned automatically.
+//           </p>
+//         ) : (
+//           <div className="">
+//             <RadioGroup
+//               value={formData.provider}
+//               onValueChange={(value) => updateFormData("provider", value)}
+//               className="mt-5 space-y-3"
+//             >
+//               {staffList.map((staff: any) => (
+//                 <div
+//                   key={staff._id}
+//                   onClick={() => updateFormData("provider", staff._id)}
+//                   className={`
+//                     flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer
+//                     ${
+//                       formData.provider === staff._id
+//                         ? "border-[#155DFC] bg-[#CCE2FF]"
+//                         : "border-gray-400 hover:bg-gray-50"
+//                     }
+//                   `}
+//                 >
+//                   <div>
+//                     <p className="text-base font-medium text-slate-900">
+//                       {staff.name}
+//                     </p>
+//                     <p className="text-base text-gray-600">
+//                       {staff.role || "Provider"} • 5 years experience
+//                     </p>
+//                   </div>
+
+//                   <div className="flex items-center gap-2 text-yellow-500">
+//                     <Star size={16} fill="currentColor" />
+//                     <span className="font-medium text-gray-700">
+//                       {staff.avgRating || 5}
+//                     </span>
+//                   </div>
+//                 </div>
+//               ))}
+//             </RadioGroup>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+"use client";
+
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { BookingFormData } from "@/config/Types/serviceTypes";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { useGetStaffsbyServiceQuery } from "@/redux/features/staff/staffApis";
@@ -9,20 +96,20 @@ interface Step3Props {
   formData: BookingFormData;
   updateFormData: <K extends keyof BookingFormData>(
     field: K,
-    value: BookingFormData[K]
+    value: BookingFormData[K],
   ) => void;
+  data?: any;
 }
 
-export default function Step3({ formData, updateFormData }: Step3Props) {
+export default function Step3({ formData, updateFormData, data }: Step3Props) {
   const params = useParams();
-  const id = params.booking;
+  const id = params.booking as string;
   const { data: staffProvider, isLoading } = useGetStaffsbyServiceQuery({ id });
 
-  console.log(staffProvider);
+  const staffList = staffProvider?.staff || data?.staff || [];
 
   return (
     <div className="space-y-6">
-      {/* Service Provider */}
       <div className="border p-5 rounded-lg border-gray-300">
         <h3 className="text-lg font-semibold">Choose Your Service Provider</h3>
         <p className="text-base text-gray-600">
@@ -31,44 +118,54 @@ export default function Step3({ formData, updateFormData }: Step3Props) {
 
         {isLoading ? (
           <LoadingSpinner />
-        ) : staffProvider?.staffs?.length === 0 ? (
+        ) : staffList.length === 0 ? (
           <p className="mt-5 text-base text-gray-600">
             No service providers are available at the moment. Please proceed to
             the next step — a provider will be assigned automatically.
           </p>
         ) : (
-          <div className="">
+          <div className="mt-5 space-y-3">
             <RadioGroup
               value={formData.provider}
-              onValueChange={(value) => updateFormData("provider", value)}
-              className="mt-5 space-y-3"
+              onValueChange={(value) => {
+                const selectedStaff = staffList.find(
+                  (s: any) => s._id === value,
+                );
+                if (selectedStaff) {
+                  updateFormData("provider", selectedStaff._id);
+                  updateFormData("providerName", selectedStaff.name);
+                }
+              }}
             >
-              {staffProvider?.staffs?.map((staff: any) => (
+              {staffList.map((staff: any) => (
                 <div
-                  key={staff?.id}
-                  onClick={() => updateFormData("provider", staff?._id)}
+                  key={staff._id}
+                  onClick={() => {
+                    updateFormData("provider", staff._id);
+                    updateFormData("providerName", staff.name); // store staff.name
+                  }}
                   className={`
-              flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer
-              ${
-                formData.provider === staff?._id
-                  ? "border-[#155DFC] bg-[#CCE2FF]"
-                  : "border-gray-400 hover:bg-gray-50"
-              }
-            `}
+                    flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer
+                    ${
+                      formData.provider === staff._id
+                        ? "border-[#155DFC] bg-[#CCE2FF]"
+                        : "border-gray-400 hover:bg-gray-50"
+                    }
+                  `}
                 >
                   <div>
                     <p className="text-base font-medium text-slate-900">
-                      {staff?.name}
+                      {staff.name}
                     </p>
                     <p className="text-base text-gray-600">
-                      {staff?.role} • 5 years experience
+                      {staff.role || "Provider"} • 5 years experience
                     </p>
                   </div>
 
                   <div className="flex items-center gap-2 text-yellow-500">
                     <Star size={16} fill="currentColor" />
                     <span className="font-medium text-gray-700">
-                      {staff?.avgRating}
+                      {staff.avgRating || 5}
                     </span>
                   </div>
                 </div>

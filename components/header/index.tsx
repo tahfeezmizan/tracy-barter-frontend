@@ -13,6 +13,8 @@ import {
   ListOrdered,
   LogOut,
   Menu,
+  RotateCcwKey,
+  ShoppingBag,
   User,
   X,
 } from "lucide-react";
@@ -29,6 +31,8 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
+
+  // console.log(role);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,8 +74,8 @@ export default function Header() {
           pathname === "/" && "lg:top-12 left-0 ",
           pathname === "/" &&
             isScrolled &&
-            "bg-primary !top-0 border-b transition duration-300",
-          pathname !== "/" && isScrolled && "bg-primary"
+            "bg-primary top-0! border-b transition duration-300",
+          pathname !== "/" && isScrolled && "bg-primary",
         )}
       >
         <div className="max-w-7xl mx-auto px-3 py-1 lg:rounded-lg bg-primary">
@@ -92,7 +96,7 @@ export default function Header() {
             {/* Desktop Navigation */}
             <div
               className={cn(
-                "hidden lg:flex items-center space-x-2"
+                "hidden lg:flex items-center space-x-2",
                 // pathname === "/" ? "text-white" : "text-green-900",
                 // pathname === "/" && isScrolled && "text-green-900"
               )}
@@ -139,15 +143,7 @@ export default function Header() {
                         asChild
                         className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
-                        {role === "admin" || "staff" ? (
-                          <Link
-                            href={"/dashboard"}
-                            className="flex items-center space-x-2"
-                          >
-                            <User className="h-4 w-4" />
-                            Dashboard
-                          </Link>
-                        ) : (
+                        {role === "client" ? (
                           <Link
                             href="/user-profile"
                             className="flex items-center space-x-2"
@@ -155,24 +151,45 @@ export default function Header() {
                             <User className="h-4 w-4" />
                             <span>Profile</span>
                           </Link>
+                        ) : (
+                          <Link
+                            href="/dashboard"
+                            className="flex items-center space-x-2"
+                          >
+                            <User className="h-4 w-4" />
+                            Dashboard
+                          </Link>
                         )}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         asChild
-                        className="data-[highlighted]:bg-primary data-[highlighted]:text-white hover:bg-primary cursor-pointer"
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
                         <Link
                           href="/user-profile/my-order"
                           className="flex items-center space-x-2"
                         >
-                          <ListOrdered className="h-4 w-4" />
-                          <span>Order</span>
+                          <ShoppingBag className="h-4 w-4" />
+                          <span>My Order</span>
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        asChild
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
+                      >
+                        <Link
+                          href="/user-profile/change-password"
+                          className="flex items-center space-x-2"
+                        >
+                          <RotateCcwKey className="h-4 w-4" />
+                          <span>Change Password</span>
                         </Link>
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
                         onClick={handleLogout}
-                        className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer"
+                        className="flex items-center space-x-2 data-highlighted:bg-primary data-highlighted:text-white cursor-pointer"
                       >
                         <LogOut className="h-4 w-4" />
                         <span>Logout</span>
@@ -193,7 +210,7 @@ export default function Header() {
                     asChild
                     variant="outline"
                     className={cn(
-                      "bg-transparent px-4 py-2 text-base  rounded-lg border cursor-pointer text-secondary"
+                      "bg-transparent px-4 py-2 text-base  rounded-lg border cursor-pointer text-secondary",
                       // isScrolled && "text-green-900 "
                     )}
                   >
@@ -218,7 +235,7 @@ export default function Header() {
                       className={cn(
                         "size-9",
                         pathname === "/" ? "text-white" : "text-black",
-                        pathname === "/" && isScrolled && "text-black "
+                        pathname === "/" && isScrolled && "text-black ",
                       )}
                     />
                   ) : (
@@ -262,7 +279,7 @@ export default function Header() {
                         className={cn(
                           "size-9",
                           pathname === "/" ? "text-white" : "text-black",
-                          pathname === "/" && isScrolled && "text-black "
+                          pathname === "/" && isScrolled && "text-black ",
                         )}
                       />
                     </>
@@ -283,7 +300,7 @@ export default function Header() {
                     className={cn(
                       "px-3 py-2 text-base font-semibold transition-colors",
                       pathname === "/" ? "text-white" : "text-black",
-                      pathname === "/" && isScrolled && "text-green-900"
+                      pathname === "/" && isScrolled && "text-green-900",
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -304,7 +321,7 @@ export default function Header() {
                       asChild
                       variant="outline"
                       className={cn(
-                        "px-6 py-2 text-base text-secondary  font-medium rounded-lg border border-secondary cursor-pointer bg-transparent hover:bg-secondary hover:text-primary duration-300"
+                        "px-6 py-2 text-base text-secondary  font-medium rounded-lg border border-secondary cursor-pointer bg-transparent hover:bg-secondary hover:text-primary duration-300",
                         // pathname === "/"
                         //   ? "border-green-900  text-white hover:bg-white hover:border-white hover:text-black"
                         //   : "border-green-900 text-black hover:bg-green-900 hover:text-white",

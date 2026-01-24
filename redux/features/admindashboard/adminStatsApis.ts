@@ -12,17 +12,32 @@ const adminStatsApis = baseApi.injectEndpoints({
       },
     }),
 
-    getStaffStats: builder.query({
+    getAdminRecentService: builder.query({
       query: () => ({
-        url: "/stats/provider/dashboard",
+        url: "/stats/admin/recent-services",
         method: "GET",
       }),
       transformResponse: (response: any) => {
         return response?.data;
       },
     }),
+
+    getStaffStatsOnAdmin: builder.query({
+      query: () => ({
+        url: "/stats/admin/staff-stats",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["staff"],
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetAdminStatsQuery, useGetStaffStatsQuery } = adminStatsApis;
+export const {
+  useGetAdminStatsQuery,
+  useGetAdminRecentServiceQuery,
+  useGetStaffStatsOnAdminQuery,
+} = adminStatsApis;

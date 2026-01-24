@@ -321,16 +321,27 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
           </div>
 
           {/* IMAGE */}
-          {/* IMAGE */}
           <div className="pt-4 border-t">
             {imagePreview ? (
               <div className="relative w-56 h-44">
-                <Image
-                  src={getImageUrl(imagePreview) || imagePreview}
-                  alt="Preview"
-                  fill
-                  className="object-cover rounded-md"
-                />
+                {/* Check if it's a base64 string (starts with data:) or a URL */}
+                {imagePreview.startsWith("data:") ? (
+                  // For base64 images from upload
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="object-cover rounded-md w-full h-full"
+                  />
+                ) : (
+                  // For URLs from server
+                  <Image
+                    src={getImageUrl(imagePreview)}
+                    alt="Preview"
+                    fill
+                    className="object-cover rounded-md"
+                    unoptimized={imagePreview?.startsWith("http")} // Optional: disable optimization for external URLs
+                  />
+                )}
 
                 {/* REMOVE BUTTON */}
                 <button
@@ -359,6 +370,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
               </label>
             )}
           </div>
+          
 
           {/* ACTIONS */}
           <div className="flex gap-3 pt-4">

@@ -5,8 +5,69 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { StaffProfileResponse } from "@/lib/types/staff.types";
+import { useStaffProfileUpdateMutation } from "@/redux/features/staffdashboard/staffStatsApis";
+import { toast } from "sonner";
 
-export default function PersonalInformation() {
+interface PersonalInformationProps {
+  data?: StaffProfileResponse["data"];
+}
+
+export default function PersonalInformation({
+  data,
+}: PersonalInformationProps) {
+  const [updateProfile, { isLoading }] = useStaffProfileUpdateMutation();
+
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      specialty: "",
+      address: "",
+      bio: "",
+    },
+  });
+
+  useEffect(() => {
+    if (!data) return;
+
+    reset({
+      fullName: data?.name || "",
+      email: data?.email || "",
+      phone: data?.phone || "",
+      specialty: data?.role || "",
+      address: data?.location?.coordinates
+        ? `Lat: ${data.location.coordinates[1]}, Lng: ${data.location.coordinates[0]}`
+        : "",
+      bio: data?.description || "",
+    });
+  }, [data, reset]);
+
+  const onSubmit = async (formData: any) => {
+    console.log("Personal Information Form Data:", formData);
+
+    try {
+      const res = await updateProfile({
+        name: formData.fullName,
+        description: formData.bio,
+        specialty: formData.specialty,
+        phone: formData.phone,
+      });
+
+      console.log(res);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      }
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full bg-white text-black p-6 rounded-xl">
       {/* Header */}
@@ -18,13 +79,17 @@ export default function PersonalInformation() {
       </div>
 
       {/* Form */}
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         {/* Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* FULL NAME */}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="fullName">Full Name</Label>
-            <Input id="fullName" placeholder="Maria Johnson" />
+            <Input
+              id="fullName"
+              placeholder="Maria Johnson"
+              {...register("fullName")}
+            />
           </div>
 
           {/* EMAIL */}
@@ -35,8 +100,10 @@ export default function PersonalInformation() {
               <Input
                 id="email"
                 type="email"
-                className="pl-10"
+                className="pl-10 bg-gray-100 cursor-not-allowed"
                 placeholder="maria@concierge.com"
+                readOnly
+                {...register("email")}
               />
             </div>
           </div>
@@ -50,6 +117,7 @@ export default function PersonalInformation() {
                 id="phone"
                 className="pl-10"
                 placeholder="(555) 111-2222"
+                {...register("phone")}
               />
             </div>
           </div>
@@ -57,7 +125,11 @@ export default function PersonalInformation() {
           {/* SPECIALTY */}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="specialty">Specialty</Label>
-            <Input id="specialty" placeholder="Home Cleaning" />
+            <Input
+              id="specialty"
+              placeholder="Home Cleaning"
+              {...register("specialty")}
+            />
           </div>
         </div>
 
@@ -70,6 +142,7 @@ export default function PersonalInformation() {
               id="address"
               className="pl-10"
               placeholder="Enter your address"
+              {...register("address")}
             />
           </div>
         </div>
@@ -81,12 +154,13 @@ export default function PersonalInformation() {
             id="bio"
             placeholder="Tell clients about your experience and expertise..."
             rows={5}
+            {...register("bio")}
           />
         </div>
 
         {/* BUTTON */}
         <Button className="mt-4 bg-[#F4C542]" type="submit">
-          Save Changes
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
       </form>
     </div>

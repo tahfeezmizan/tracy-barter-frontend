@@ -1,6 +1,11 @@
+import { StaffProfileResponse } from "@/lib/types/staff.types";
 import { Star } from "lucide-react";
 
-export function PerformanceStats() {
+interface PerformanceStatsProps {
+  data?: StaffProfileResponse["data"];
+}
+
+export function PerformanceStats({ data }: PerformanceStatsProps) {
   return (
     <div className="w-full p-6 bg-white text-black rounded-lg">
       {/* Heading */}
@@ -14,7 +19,7 @@ export function PerformanceStats() {
         {/* Average Rating */}
         <div className="flex flex-col items-center justify-center bg-gray-100 rounded-md p-6">
           <div className="flex items-center space-x-1">
-            <p className="text-3xl font-semibold">4.9</p>
+            <p className="text-3xl font-semibold">{data?.avgRating}</p>
             <Star className="text-yellow-500 fill-yellow-500 h-6 w-6" />
           </div>
           <p className="text-sm text-gray-600 mt-1">Average Rating</p>
@@ -22,7 +27,9 @@ export function PerformanceStats() {
 
         {/* Total Services */}
         <div className="flex flex-col items-center justify-center bg-gray-100 rounded-md p-6">
-          <p className="text-3xl font-semibold">156</p>
+          <p className="text-3xl font-semibold">
+            {data?.completedServiceCount}
+          </p>
           <p className="text-sm text-gray-600 mt-1">Total Services</p>
         </div>
 

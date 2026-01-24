@@ -6,10 +6,23 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getImageUrl = (path?: string) => {
-  if (!path) return "/placeholder.png"; // fallback image
+  if (!path) return "/placeholder.png";
 
   const baseURL = process.env.NEXT_PUBLIC_BASEURL as string;
 
   // Prevent double slashes
   return `${baseURL}${path}`;
+};
+
+export const formatDateOnly = (date?: string) => {
+  if (!date) return "";
+  return date.split("T")[0];
+};
+
+export const formatDate = (date: string | Date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 };

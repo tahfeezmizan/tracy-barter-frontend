@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ReviewItem } from "@/lib/types/review.types";
+import { ReviewItemType } from "@/lib/types/review.types";
 import { SupportItem } from "@/lib/types/support.types";
 import {
   useGetSupportQuery,
@@ -112,7 +112,7 @@ export default function ClientFeedback() {
           </p>
 
           <div className="space-y-6">
-            {review?.data?.map((item: ReviewItem) => (
+            {review?.data?.map((item: ReviewItemType) => (
               <Card
                 key={item?._id}
                 className="border rounded-xl bg-gray-50 p-0"

@@ -21,7 +21,28 @@ const staffApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+    getScheduledBookingsByDate: builder.query({
+      query: (date: string) => ({
+        url: "/booking/scheduled",
+        method: "GET",
+        params: { date },
+      }),
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getSingleShedule: builder.query({
+      query: (id: string) => ({
+        url: `/booking/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response.data,
+    }),
   }),
 });
 
-export const { useGetServiceQuery, useGetStaffsbyServiceQuery } = staffApis;
+export const {
+  useGetServiceQuery,
+  useGetSingleSheduleQuery,
+  useGetStaffsbyServiceQuery,
+  useGetScheduledBookingsByDateQuery,
+} = staffApis;
