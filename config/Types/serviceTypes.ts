@@ -4,9 +4,12 @@ export interface BookingFormData {
   [key: string]: any;
 
   provider: string;
+  providerName: string;
+  isOutdoor: boolean;
+
   date?: Date;
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
 
   address: {
     address: string;
