@@ -13,6 +13,17 @@ const staffApis = baseApi.injectEndpoints({
       providesTags: ["Service"],
     }),
 
+    getMyOrder: builder.query({
+      query: () => ({
+        url: "/booking/my-orders",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ["Service"],
+    }),
+
     createStaff: builder.mutation({
       query: (data) => ({
         url: "/user/staff",
@@ -45,6 +56,7 @@ const staffApis = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetMyOrderQuery,
   useGetStaffSpecialtyServicesQuery,
   useCreateStaffMutation,
   useGetSingleStaffQuery,

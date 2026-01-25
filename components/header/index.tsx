@@ -7,25 +7,25 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn, getImageUrl } from "@/lib/utils";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
+import Cookies from "js-cookie";
 import {
   CircleUserRound,
-  ListOrdered,
   LogOut,
   Menu,
   RotateCcwKey,
   ShoppingBag,
   User,
-  X,
+  X
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
-import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { Avatar } from "../ui/avatar";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -34,9 +34,7 @@ export default function Header() {
   const role = useSelector(selectUserRole);
   const {data}  = useGetStaffProfileQuery(undefined)
 
-  console.log("data", data)
-
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [token, setToken] = useState<boolean>(false);
@@ -130,12 +128,20 @@ export default function Header() {
                   </Link> */}
 
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                          <CircleUserRound className="size-9 text-white" />
-                        </div>
-                      </Button>
+                    <DropdownMenuTrigger asChild>                      
+                      <Avatar className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                                      <Image
+                                        src={
+                                          data?.profile
+                                            ? getImageUrl(data?.profile)
+                                            : "/placeholder.svg"
+                                        }
+                                        width={200}
+                                        height={200}
+                                        alt={data?.name}
+                                      />
+                                     
+                                    </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
