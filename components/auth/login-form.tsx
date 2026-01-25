@@ -50,10 +50,11 @@ export function SignInForm() {
             },
           })
         );
-        if (res?.data?.data?.role === "admin" || "staff") {
+        
+        if (res?.data?.data?.role === "admin" || res?.data?.data?.role === "staff") {
           router.push("/dashboard");
         } else {
-          router.push("/prifle");
+          router.push("/user-profile");
         }
         // Redirect based on role
       } else if (res?.error) {

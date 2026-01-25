@@ -41,12 +41,9 @@ export function ShoppingListPage() {
 
   // Handle submit - log to console
   const handleSubmit = () => {
-    console.log("Shopping List Data:", {
-      items,
-      timestamp: new Date().toISOString(),
-      totalItems: items.length,
-    });
-    alert("Shopping list submitted! Check the console for details.");
+    console.log("Submitted Shopping List Data:", items);
+    console.log("clicked")
+    
   };
 
   return (

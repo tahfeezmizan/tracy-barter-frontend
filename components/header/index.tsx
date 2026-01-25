@@ -34,7 +34,7 @@ export default function Header() {
   const role = useSelector(selectUserRole);
   const {data}  = useGetStaffProfileQuery(undefined)
 
-   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [token, setToken] = useState<boolean>(false);
@@ -62,7 +62,7 @@ export default function Header() {
   const handleLogout = () => {
     Cookies.remove("token");
     dispatch(removeUser());
-    setToken(false); // instant UI update
+    setToken(false); 
     router.push("/");
   };
 
