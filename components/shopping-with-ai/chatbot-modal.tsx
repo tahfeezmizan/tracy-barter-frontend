@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send } from "lucide-react";
+import { CloudCog, Send } from "lucide-react";
+import { useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
 
 interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
-  suggestedItem?: { name: string; quantity: number };
+  suggestedItems?: { name: string; quantity: number | string }[];
 }
 
 interface ChatbotModalProps {
@@ -33,17 +34,13 @@ export function ChatbotModal({
   onOpenChange,
   onAddItem,
 }: ChatbotModalProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content:
-        "Hello! I'm your AI Shopping Assistant. I can help you refine your shopping list by asking about brand preferences, quantities, and special requirements. What would you like help with?",
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // chat api 
+    const [sendChat] = useSendBookingChatMutation()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,46 +50,10 @@ export function ChatbotModal({
     scrollToBottom();
   }, [messages]);
 
-  // Simulate AI responses with item suggestions
-  const generateAIResponse = (userMessage: string) => {
-    const lowerMessage = userMessage.toLowerCase();
-
-    // Simple pattern matching to suggest items
-    if (lowerMessage.includes("milk")) {
-      return {
-        text: "Great! I'd suggest 2 liters of whole milk. Does that work for you?",
-        item: { name: "whole milk", quantity: 2 },
-      };
-    }
-    if (lowerMessage.includes("bread")) {
-      return {
-        text: "Whole grain bread is a good choice. How many loaves would you like?",
-        item: { name: "whole grain bread", quantity: 1 },
-      };
-    }
-    if (lowerMessage.includes("eggs")) {
-      return {
-        text: "I recommend a dozen eggs. Shall I add that to your list?",
-        item: { name: "eggs", quantity: 12 },
-      };
-    }
-    if (
-      lowerMessage.includes("vegetables") ||
-      lowerMessage.includes("veggies")
-    ) {
-      return {
-        text: "Would you like me to suggest some fresh vegetables? I could add carrots, broccoli, and spinach.",
-        item: { name: "fresh vegetables mix", quantity: 1 },
-      };
-    }
-
-    return {
-      text: "Thanks for letting me know. What else would you like help with for your shopping list?",
-    };
-  };
-
   const handleSendMessage = async () => {
     if (!input.trim()) return;
+
+    console.log("input", input)
 
     // Add user message
     const userMessage: ChatMessage = {
@@ -106,19 +67,30 @@ export function ChatbotModal({
     setIsLoading(true);
 
     // Simulate AI response delay
-    setTimeout(() => {
-      const aiResponse = generateAIResponse(input);
+    // Simulate AI response delay
+    try {
+      const res: any = await sendChat({ message: input });
+      console.log("Chat API Response:", res);
+   
+      if (res?.data?.success) {
+        const assistantMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: res?.data?.data?.response,
+          suggestedItems: res?.data?.data?.items?.map((item: any) => ({
+            name: item.name,
+            quantity: item.quantity,
+          })),
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
 
-      const assistantMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: aiResponse.text,
-        suggestedItem: aiResponse.item,
-      };
+      }
+    } catch (error) {
+      console.log(error);
 
-      setMessages((prev) => [...prev, assistantMessage]);
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
 
   const handleAddSuggestedItem = (item: { name: string; quantity: number }) => {
@@ -162,18 +134,27 @@ export function ChatbotModal({
               >
                 <p className="text-sm">{message.content}</p>
 
-                {/* Suggested Item */}
-                {message.suggestedItem && message.role === "assistant" && (
-                  <div className="mt-3 pt-3 border-t border-slate-200">
-                    <Button
-                      onClick={() =>
-                        handleAddSuggestedItem(message.suggestedItem!)
-                      }
-                      size="sm"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                    >
-                      Add to List
-                    </Button>
+                {/* Suggested Items */}
+                {message.suggestedItems && message.suggestedItems.length > 0 && message.role === "assistant" && (
+                  <div className="mt-3 pt-3 border-t border-slate-200 space-y-2">
+                    {message.suggestedItems.map((item, idx) => (
+                      <div key={idx} className="flex items-center justify-between gap-2 p-2 bg-slate-50 rounded border border-slate-100">
+                         <div className="text-sm">
+                            <span className="font-medium">{item.name}</span>
+                            <span className="text-slate-500 ml-1">({item.quantity})</span>
+                         </div>
+                        <Button
+                          onClick={() => {
+                             const qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity as string) || 1;
+                             handleAddSuggestedItem({ name: item.name, quantity: qty });
+                          }}
+                          size="sm"
+                          className="bg-blue-600 hover:bg-blue-700 text-white shrink-0 h-8"
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

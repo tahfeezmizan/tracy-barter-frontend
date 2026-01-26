@@ -7,6 +7,7 @@ import { MessageCircle, Check } from "lucide-react";
 import { ShoppingListForm } from "./shopping-list-form";
 import { ShoppingListDisplay } from "./shopping-list-display";
 import { ChatbotModal } from "./chatbot-modal";
+import { useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
 
 export interface ShoppingItem {
   id: string;
@@ -18,6 +19,9 @@ export interface ShoppingItem {
 export function ShoppingListPage() {
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+
+  // chat api 
+  const [sendChat, { isLoading }] = useSendBookingChatMutation()
 
   // Add item from form or chatbot
   const addItem = (

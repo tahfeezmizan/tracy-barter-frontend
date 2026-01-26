@@ -74,7 +74,7 @@ export default function GroceryAssistant() {
             </p>
             <Link href={"/shopping-with-ai"}>
               <Button className="bg-secondary text-2xl text-white mt-6 py-6">
-                Try Grocery
+                Try AI Grocery
               </Button>
             </Link>
           </div>

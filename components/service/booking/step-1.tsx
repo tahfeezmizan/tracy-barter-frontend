@@ -155,7 +155,7 @@ export default function Step1({ formData, updateFormData, data }: Step1Props) {
         value: "",
       };
     });
-    serviceDetails.push(serviceDetails);
+    // serviceDetails.push(serviceDetails);
 
     // Also log as an array
     console.log({ serviceDetails });

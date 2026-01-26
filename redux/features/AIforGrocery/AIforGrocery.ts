@@ -1,10 +1,19 @@
 import { baseApi } from "../baseApi";
 
 const staffApis = baseApi.injectEndpoints({
-  endpoints: (builder) => ({        
-    getGroceryList: builder.query({
+  endpoints: (builder) => ({  
+    sendBookingChat: builder.mutation({
+      query: (body) => ({
+        url: '/booking/chat/send',
+        method: 'POST',
+        body,
+      }),
+      // invalidatesTags: ['Chat'],
+    }),
+    
+    getGroceryChat: builder.query({
       query: () => ({
-        url: "/booking/my-orders",
+        url: "/booking/chat/send",
         method: "GET",
       }),
       transformResponse: (response: any) => {
@@ -16,4 +25,4 @@ const staffApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetGroceryListQuery } = staffApis;
+export const { useGetGroceryChatQuery, useSendBookingChatMutation } = staffApis;

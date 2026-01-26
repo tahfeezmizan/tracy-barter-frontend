@@ -1,10 +1,19 @@
 "use client";
 
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useState, ChangeEvent, FormEvent } from "react";
 import { KeyRound } from "lucide-react";
 
+interface PasswordFormData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+type FormInputChangeEvent = ChangeEvent<HTMLInputElement>;
+type FormSubmitEvent = FormEvent<HTMLFormElement>;
+
 /** Default password form state */
-const DEFAULT_FORM_STATE: PasswordFormData: any = {
+const DEFAULT_FORM_STATE: PasswordFormData = {
   currentPassword: "",
   newPassword: "",
   confirmPassword: "",

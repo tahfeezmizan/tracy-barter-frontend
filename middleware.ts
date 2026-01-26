@@ -19,6 +19,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  if (pathname.startsWith("/shopping-with-ai")) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/signin", request.url));
+    }
+  }
+
   // Protect Service Booking Routes
   // logic: Matches /service/* but NOT /service (listing page)
   if (pathname.startsWith("/service") && pathname !== "/service") {
@@ -34,9 +40,12 @@ export const config = {
   matcher: [
     // Pattern to match dashboard routes
     "/dashboard/:path*",
+ // Pattern to match user profile routes
+    "/user-profile/:path*",
+
     // Pattern to match service routes
     "/service/:path*",
-    // Pattern to match user profile routes
-    "/user-profile/:path*",
+
+    "/shopping-with-ai/:path*",
   ],
 };
