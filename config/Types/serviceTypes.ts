@@ -1,5 +1,5 @@
 export interface BookingFormData {
-  serviceType: string | null;
+  serviceType: ServiceType | null;
 
   [key: string]: any;
 

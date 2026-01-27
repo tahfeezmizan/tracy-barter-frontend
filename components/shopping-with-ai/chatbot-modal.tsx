@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CloudCog, Send } from "lucide-react";
-import { useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
+import { useGetPastOrdersHistoryQuery, useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
 
 interface ChatMessage {
   id: string;
@@ -41,6 +41,9 @@ export function ChatbotModal({
 
   // chat api 
     const [sendChat] = useSendBookingChatMutation()
+    const { data: pastOrdersHistory } = useGetPastOrdersHistoryQuery(undefined)
+
+    console.log("pastOrdersHistory", pastOrdersHistory)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

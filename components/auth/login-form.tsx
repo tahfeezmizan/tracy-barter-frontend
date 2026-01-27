@@ -41,6 +41,7 @@ export function SignInForm() {
       console.log(res?.data?.data?.role);
 
       if (res?.data?.success) {
+        toast.success(res?.data?.message || "Login successful");
         // store token on redux
         dispatch(
           setUser({
@@ -51,18 +52,21 @@ export function SignInForm() {
           })
         );
         
-        if (res?.data?.data?.role === "admin" || res?.data?.data?.role === "staff") {
+        if (["admin", "staff"].includes(res?.data?.data?.role)) {
           router.push("/dashboard");
         } else {
           router.push("/user-profile");
         }
         // Redirect based on role
       } else if (res?.error) {
-        toast.error("Something went wrong");
+        const errorData = res?.error as any;
+        const errorMessage = errorData?.data?.message || errorData?.data?.errorMessages?.[0]?.message || "Something went wrong";
+        toast.error(errorMessage);
+        console.log("Login error:", res.error);
       }
-      console.log(res);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast.error("Something went wrong");
     }
   };
 

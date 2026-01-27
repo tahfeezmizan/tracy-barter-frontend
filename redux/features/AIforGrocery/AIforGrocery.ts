@@ -11,18 +11,18 @@ const staffApis = baseApi.injectEndpoints({
       // invalidatesTags: ['Chat'],
     }),
     
-    getGroceryChat: builder.query({
+    getPastOrdersHistory: builder.query({
       query: () => ({
-        url: "/booking/chat/send",
+        url: "/booking/chat/past-orders",
         method: "GET",
       }),
-      transformResponse: (response: any) => {
-        return response?.data;
-      },
-      providesTags: ["Service"],
+      // transformResponse: (response: any) => {
+      //   return response?.data;
+      // },
+      // providesTags: ["Chat"],
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetGroceryChatQuery, useSendBookingChatMutation } = staffApis;
+export const { useGetPastOrdersHistoryQuery, useSendBookingChatMutation } = staffApis;
