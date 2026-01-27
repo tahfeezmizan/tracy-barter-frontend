@@ -12,6 +12,15 @@ const reviewApis = baseApi.injectEndpoints({
       },
     }),
 
+    createReview: builder.mutation({
+      query: (data) => ({
+        url: "/review",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Review"],
+    }),
+
     updateReviewStatus: builder.mutation<any, { id: string; status: string }>({
       query: ({ id, status }) => ({
         url: `/review/${id}/status`,
@@ -22,4 +31,4 @@ const reviewApis = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetReviewQuery, useUpdateReviewStatusMutation } = reviewApis;
+export const { useGetReviewQuery, useUpdateReviewStatusMutation, useCreateReviewMutation } = reviewApis;

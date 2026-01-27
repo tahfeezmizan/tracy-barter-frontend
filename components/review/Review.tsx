@@ -4,39 +4,55 @@ import { useParams } from "next/navigation";
 import { 
   Star,
   MessageSquare,
+  Loader,
 } from "lucide-react";
+import { useCreateReviewMutation } from "@/redux/features/review/reviewApis";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
 const Review = () => {
-      const params = useParams();
-  const orderId = params?.orderId;
+  const params = useParams();
+  const router = useRouter();
+  const orderId = params?.orderId; 
   
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [title, setTitle] = useState("");
   const [photos, setPhotos] = useState<string[]>([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
 
-  console.log(orderId);
+  const [createReview, { isLoading }] = useCreateReviewMutation();
 
+  console.log("Order ID for review:", orderId);
 
   const handleClearForm = () => {
     setRating(0);
     setReviewText("");
+    setTitle("");
     setPhotos([]);
-    setName("");
-    setEmail("");
   };
 
-  const handleSubmitReview = () => {
-    console.log({
-      orderId,
+  const handleSubmitReview = async () => {
+    const payload = {
+      bookingId: orderId,
+      title: title || "Service Review",
       rating,
-      reviewText,
-      photos,
-      name,
-      email
-    });
-    // Submit logic here
+      review: reviewText,
+    };
+
+    try {
+      const res = await createReview(payload).unwrap();
+      if (res?.success) {
+        toast.success(res?.message || "Review submitted successfully");
+        handleClearForm();
+        router.push("/user-profile/my-order");
+      } else {
+        toast.error(res?.message || "Failed to submit review");
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong");
+      console.error("Review submission error:", error);
+    }
   };
   return (
      <div className="w-full p-4 items-center justify-between rounded-xl gap-4 py-10">
@@ -93,10 +109,24 @@ const Review = () => {
           </p>
         </div>
 
+        {/* Review Title */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Review Title
+          </h3>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Summarize your experience (optional)"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+        </div>
+
         {/* Review Text */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
-            Your Review
+            Your Review <span className="text-red-500">*</span>
           </h3>
           <textarea
             value={reviewText}
@@ -118,13 +148,14 @@ const Review = () => {
           </button>
           <button
             onClick={handleSubmitReview}
-            disabled={rating === 0}
-            className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-              rating === 0
+            disabled={rating === 0 || isLoading}
+            className={`px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 ${
+              rating === 0 || isLoading
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-[#F4C542] text-white hover:bg-[#F4C542]/90"
             }`}
           >
+            {isLoading ? <Loader className="w-5 h-5 animate-spin" /> : null}
             Submit Review
           </button>
         </div>

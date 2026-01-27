@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import { useUpdateAvailabilityMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
+import Link from "next/link";
 
 interface AccountSettingsProps {
   data?: StaffProfileResponse["data"];
@@ -61,13 +62,15 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
           <h3 className="font-medium">Change Password</h3>
           <p className="text-slate-500">Update your account password</p>
         </div>
+        
+        <Link href="/user-profile/change-password">
         <Button
-          className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white"
-          onClick={() => alert("Change password functionality")}
-        >
+          className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white"          
+          >
           <Lock />
           Change Password
         </Button>
+          </Link>
       </div>
     </div>
   );

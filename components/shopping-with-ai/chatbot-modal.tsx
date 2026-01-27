@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CloudCog, Send } from "lucide-react";
 import { useGetPastOrdersHistoryQuery, useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
+import { Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface ChatMessage {
   id: string;
@@ -40,10 +40,10 @@ export function ChatbotModal({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // chat api 
-    const [sendChat] = useSendBookingChatMutation()
-    const { data: pastOrdersHistory } = useGetPastOrdersHistoryQuery(undefined)
+    const [sendChat] = useSendBookingChatMutation();
+    const {data: pastOrdersHistory} = useGetPastOrdersHistoryQuery(undefined);
 
-    console.log("pastOrdersHistory", pastOrdersHistory)
+    console.log("pastOrdersHistory", pastOrdersHistory);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -55,8 +55,6 @@ export function ChatbotModal({
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
-
-    console.log("input", input)
 
     // Add user message
     const userMessage: ChatMessage = {
@@ -83,6 +81,7 @@ export function ChatbotModal({
           suggestedItems: res?.data?.data?.items?.map((item: any) => ({
             name: item.name,
             quantity: item.quantity,
+            sessionId: item?.sessionId
           })),
         };
         setMessages((prev) => [...prev, assistantMessage]);
