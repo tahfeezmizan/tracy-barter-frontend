@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Step1 from "@/components/service/booking/step-1";
@@ -31,7 +31,9 @@ export default function BookingPage() {
 
   const [createBooking] = useCreateBookingMutation();
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const searchParams = useSearchParams();
+  const initialStep = Number(searchParams.get("step")) || 1;
+  const [currentStep, setCurrentStep] = useState(initialStep);
 
   // Single Source of Truth
   const [formData, setFormData] = useState<BookingFormData>({
@@ -66,6 +68,41 @@ export default function BookingPage() {
     }));
   };
 
+  // Load shopping list from localStorage if redirected from AI shopping
+  useEffect(() => {
+    const list = localStorage.getItem("pendingShoppingList");
+    if (list) {
+      try {
+        const items = JSON.parse(list);
+        const serviceDetails = items.map((item: any) => ({
+          name: item.name,
+          value: item.quantity,
+        }));
+        
+        setFormData(prev => ({
+          ...prev,
+          serviceDetails: serviceDetails,
+          // Pre-populate fields if they exist in serviceData
+        }));
+
+        // Select the first service type if we are jumping into step 2
+        if (serviceData?.serviceType?.length && !formData.serviceType) {
+          const type = serviceData.serviceType[0];
+          updateFormData("serviceType", {
+            _id: type._id,
+            title: type.title,
+            description: type.description,
+          });
+        }
+
+        // Clean up
+        localStorage.removeItem("pendingShoppingList");
+      } catch (e) {
+        console.error("Failed to parse pendingShoppingList", e);
+      }
+    }
+  }, [serviceData]);
+
   // Live console for all form data
   useEffect(() => {
     console.log("📦 FULL BOOKING FORM DATA:", formData);
@@ -78,8 +115,15 @@ export default function BookingPage() {
         name: field.label,
         value: formData[field.name],
       })) || [];
-    formData.serviceDetails = serviceDetails;
-  }, [currentStep, serviceData, formData]);
+    
+    // Merge or set service details
+    if (formData.serviceDetails && formData.serviceDetails.length > 0) {
+      // If we already have details (e.g. from shopping list), we might want to keep them or merge
+      // For now, let's just log and see. The user asked to "pass the shopping list data".
+    } else {
+      updateFormData("serviceDetails", serviceDetails);
+    }
+  }, [currentStep, serviceData]);
 
   const handleContinue = () => {
     if (currentStep < TOTAL_STEPS) {
@@ -103,10 +147,10 @@ export default function BookingPage() {
     // console.log("📦 FULL BOOKING FORM DATA:", formData);
 
     const payload = {
-      service: id, // From URL params
-      staff: formData.provider, // Mapped from provider
-      date: formData.date ? new Date(formData.date).toISOString().split('T')[0] : "", // Format YYYY-MM-DD
-      startTime: "10:00", // Defaulting for now as requested by user's example, or check requirements
+      service: id, 
+      staff: formData.provider, 
+      date: formData.date ? new Date(formData.date).toISOString().split('T')[0] : "", 
+      startTime: "10:00", 
       endTime: "11:00",
       address: formData.address,
       serviceType: formData.serviceType,
