@@ -10,6 +10,15 @@ const staffApis = baseApi.injectEndpoints({
       }),
       // invalidatesTags: ['Chat'],
     }),
+
+    confirmChat: builder.mutation({
+      query: (body) => ({
+        url: '/booking/chat/confirm',
+        method: 'POST',
+        body
+      }),
+      // invalidatesTags: ['Chat'],
+    }),
     
     getPastOrdersHistory: builder.query({
       query: () => ({
@@ -25,4 +34,4 @@ const staffApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetPastOrdersHistoryQuery, useSendBookingChatMutation } = staffApis;
+export const { useGetPastOrdersHistoryQuery, useSendBookingChatMutation, useConfirmChatMutation  } = staffApis;

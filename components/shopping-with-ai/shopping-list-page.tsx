@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MessageCircle, Check } from "lucide-react";
 import { ShoppingListForm } from "./shopping-list-form";
 import { ShoppingListDisplay } from "./shopping-list-display";
 import { ChatbotModal } from "./chatbot-modal";
-import { useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
+import { useConfirmChatMutation, useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
 
 export interface ShoppingItem {
   id: string;
@@ -19,24 +19,34 @@ export interface ShoppingItem {
 export function ShoppingListPage() {
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  // chat api 
-  const [sendChat, { isLoading }] = useSendBookingChatMutation()
+  const [confirmChat, { isLoading }] = useConfirmChatMutation()
 
   // Add item from form or chatbot
   const addItem = (
-    name: string,
-    quantity: number,
-    source: "manual" | "chatbot" = "manual"
-  ) => {
-    const newItem: ShoppingItem = {
-      id: Date.now().toString(),
-      name,
-      quantity,
-      source,
-    };
-    setItems([...items, newItem]);
+  name: string,
+  quantity: number,
+  source: "manual" | "chatbot" = "manual"
+) => {
+  const newItem: ShoppingItem = {
+    id: Date.now().toString(),
+    name,
+    quantity,
+    source,
   };
+
+  const updatedItems = [...items, newItem];
+  setItems(updatedItems);
+
+  // ✅ log instantly when item is added
+  console.log("Item added:", newItem);
+  console.log("Updated shopping list:", updatedItems);
+};
+
+// useEffect(() => {
+//   console.log("Shopping list updated:", items);
+// }, [items]);
 
   // Delete item
   const deleteItem = (id: string) => {
@@ -44,7 +54,17 @@ export function ShoppingListPage() {
   };
 
   // Handle submit - log to console
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
+
+    try {
+      const res = await confirmChat({sessionId: sessionId})
+
+    
+
+
+    } catch (error) {
+      
+    }
     console.log("Submitted Shopping List Data:", items);
     console.log("clicked")
     
@@ -161,6 +181,10 @@ export function ShoppingListPage() {
         open={chatbotOpen}
         onOpenChange={setChatbotOpen}
         onAddItem={addItem}
+        onSessionIdReceived={(sessionId) => {
+          setSessionId(sessionId)
+          // console.log("Session ID received in ShoppingListPage:", sessionId);
+        }}
       />
     </div>
   );
