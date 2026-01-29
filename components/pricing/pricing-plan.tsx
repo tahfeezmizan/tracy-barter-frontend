@@ -26,7 +26,7 @@ export default function PricingPlan() {
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
 
   
-  const [createSubscription] = useCreateSubscriptionMutation();
+  const [createSubscription, {isLoading:isCreatingSubscription}] = useCreateSubscriptionMutation();
 
   const handleSubscription = async (planId: string) => {
     try {
@@ -101,9 +101,13 @@ export default function PricingPlan() {
                     <Button
                       onClick={() => handleSubscription(plan?._id)}
                       variant="outline"
-                      className="border border-primary text-primary hover:bg-primary/15 font-semibold text-2xl py-6 rounded-xl transition-all duration-300"
+                      className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300"
                     >
-                      Get started
+                      {isCreatingSubscription ? (
+                        <LoadingSpinner />
+                      ) : (
+                        "Get started"
+                      )}
                     </Button>
                   </div>
                 </CardHeader>

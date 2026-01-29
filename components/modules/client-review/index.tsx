@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { ReviewItemType } from "@/lib/types/review.types";
+import { getImageUrl } from "@/lib/utils";
 import { useGetReviewQuery } from "@/redux/features/review/reviewApis";
 import { ChevronLeft, ChevronRight, CircleUserRound } from "lucide-react";
 import Image from "next/image";
@@ -80,7 +81,7 @@ export default function ClientReview() {
                         {service?.reviewer?.profile ? (
                           <Image
                             src={
-                              service?.reviewer?.profile || "Defult Image url"
+                              getImageUrl(service?.reviewer?.profile) || "Defult Image url"
                             }
                             alt={service?.reviewer?.name}
                             width={400}

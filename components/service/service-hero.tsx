@@ -30,13 +30,10 @@ export default function ServiceHero() {
 
       <div className="max-w-7xl mx-auto px-4 py-32 text-center">
         <div className="">
-          <Link
-            href={"#"}
-            className="text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-secondary "
-          >
+           <h2 className="text-3xl md:text-4xl font-bold text-black">
             Our Services
-          </Link>
-          <h3 className="text-xl md:text-2xl md:px-24 lg:px-0 py-10 leading-relaxed">
+          </h2>
+          <h3 className="text-xl md:text-2xl md:px-24 lg:px-0 py-6 leading-relaxed">
             We keep your home running smoothly with the core services you ask
             for, nothing less.
           </h3>

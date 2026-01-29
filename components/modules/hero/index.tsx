@@ -71,7 +71,7 @@ export default function HeroSection() {
             <span className="text-xl md:text-2xl font-medium leading-10">
               Your Home, Handled.
             </span>
-            <h2 className="text-3xl md:text-4xl text-primary font-bold leading-tight tracking-tight py-1 mb-2">
+            <h2 className="text-4xl md:text-5xl text-primary font-bold leading-tight tracking-tight py-1 mb-2">
               It's More Than A Service... <br className="" />{" "}
               It's A Lifestyle.
             </h2>

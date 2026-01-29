@@ -17,7 +17,7 @@ export default function Page() {
       <PricingPlan />
       <ClientReview />
       <FAQSection />
-      <ChatWidget />
+      
     </div>
   );
 }
