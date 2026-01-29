@@ -10,6 +10,7 @@ import {
 } from "@/redux/features/service/serviceApis";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function ServiceSection() {
@@ -48,7 +49,7 @@ export default function ServiceSection() {
     <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
       <div className="max-w-full mx-auto ">
         <div className="text-center mb-10 lg:mb-16 text-black">
-          <h1 className="text-3xl font-bold  mb-3">Service Highlights</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">Service Highlights</h1>
           <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
             Everything you need to keep your home ready for arrival whenever you
             need it.
@@ -76,6 +77,8 @@ export default function ServiceSection() {
                       shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
                     `}
                 >
+                  <Link href={`/service/${service?._id}`}>
+                  
                   <CardContent className="p-3 text-center">
                     <div className="relative ">
                       <Image
@@ -95,6 +98,7 @@ export default function ServiceSection() {
                       </p>
                     </div>
                   </CardContent>
+                  </Link>
                 </Card>
               );
             })}

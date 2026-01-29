@@ -34,7 +34,7 @@ export default function FAQSection() {
         />
       </div>
       <div className="max-w-7xl mx-auto px-3 overflow-hidden ">
-        <h1 className="text-4xl md:text-5xl font-bold text-black text-center mb-10 md:mb-16">
+        <h1 className="text-3xl md:text-4xl font-bold text-black text-center mb-10 md:mb-16">
           Frequently asked questions
         </h1>
 

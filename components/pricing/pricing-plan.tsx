@@ -47,7 +47,7 @@ export default function PricingPlan() {
       <div className="max-w-7xl mx-auto px-4">
         {pathname === "/" && (
           <div className="text-center mb-8 md:mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-black mb-3 md:mb-5">
+            <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
               Pricing
             </h1>
             <p className="text-xl md:text-2xl text-neutral-700 max-w-3xl mx-auto leading-relaxed">

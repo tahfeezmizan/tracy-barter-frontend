@@ -65,7 +65,7 @@ export default function GroceryAssistant() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl text-black font-bold leading-tight tracking-tight py-1 mb-2">
+            <h2 className="text-3xl md:text-4xl text-black font-bold leading-tight tracking-tight py-1 mb-2">
               Smart, Stocked Kitchen
             </h2>
             <p className="text-xl md:text-2xl leading-snug ">

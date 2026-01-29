@@ -21,7 +21,7 @@ export default function AboutTracy() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl text-black font-bold leading-tight tracking-tight ">
+            <h2 className="text-3xl md:text-4xl text-black font-bold leading-tight tracking-tight ">
               Tracy Barter
             </h2>
             <Button className="p-2.5 bg-primary/60 text-secondary text-base font-medium rounded-full my-3">
