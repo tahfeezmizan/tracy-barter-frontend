@@ -12,8 +12,15 @@ import { Badge } from "@/components/ui/badge";
 import { Eye, Pencil, Search } from "lucide-react";
 import { useGetClientsQuery } from "@/redux/features/service/clientApis";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { useState } from "react";
+import ClientDetailsModal from "./client-details-modal";
 
 export default function AllClientsTable() {
+const [selectedClient, setSelectedClient] = useState<any>(null);
+const [modalMode, setModalMode] = useState<"view" | "edit">("view");
+const [open, setOpen] = useState(false);
+
+
   const { data, isLoading } = useGetClientsQuery("client");
   console.log("client", data?.data);
 
@@ -92,21 +99,53 @@ export default function AllClientsTable() {
 
                     <td className="p-4">${client?.totalSpent || "0"}</td>
 
-                    <td className="p-4 text-center flex items-center justify-center gap-3">
+                    {/* <td className="p-4 text-center flex items-center justify-center gap-3">
                       <button>
                         <Eye className="h-5 w-5 text-gray-600 hover:text-black" />
                       </button>
                       <button>
                         <Pencil className="h-5 w-5 text-gray-600 hover:text-black" />
                       </button>
-                    </td>
+                    </td> */}
+                    <td className="p-4 text-center flex items-center justify-center gap-3">
+  <button
+    onClick={() => {
+      setSelectedClient(client);
+      setModalMode("view");
+      setOpen(true);
+    }}
+  >
+    <Eye className="h-5 w-5 text-gray-600 hover:text-black" />
+  </button>
+
+  <button
+    onClick={() => {
+      setSelectedClient(client);
+      setModalMode("edit");
+      setOpen(true);
+    }}
+  >
+    <Pencil className="h-5 w-5 text-gray-600 hover:text-black" />
+  </button>
+</td>
+
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
+        {selectedClient && (
+  <ClientDetailsModal
+    open={open}
+    onClose={() => setOpen(false)}
+    mode={modalMode}
+    client={selectedClient}
+  />
+)}
+
       </CardContent>
     </Card>
+    
   );
 }

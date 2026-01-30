@@ -40,6 +40,11 @@ export const menuItems: Record<string, MenuItem[]> = {
       icon: Briefcase,
     },
     {
+      title: "Bookings",
+      url: "/dashboard/booking",
+      icon: Calendar,
+    },
+    {
       title: "Payments",
       url: "/dashboard/payments",
       icon: CreditCard,
