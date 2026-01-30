@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MessageCircle, Check } from "lucide-react";
-import { ShoppingListForm } from "./shopping-list-form";
-import { ShoppingListDisplay } from "./shopping-list-display";
-import { ChatbotModal } from "./chatbot-modal";
-import { useConfirmChatMutation, useSendBookingChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
+import { useConfirmChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
 import { useGetServiceHomeQuery } from "@/redux/features/service/serviceApis";
+import { Check, MessageCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChatbotModal } from "./chatbot-modal";
+import { ShoppingListDisplay } from "./shopping-list-display";
+import { ShoppingListForm } from "./shopping-list-form";
 
 export interface ShoppingItem {
   id: string;

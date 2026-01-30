@@ -1,6 +1,5 @@
 import { BookingFormData } from "@/config/Types/serviceTypes";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
-import { CloudCog } from "lucide-react";
 
 interface Step5Props {
   formData: BookingFormData;
