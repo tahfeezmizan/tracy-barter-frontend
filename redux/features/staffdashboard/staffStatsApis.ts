@@ -97,11 +97,12 @@ const staffStatsApis = baseApi.injectEndpoints({
     }),
 
     updateAvailability: builder.mutation({
-      query: (isAvailable) => ({
+      query: ({ isAvailable }) => ({
         url: "/user/availability",
         method: "POST",
         body: { isAvailable },
       }),
+      invalidatesTags: ["staff"],
     }),
   }),
   overrideExisting: true,

@@ -7,6 +7,7 @@ import { Lock } from "lucide-react";
 import { useUpdateAvailabilityMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface AccountSettingsProps {
   data?: StaffProfileResponse["data"];
@@ -23,16 +24,19 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
 
   const handleToggle = async () => {
     const newStatus = !isAvailable;
+    // Optimistic update
     setIsAvailable(newStatus);
     console.log("Account Settings", newStatus);
 
     try {
-      const res = await updateAvailability({
+      await updateAvailability({
         isAvailable: newStatus,
       }).unwrap();
-      console.log(res);
+      toast.success(`Availability updated to ${newStatus ? "available" : "unavailable"}`);
     } catch (error) {
       console.error("Failed to update availability:", error);
+      toast.error("Failed to update availability. Please try again.");
+      // Revert state on error
       setIsAvailable(!newStatus);
     }
   };
