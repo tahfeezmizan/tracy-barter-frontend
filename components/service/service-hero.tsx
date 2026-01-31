@@ -37,12 +37,12 @@ export default function ServiceHero() {
             We keep your home running smoothly with the core services you ask
             for, nothing less.
           </h3>
-          <Link
+          {/* <Link
             href={"#"}
             className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 "
           >
             Book a visit
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

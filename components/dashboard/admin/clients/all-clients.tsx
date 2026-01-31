@@ -118,7 +118,7 @@ const [open, setOpen] = useState(false);
     <Eye className="h-5 w-5 text-gray-600 hover:text-black" />
   </button>
 
-  <button
+  {/* <button
     onClick={() => {
       setSelectedClient(client);
       setModalMode("edit");
@@ -126,7 +126,7 @@ const [open, setOpen] = useState(false);
     }}
   >
     <Pencil className="h-5 w-5 text-gray-600 hover:text-black" />
-  </button>
+  </button> */}
 </td>
 
                   </tr>

@@ -15,12 +15,13 @@ interface AccountSettingsProps {
 
 const AccountSettings = ({ data }: AccountSettingsProps) => {
   // Initialize based on data?.status
-  const [isAvailable, setIsAvailable] = useState(data?.status === "active");
+  const [isAvailable, setIsAvailable] = useState(!!data?.isAvailable);
   const [updateAvailability, { isLoading }] = useUpdateAvailabilityMutation();
 
   useEffect(() => {
-    setIsAvailable(data?.status === "active");
-  }, [data?.status]);
+  setIsAvailable(!!data?.isAvailable);
+}, [data?.isAvailable]);
+
 
   const handleToggle = async () => {
     const newStatus = !isAvailable;
@@ -29,9 +30,10 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
     console.log("Account Settings", newStatus);
 
     try {
-      await updateAvailability({
+      const res = await updateAvailability({
         isAvailable: newStatus,
       }).unwrap();
+      console.log("Account Settings", res);
       toast.success(`Availability updated to ${newStatus ? "available" : "unavailable"}`);
     } catch (error) {
       console.error("Failed to update availability:", error);
@@ -57,7 +59,8 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
         <Switch
           checked={isAvailable}
           onCheckedChange={handleToggle}
-          disabled={isLoading || data?.status === "inactive"}
+          disabled={isLoading} 
+          className="bg-gray-200 h-5"
         />
       </div>
 
