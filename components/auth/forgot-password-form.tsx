@@ -40,7 +40,6 @@ const [forgetPassword, { isLoading }] = useForgetPasswordSendOTPMutation({});
   } catch (error: any) {
     const message =
       error?.data?.message || "Something went wrong";
-
     toast.error(message);
   }
 };

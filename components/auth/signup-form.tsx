@@ -15,11 +15,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-interface SignUpSuccess {
-  success: boolean;
-  message: string;
-}
-
 interface SignUpErrorMessage {
   path: string;
   message: string;
