@@ -112,15 +112,17 @@ export function SignInForm() {
           <Label htmlFor="password">Password</Label>
           <div className="relative">
             <Input
-              id="password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
-              required
-            />
+  id="password"
+  name="password"
+  type={showPassword ? "text" : "password"}
+  placeholder="••••••••"
+  value={formData.password}
+  onChange={handleInputChange}
+  minLength={8}
+  className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+  required
+/>
+
             <Button
               type="button"
               variant="ghost"
@@ -148,12 +150,9 @@ export function SignInForm() {
               Remember me
             </Label>
           </div>
-          <Button
-            variant="link"
-            className="px-0 text-blue-600 hover:text-blue-800"
-          >
+          <Link  href="/forgot-password">
             Forgot password ?
-          </Button>
+          </Link>
         </div>
 
         <Button

@@ -11,7 +11,7 @@ type LoginFormData = {
   password: string;
 };
 
-export default function ForgotPasswordForm() {
+export default function SetNewPasswordForm() {
   const {
     register,
     handleSubmit,

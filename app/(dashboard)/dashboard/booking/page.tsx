@@ -1,3 +1,4 @@
+import AllBookingTable from "@/components/dashboard/admin/booking/AllBookingTable";
 import DynamicHeader from "@/components/dashboard/dynamic-header";
 import StatsCard from "@/components/dashboard/stats-card";
 
@@ -28,7 +29,7 @@ const stats = [
                     des="View and manage your booking requests"
                   />
             <StatsCard stats={stats} />
-
+<AllBookingTable />
         </div>
     );
 }
