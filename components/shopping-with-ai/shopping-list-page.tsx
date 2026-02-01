@@ -31,7 +31,7 @@ export function ShoppingListPage() {
   const addItem = (
     name: string,
     quantity: number,
-    source: "manual" | "chatbot" = "manual"
+    source: "manual" | "chatbot" = "manual",
   ) => {
     const newItem: ShoppingItem = {
       id: Date.now().toString(),
@@ -63,13 +63,13 @@ export function ShoppingListPage() {
       const groceryService = servicesData?.data?.find(
         (service: any) =>
           service.name.toLowerCase().includes("grocery") ||
-          service.name.toLowerCase().includes("shopping")
+          service.name.toLowerCase().includes("shopping"),
       );
 
       if (groceryService) {
         // Save items to localStorage for the booking page to pick up
         localStorage.setItem("pendingShoppingList", JSON.stringify(items));
-        
+
         // Redirect to booking page directly to Step 2
         router.push(`/service/${groceryService._id}?step=2`);
       } else {
@@ -79,7 +79,7 @@ export function ShoppingListPage() {
     } catch (error) {
       console.error("Submission error:", error);
     }
-    
+
     console.log("Submitted Shopping List Data:", items);
   };
 
@@ -195,7 +195,7 @@ export function ShoppingListPage() {
         onOpenChange={setChatbotOpen}
         onAddItem={addItem}
         onSessionIdReceived={(sessionId) => {
-          setSessionId(sessionId)
+          setSessionId(sessionId);
           // console.log("Session ID received in ShoppingListPage:", sessionId);
         }}
       />

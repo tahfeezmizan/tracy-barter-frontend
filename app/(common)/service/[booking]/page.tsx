@@ -14,7 +14,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 import { BookingFormData, ServiceResponse } from "@/config/Types/serviceTypes";
-import { useCreateBookingMutation, useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
+import {
+  useCreateBookingMutation,
+  useGetSingleServiceQuery,
+} from "@/redux/features/service/serviceApis";
 import { CloudCog } from "lucide-react";
 import { toast } from "sonner";
 
@@ -78,8 +81,8 @@ export default function BookingPage() {
           name: item.name,
           value: item.quantity,
         }));
-        
-        setFormData(prev => ({
+
+        setFormData((prev) => ({
           ...prev,
           serviceDetails: serviceDetails,
           // Pre-populate fields if they exist in serviceData
@@ -115,7 +118,7 @@ export default function BookingPage() {
         name: field.label,
         value: formData[field.name],
       })) || [];
-    
+
     // Merge or set service details
     if (formData.serviceDetails && formData.serviceDetails.length > 0) {
       // If we already have details (e.g. from shopping list), we might want to keep them or merge
@@ -147,10 +150,12 @@ export default function BookingPage() {
     // console.log("📦 FULL BOOKING FORM DATA:", formData);
 
     const payload = {
-      service: id, 
-      staff: formData.provider, 
-      date: formData.date ? new Date(formData.date).toISOString().split('T')[0] : "", 
-      startTime: "10:00", 
+      service: id,
+      staff: formData.provider,
+      date: formData.date
+        ? new Date(formData.date).toISOString().split("T")[0]
+        : "",
+      startTime: "10:00",
       endTime: "11:00",
       address: formData.address,
       serviceType: formData.serviceType,
@@ -166,10 +171,13 @@ export default function BookingPage() {
       if (res?.data?.success) {
         toast.success(res?.data?.message || "Booking created successfully");
         // Handle success (e.g., redirect)
-         router.push("/service/booking/confirmation");
+        router.push("/service/booking/confirmation");
       } else {
         // Handle RTK Query error response
-        const errorMessage = res?.error?.data?.message || res?.data?.message || "Failed to create booking";
+        const errorMessage =
+          res?.error?.data?.message ||
+          res?.data?.message ||
+          "Failed to create booking";
         toast.error(errorMessage);
         console.log("Error response:", res);
       }

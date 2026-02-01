@@ -1,48 +1,40 @@
 import { useCreateSupportTicketMutation } from "@/redux/features/support/supportApi";
-import { CloudCog, Flag } from "lucide-react";
+import { Flag } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 const Report = () => {
-   const params = useParams();
+  const params = useParams();
   const bookingId = params?.orderId;
 
-      const [problemType, setProblemType] = useState("");
   const [priorityLevel, setPriorityLevel] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
 
   const [createSupportTicket] = useCreateSupportTicketMutation();
 
-  // const problemTypes = [
-  //   "Payment Issue",
-  //   "Service Quality",
-  //   "Safety Concern",
-  //   "Professionalism",
-  //   "Cancellation",
-  //   "Other"
-  // ];
-
-const priorityLevels = [
-  {
-    label: "low",
-    active: "border-green-600 bg-green-50 text-green-700 ring-2 ring-green-200",
-    inactive: "border-gray-300 text-gray-700 hover:border-green-400"
-  },
-  {
-    label: "medium",
-    active: "border-yellow-600 bg-yellow-50 text-yellow-700 ring-2 ring-yellow-200",
-    inactive: "border-gray-300 text-gray-700 hover:border-yellow-400"
-  },
-  {
-    label: "high",
-    active: "border-orange-600 bg-orange-50 text-orange-700 ring-2 ring-orange-200",
-    inactive: "border-gray-300 text-gray-700 hover:border-orange-400"
-  }
-];
+  const priorityLevels = [
+    {
+      label: "low",
+      active:
+        "border-green-600 bg-green-50 text-green-700 ring-2 ring-green-200",
+      inactive: "border-gray-300 text-gray-700 hover:border-green-400",
+    },
+    {
+      label: "medium",
+      active:
+        "border-yellow-600 bg-yellow-50 text-yellow-700 ring-2 ring-yellow-200",
+      inactive: "border-gray-300 text-gray-700 hover:border-yellow-400",
+    },
+    {
+      label: "high",
+      active:
+        "border-orange-600 bg-orange-50 text-orange-700 ring-2 ring-orange-200",
+      inactive: "border-gray-300 text-gray-700 hover:border-orange-400",
+    },
+  ];
 
   const handleClearForm = () => {
-    setProblemType("");
     setPriorityLevel("");
     setSubject("");
     setDescription("");
@@ -50,20 +42,19 @@ const priorityLevels = [
 
   const handleSubmitReport = async () => {
     console.log({
-      
       priorityLevel,
       subject,
-      description
+      description,
     });
-    
+
     try {
       const res = await createSupportTicket({
-        bookingId:bookingId,
+        bookingId: bookingId,
         priority: priorityLevel,
-        message: description
+        message: description,
       });
 
-      console.log(res)
+      console.log(res);
 
       if (res.data) {
         toast.success("Report submitted successfully");
@@ -72,7 +63,6 @@ const priorityLevels = [
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
@@ -123,28 +113,23 @@ const priorityLevels = [
           <h2 className="text-lg font-semibold text-gray-800 mb-3">
             Priority Level <span className="text-red-500">*</span>
           </h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {priorityLevels.map((level) => (
               <button
-  key={level.label}
-  type="button"
-  onClick={() => setPriorityLevel(level.label)}
-  className={`px-4 py-3 border rounded-lg text-center transition-all duration-200 capitalize font-semibold ${
-    priorityLevel === level.label
-      ? level.active
-      : level.inactive
-  }`}
->
-  {level.label}
-</button>
-
+                key={level.label}
+                type="button"
+                onClick={() => setPriorityLevel(level.label)}
+                className={`px-4 py-3 border rounded-lg text-center transition-all duration-200 capitalize font-semibold ${
+                  priorityLevel === level.label ? level.active : level.inactive
+                }`}
+              >
+                {level.label}
+              </button>
             ))}
           </div>
-          
-          <p className="text-sm text-gray-500 mt-2">
-            Select priority level
-          </p>
+
+          <p className="text-sm text-gray-500 mt-2">Select priority level</p>
         </div>
 
         {/* Subject */}
@@ -152,7 +137,7 @@ const priorityLevels = [
           <h2 className="text-lg font-semibold text-gray-800 mb-3">
             Subject <span className="text-red-500">*</span>
           </h2>
-          
+
           <input
             type="text"
             value={subject}
@@ -167,7 +152,7 @@ const priorityLevels = [
           <h2 className="text-lg font-semibold text-gray-800 mb-3">
             Description <span className="text-red-500">*</span>
           </h2>
-          
+
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -199,7 +184,7 @@ const priorityLevels = [
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Report
+export default Report;

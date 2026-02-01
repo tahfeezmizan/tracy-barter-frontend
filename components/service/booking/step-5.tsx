@@ -7,7 +7,7 @@ interface Step5Props {
 }
 
 export default function Step5({ formData }: Step5Props) {
-  const {data}  = useGetStaffProfileQuery(undefined)
+  const { data } = useGetStaffProfileQuery(undefined);
 
   return (
     <div className="space-y-6">
