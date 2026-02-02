@@ -18,7 +18,7 @@ import {
   RotateCcwKey,
   ShoppingBag,
   User,
-  X
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,7 +32,9 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
-  const {data}  = useGetStaffProfileQuery(undefined)
+  const { data } = useGetStaffProfileQuery(undefined);
+
+  console.log("data", data);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,7 +64,7 @@ export default function Header() {
   const handleLogout = () => {
     Cookies.remove("token");
     dispatch(removeUser());
-    setToken(false); 
+    setToken(false);
     router.push("/");
   };
 
@@ -128,20 +130,20 @@ export default function Header() {
                   </Link> */}
 
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>                      
+                    <DropdownMenuTrigger asChild>
                       <Avatar className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                                      <Image
-                                        src={
-                                          data?.profile
-                                            ? getImageUrl(data?.profile)
-                                            : "/placeholder.svg"
-                                        }
-                                        width={200}
-                                        height={200}
-                                        alt={data?.name || "Profile"}
-                                      />
-                                     
-                                    </Avatar>
+                        {data?.profile ? (
+                          <Image
+                            src={getImageUrl(data?.profile)}
+                            width={200}
+                            height={200}
+                            alt={data?.name || "Profile"}
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        ) : (
+                          <User className="h-6 w-6 text-white" />
+                        )}
+                      </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"

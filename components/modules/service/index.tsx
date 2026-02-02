@@ -5,9 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { Service } from "@/lib/types/service.types";
 import { getImageUrl } from "@/lib/utils";
-import {
-  useGetServiceHomeQuery
-} from "@/redux/features/service/serviceApis";
+import { useGetServiceHomeQuery } from "@/redux/features/service/serviceApis";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +24,7 @@ export default function ServiceSection() {
 
   const prevSlide = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + servicesCards.length) % servicesCards.length
+      (prev) => (prev - 1 + servicesCards.length) % servicesCards.length,
     );
   };
 
@@ -49,7 +47,9 @@ export default function ServiceSection() {
     <div className="overflow-hidden bg-white py-12 lg:py-16 md:px-4 pr-4 lg:px-8">
       <div className="max-w-full mx-auto ">
         <div className="text-center mb-10 lg:mb-16 text-black">
-          <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">Service Highlights</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
+            Service Highlights
+          </h1>
           <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
             Everything you need to keep your home ready for arrival whenever you
             need it.
@@ -78,26 +78,27 @@ export default function ServiceSection() {
                     `}
                 >
                   <Link href={`/service/${service?._id}`}>
-                  
-                  <CardContent className="p-3 text-center">
-                    <div className="relative ">
-                      <Image
-                        src={getImageUrl(service?.image)}
-                        alt={service?.name}
-                        width={400}
-                        height={400}
-                        className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 overflow-hidden"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
-                        {service?.name}
-                      </h3>
-                      <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
-                        {service?.description}
-                      </p>
-                    </div>
-                  </CardContent>
+                    <CardContent className="p-3 text-center">
+                      {!service?.image ? ("Hell") :  ("HIIII")}
+                      <div className=""></div>
+                      <div className="relative ">
+                        <Image
+                          src={getImageUrl(service?.image)}
+                          alt={service?.name}
+                          width={400}
+                          height={400}
+                          className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 overflow-hidden"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
+                          {service?.name}
+                        </h3>
+                        <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+                          {service?.description}
+                        </p>
+                      </div>
+                    </CardContent>
                   </Link>
                 </Card>
               );
