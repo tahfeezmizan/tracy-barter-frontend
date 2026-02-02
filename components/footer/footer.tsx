@@ -30,15 +30,25 @@ export default function Footer() {
               </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">
-                    tracy@HappyValleyHomeConcierge.com
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">8148835114</span>
-                </div>
+  <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+  <a
+    href="mailto:tracy@HappyValleyHomeConcierge.com"
+    className="text-slate-300 hover:underline"
+  >
+    tracy@HappyValleyHomeConcierge.com
+  </a>
+</div>
+
+<div className="flex items-start gap-3">
+  <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+  <a
+    href="tel:8148835114"
+    className="text-slate-300 hover:underline"
+  >
+    8148835114
+  </a>
+</div>
+
                 <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
                   <span className="text-slate-300">Happy Valley, USA</span>
