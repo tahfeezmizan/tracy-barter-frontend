@@ -32,16 +32,16 @@ export default function Footer() {
                 <div className="flex items-start gap-3">
                   <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
                   <span className="text-slate-300">
-                    info@happyvalleyconcierge.com
+                    tracy@HappyValleyHomeConcierge.com
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">814-883-5114</span>
+                  <span className="text-slate-300">8148835114</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Happy Valley, PA</span>
+                  <span className="text-slate-300">Happy Valley, USA</span>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function Footer() {
               <div className="space-y-4">
                 <div>
                   <p className="text-slate-300 font-medium">Monday – Friday</p>
-                  <p className="text-slate-400">8:30 AM – 5:00 PM</p>
+                  
                 </div>
                 <div>
                   <p className="text-slate-300 font-medium">
