@@ -49,11 +49,11 @@ export const menuItems: Record<string, MenuItem[]> = {
       url: "/dashboard/payments",
       icon: CreditCard,
     },
-    // {
-    //   title: "Pricing Plans",
-    //   url: "/dashboard/pricing-plans",
-    //   icon: CreditCard,
-    // },
+    {
+      title: "Pricing Plans",
+      url: "/dashboard/pricing-plans",
+      icon: CreditCard,
+    },
     {
       title: "Quality Control",
       url: "/dashboard/quality-control",

@@ -79,8 +79,6 @@ export default function ServiceSection() {
                 >
                   <Link href={`/service/${service?._id}`}>
                     <CardContent className="p-3 text-center">
-                      {!service?.image ? ("Hell") :  ("HIIII")}
-                      <div className=""></div>
                       <div className="relative ">
                         <Image
                           src={getImageUrl(service?.image)}

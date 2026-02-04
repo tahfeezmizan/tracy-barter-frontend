@@ -57,8 +57,12 @@ I'll need to learn how to update this section as I hire more employees in the fu
                 className="flex items-center gap-3 justify-center font-medium group hover:bg-primary/80 hover:text-secondary text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg"
               >
                 Connect On Socials
-                {/* <Facebook className="size-6 text-primary group-hover:text-secondary" /> */}
+                <Link href={"https://www.facebook.com/happyvalleyconcierge"} target="_blank">
+                <Facebook className="size-6 text-primary group-hover:text-secondary" />
+                </Link>
+                <Link href={"https://www.instagram.com/happyvalleyconcierge"} target="_blank">
                 <Instagram className="size-6 text-primary group-hover:text-secondary" />
+                </Link>
               </Link>
             </div>
           </div>
