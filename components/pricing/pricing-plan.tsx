@@ -45,7 +45,7 @@ export default function PricingPlan() {
   return (
     <div className="bg-white py-32 px-4 sm:px-6 lg:px-8 faq-gradient-bg">
       <div className="max-w-7xl mx-auto px-4">
-        {pathname === "/" && (
+        {pathname !== "/dashboard/pricing-plans" && (
           <div className="text-center mb-8 md:mb-10">
             <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
               Pricing
