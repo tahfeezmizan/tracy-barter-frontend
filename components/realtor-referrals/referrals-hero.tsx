@@ -33,11 +33,8 @@ export default function ReferralsHero() {
             Partner Program
           </h2>
           <h3 className="text-xl md:text-2xl px-2 lg:px-12 py-6 leading-relaxed">
-            Make your family &friends lives easier—earn a bonus for every
-            successful referral. We provide State College homeowners with
-            trusted services (cleaning, landscaping, grocery delivery, seasonal
-            checks, event planning, and more). You connect us with a client; we
-            take it from there.
+            Make your family & friends lives easier—earn a bonus for every successful referral.
+We provide State College homeowners with trusted services (cleaning, landscaping, grocery delivery, seasonal checks, event planning, and more). You connect us with a client; we take it from there.
           </h3>
           <Link
             href={"#referral-form"}
