@@ -6,7 +6,7 @@ interface Section {
   id: string;
   title: string;
   serial: string;
-  content: string;
+  content?: string;
   subsections?: string[];
   note?: string;
 }
@@ -30,9 +30,11 @@ export function TermsAndConditionsPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">
                   {section.title}
                 </h2>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  {section.content}
-                </p>
+                {section.content && (
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    {section.content}
+                  </p>
+                )}
 
                 {/* Subsections */}
                 {section.subsections && (
