@@ -41,7 +41,7 @@ to her business that she once brought to the court. <br />
 I'll need to learn how to update this section as I hire more employees in the future.
             </p>
             <div className="flex flex-col md:flex-row gap-1  md:gap-5">
-              <a href="tel:8148835114"  >
+              <Link href="tel:8148835114"  >
 
               <Button                        
               className="flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary text-2xl text-white mt-6 py-6 ">
@@ -50,7 +50,7 @@ I'll need to learn how to update this section as I hire more employees in the fu
 
                 Contact Tracy
               </Button>
-                </a>
+                </Link>
               <Link
                 href={"https://www.instagram.com/happyvalleyconcierge"}
                 target="_blank"

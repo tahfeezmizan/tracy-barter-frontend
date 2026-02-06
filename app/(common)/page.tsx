@@ -15,8 +15,7 @@ export default function Page() {
       <AboutTracy />
       <PricingPlan />
       <ClientReview />
-      <FAQSection />
-      
+      <FAQSection />      
     </div>
   );
 }
