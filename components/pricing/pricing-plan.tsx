@@ -42,8 +42,10 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
 
   
   const [createSubscription, {isLoading:isCreatingSubscription}] = useCreateSubscriptionMutation();
+  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
   const handleSubscription = async (planId: string) => {
+    setLoadingPlanId(planId);
     try {
       const res = await createSubscription(planId).unwrap();
       console.log("createSubscription", res);
@@ -54,6 +56,8 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
       }
     } catch (error) {
       console.error("Subscription error:", error);
+    } finally {
+      setLoadingPlanId(null);
     }
   };
 
@@ -141,10 +145,11 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
                     ) : (
                       <Button
                         onClick={() => handleSubscription(plan?._id)}
+                        disabled={isCreatingSubscription}
                         variant="outline"
-                        className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full"
+                        className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isCreatingSubscription ? (
+                        {isCreatingSubscription && loadingPlanId === plan?._id ? (
                           <LoadingSpinner />
                         ) : (
                           "Get started"
