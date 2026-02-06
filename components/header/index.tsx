@@ -34,7 +34,7 @@ export default function Header() {
   const role = useSelector(selectUserRole);
   const { data } = useGetStaffProfileQuery(undefined);
 
-  console.log("data", data);
+  // console.log("data", data);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
