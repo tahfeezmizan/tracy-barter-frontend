@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "lucide-react";
 import { useGetSingleStaffQuery } from "@/redux/features/service/staffApis";
+import { useState } from "react";
+import { StaffScheduleDialog } from "./staff-schedule-dialog";
 
 type Staff = {
   id: string;
@@ -47,10 +49,17 @@ const staffMock = {
 };
 
 export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
+  const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   console.log(staffId);
   const { data, isLoading } = useGetSingleStaffQuery(staffId);
 
   console.log("useGetSingleStaffQuery", data);
+
+  const initials = data?.name
+    ?.split(" ")
+    .map((n: string) => n[0])
+    .join("")
+    .toUpperCase() || "ST";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -65,7 +74,7 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
         {/* Profile */}
         <div className="flex items-center gap-4 mt-4">
           <div className="h-14 w-14 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold">
-            {/* {initials} */}
+            {initials}
           </div>
           <div>
             <p className="font-semibold">{data?.name}</p>
@@ -134,11 +143,22 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
         <DialogFooter className="mt-6 flex gap-2">
           <Button className="flex-1">Save Changes</Button>
 
-          <Button variant="outline" className="flex-1 gap-2">
+          <Button
+            variant="outline"
+            className="flex-1 gap-2"
+            onClick={() => setIsScheduleOpen(true)}
+          >
             <Calendar className="h-4 w-4" />
             View Schedule
           </Button>
         </DialogFooter>
+
+        <StaffScheduleDialog
+          open={isScheduleOpen}
+          onOpenChange={setIsScheduleOpen}
+          staffName={data?.name}
+          specialty={staffMock.specialty}
+        />
       </DialogContent>
     </Dialog>
   );
