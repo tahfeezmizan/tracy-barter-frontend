@@ -107,7 +107,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-2 text-2xl font-bold"
+                  className={cn(
+                    "px-2 text-2xl font-bold rounded-lg transition-all duration-300 py-1",
+                    pathname === link.href && "bg-secondary text-white"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -310,9 +313,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "px-3 py-2 text-base font-semibold transition-colors",
+                      "px-3 py-2 text-base font-semibold transition-colors rounded-lg",
                       pathname === "/" ? "text-white" : "text-black",
                       pathname === "/" && isScrolled && "text-green-900",
+                      pathname === link.href && "bg-secondary text-white"
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

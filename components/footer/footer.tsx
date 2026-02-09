@@ -76,11 +76,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-700 pt-8">
-          <p className="text-center text-slate-400 text-sm">
-            © 2025 Happy Valley Home Concierge, LLC. All rights reserved.
-          </p>
-        </div>
+       <div className="border-t border-slate-700 pt-8">
+  <p className="text-center text-slate-400 text-sm">
+    © {new Date().getFullYear()} Happy Valley Home Concierge, LLC. All rights reserved.
+  </p>
+</div>
+
       </div>
     </footer>
   );
