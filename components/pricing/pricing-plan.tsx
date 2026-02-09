@@ -24,6 +24,8 @@ import {
   useGetPricingPlansQuery,
   useUpdatePricingPlanMutation,
 } from "@/redux/features/pricing/pricingApis";
+import { selectUser } from "@/redux/slice/userSlice";
+import { useSelector } from "react-redux";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -39,12 +41,16 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
 
   // Fetch pricing plans
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
-
+  const { user } = useSelector(selectUser);
   
   const [createSubscription, {isLoading:isCreatingSubscription}] = useCreateSubscriptionMutation();
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
   const handleSubscription = async (planId: string) => {
+    if (!user) {
+      router.push("/signin");
+      return;
+    }
     setLoadingPlanId(planId);
     try {
       const res = await createSubscription(planId).unwrap();
