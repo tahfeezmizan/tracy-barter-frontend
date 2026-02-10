@@ -4,8 +4,12 @@ import { baseApi } from "@/redux/features/baseApi";
 
 interface ClientsResponse {
   data: any[];
-  message: string;
-  success: boolean;
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 interface StaffResponse {
@@ -25,15 +29,16 @@ const clientApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
-    getClients: builder.query<ClientsResponse, string>({
-      query: (role) => ({
+    getClients: builder.query<ClientsResponse, { role: string; searchTerm?: string; page?: number }>({
+      query: ({ role, searchTerm, page }) => ({
         url: "/user",
         method: "GET",
-        params: { role },
+        params: { role, searchTerm, page },
       }),
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["client"],
     }),
     getStaff: builder.query<StaffResponse, void>({
       query: () => ({

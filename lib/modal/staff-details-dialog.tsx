@@ -13,21 +13,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Calendar } from "lucide-react";
-import { useGetSingleStaffQuery } from "@/redux/features/service/staffApis";
+import { Calendar, CloudCog } from "lucide-react";
+import { useGetSingleStaffQuery, useGetStaffSpecialtyServicesQuery } from "@/redux/features/service/staffApis";
 import { useState } from "react";
 import { StaffScheduleDialog } from "./staff-schedule-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
 
-type Staff = {
-  id: string;
+type SelectedItem = {
+  _id: string;
   name: string;
-  email: string;
-  phone: string;
-  specialty: string;
-  bio: string;
-  rating: number;
-  services: number;
-  status: "Active" | "Inactive";
 };
 
 type Props = {
@@ -37,29 +36,37 @@ type Props = {
 };
 
 const staffMock = {
-  id: "1",
-  name: "Maria Johnson",
-  email: "maria@concierge.com",
-  phone: "(555) 111-2222",
   specialty: "Home Cleaning",
-  bio: "Experienced cleaner with 10+ years in the industry. Specializes in eco-friendly cleaning solutions.",
-  rating: 4.9,
-  services: 156,
   status: "Active",
 };
 
 export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
-  console.log(staffId);
-  const { data, isLoading } = useGetSingleStaffQuery(staffId);
+  const { data } = useGetSingleStaffQuery(staffId);
 
-  console.log("useGetSingleStaffQuery", data);
+  console.log(data0)
 
-  const initials = data?.name
-    ?.split(" ")
-    .map((n: string) => n[0])
-    .join("")
-    .toUpperCase() || "ST";
+  // 🔹 Specialty dropdown logic (same as AddStaffDialog)
+  const { data: specialties = [] } = useGetStaffSpecialtyServicesQuery(undefined);
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(data?.services || []);
+
+  const toggleSpecialty = (id: string) => {
+    setSelectedSpecialties((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+    );
+  };
+
+  const selectedNames = specialties
+    .filter((item: SelectedItem) => selectedSpecialties.includes(item._id))
+    .map((item: SelectedItem) => item.name)
+    .join(", ");
+
+  const initials =
+    data?.name
+      ?.split(" ")
+      .map((n: string) => n[0])
+      .join("")
+      .toUpperCase() || "ST";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -98,16 +105,39 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
             </div>
           </div>
 
+          {/* 🔹 Specialty Dropdown (Added) */}
           <div className="space-y-1">
             <Label>Specialty</Label>
-            <Input defaultValue={staffMock.specialty} />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start truncate"
+                >
+                  {selectedNames || "Select specialty"}
+                </Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent className="bg-white">
+                {specialties.map((item: SelectedItem) => (
+                  <DropdownMenuCheckboxItem
+                    key={item._id}
+                    checked={selectedSpecialties.includes(item._id)}
+                    onCheckedChange={() => toggleSpecialty(item._id)}
+                  >
+                    {item.name}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="space-y-1">
             <Label>Bio</Label>
             <Textarea
               rows={4}
-              defaultValue={data?.bio || "bio not provide  "}
+              defaultValue={data?.bio || "bio not provide"}
             />
           </div>
         </div>
