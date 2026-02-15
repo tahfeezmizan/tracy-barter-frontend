@@ -1,26 +1,30 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeft,
   ChevronRight,
-  User,
   Clock,
   MapPin,
-  Calendar,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import {
+  useGetStaffScheduleQuery,
+} from "@/redux/features/service/staffApis";
+import { useState } from "react";
+
 type Appointment = {
-  id: string;
+  _id: string;
   clientName: string;
   serviceName: string;
   time: string;
@@ -33,39 +37,35 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   staffName: string | undefined;
   specialty: string | undefined;
+  staffId: string;
 };
-
-const mockAppointments: Appointment[] = [
-  {
-    id: "1",
-    clientName: "Lisa Anderson",
-    serviceName: "Grocery Shopping",
-    time: "10:00 AM - 11:30 AM",
-    location: "Whole Foods Market",
-    status: "Completed",
-  },
-  {
-    id: "2",
-    clientName: "Tom Harris",
-    serviceName: "Grocery Shopping",
-    time: "3:00 PM - 4:00 PM",
-    location: "Trader Joe's",
-    status: "Completed",
-  },
-];
 
 export function StaffScheduleDialog({
   open,
   onOpenChange,
   staffName,
   specialty,
+  staffId,
 }: Props) {
+  const [dateParam, setDateParam] = useState<string | undefined>(undefined);
+  const { data, isLoading } = useGetStaffScheduleQuery(
+    { date: dateParam, staffId },
+    { skip: !staffId || !open }
+  );
+
+  const scheduleData = data?.data || [];
+  const weekRange = data?.weekRange || "This Week";
+
   // Get initials for avatar
-  const initials = staffName
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase() || "ST";
+  const initials =
+    staffName
+      ?.split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase() || "ST";
+
+  const handlePrev = () => setDateParam("prev");
+  const handleNext = () => setDateParam("next");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -93,14 +93,16 @@ export function StaffScheduleDialog({
         <div className="bg-[#E2E8F0]/50 p-2 rounded-xl flex items-center justify-between mt-4">
           <Button
             variant="ghost"
+            onClick={handlePrev}
             className="bg-white hover:bg-white/80 text-[#475569] shadow-sm border border-[#E2E8F0] px-4"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Previous Week
           </Button>
-          <span className="font-semibold text-[#475569]">This Week</span>
+          <span className="font-semibold text-[#475569]">{weekRange}</span>
           <Button
             variant="ghost"
+            onClick={handleNext}
             className="bg-white hover:bg-white/80 text-[#475569] shadow-sm border border-[#E2E8F0] px-4"
           >
             Next Week
@@ -109,57 +111,84 @@ export function StaffScheduleDialog({
         </div>
 
         {/* Schedule List */}
-        <div className="mt-6 border-2 border-[#1E293B] rounded-2xl p-6 bg-white min-h-[400px]">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <h3 className="text-xl font-bold text-[#1E293B]">
-                Tuesday, Oct 28
-              </h3>
-              <Badge className="bg-[#1E293B] hover:bg-[#1E293B] text-white rounded-md px-3 py-1 font-medium">
-                Today
-              </Badge>
+        <div className="mt-6 border-2 border-[#1E293B] rounded-2xl p-6 bg-white min-h-[400px] overflow-y-auto max-h-[60vh]">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-[#64748B]">Loading schedule...</p>
             </div>
-            <span className="text-[#94A3B8] border border-[#E2E8F0] px-3 py-1 rounded-lg text-sm">
-              2 appointments
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            {mockAppointments.map((appt) => (
-              <div
-                key={appt.id}
-                className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-[#F1F5F9] flex items-center justify-center text-[#64748B]">
-                      <User className="h-4 w-4" />
+          ) : scheduleData.length > 0 ? (
+            <div className="space-y-6">
+              {scheduleData.map((day: any) => (
+                <div key={day.date}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-xl font-bold text-[#1E293B]">
+                        {day.dateLabel || day.date}
+                      </h3>
+                      {day.isToday && (
+                        <Badge className="bg-[#1E293B] hover:bg-[#1E293B] text-white rounded-md px-3 py-1 font-medium">
+                          Today
+                        </Badge>
+                      )}
                     </div>
-                    <span className="font-bold text-[#1E293B] text-lg">
-                      {appt.clientName}
+                    <span className="text-[#94A3B8] border border-[#E2E8F0] px-3 py-1 rounded-lg text-sm">
+                      {day.appointments.length} appointments
                     </span>
-                    <Badge variant="secondary" className="bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7] font-medium px-3 rounded-full">
-                      {appt.status}
-                    </Badge>
                   </div>
-                  <span className="text-[#475569] font-medium">
-                    {appt.serviceName}
-                  </span>
-                </div>
 
-                <div className="space-y-2 text-[#64748B]">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-[15px]">{appt.time}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span className="text-[15px]">{appt.location}</span>
+                  <div className="space-y-4">
+                    {day.appointments.map((appt: any) => (
+                      <div
+                        key={appt._id}
+                        className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="h-8 w-8 rounded-full bg-[#F1F5F9] flex items-center justify-center text-[#64748B]">
+                              <User className="h-4 w-4" />
+                            </div>
+                            <span className="font-bold text-[#1E293B] text-lg">
+                              {appt.clientName}
+                            </span>
+                            <Badge
+                              variant="secondary"
+                              className={cn(
+                                "font-medium px-3 rounded-full",
+                                appt.status === "Completed"
+                                  ? "bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7]"
+                                  : "bg-[#FEF9C3] text-[#854D0E] hover:bg-[#FEF9C3]"
+                              )}
+                            >
+                              {appt.status}
+                            </Badge>
+                          </div>
+                          <span className="text-[#475569] font-medium">
+                            {appt.serviceName}
+                          </span>
+                        </div>
+
+                        <div className="space-y-2 text-[#64748B]">
+                          <div className="flex items-center gap-2">
+                            <Clock className="h-4 w-4" />
+                            <span className="text-[15px]">{appt.time}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            <span className="text-[15px]">{appt.location}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-2 py-20">
+              <p className="text-xl font-bold text-[#1E293B]">No Appointments</p>
+              <p className="text-[#64748B]">There are no scheduled services for this week.</p>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

@@ -38,12 +38,10 @@ export default function StaffCards() {
       try {
         // Step 2: Perform delete
         const res: any = await deleteStaff(id);
-        console.log("deleteStaff", res);
 
         // Step 3: Show success message
         Swal.fire("Deleted!", "Staff has been deleted.", "success");
       } catch (error) {
-        console.log(error);
         Swal.fire(
           "Error!",
           "Something went wrong while deleting staff.",
@@ -57,7 +55,7 @@ export default function StaffCards() {
     setStaffId(id);
     setOpen(true);
   };
-  // console.log("useGetStaffQuery", data?.data);
+  
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

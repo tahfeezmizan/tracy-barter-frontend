@@ -60,7 +60,7 @@ export function AddStaffDialog({
 
   const [AddStaff] = useCreateStaffMutation({});
 
-  console.log(data);
+  // console.log(data);
 
   const toggleSpecialty = (id: string) => {
     setValue(

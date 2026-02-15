@@ -35,6 +35,18 @@ const staffApis = baseApi.injectEndpoints({
       invalidatesTags: ["staff"],
     }),
 
+    updateStaff: builder.mutation({
+      query: ({ id, ...data }) => {
+        const { bio, ...rest } = data;
+        return {
+          url: `/user/${id}`,
+          method: "PATCH",
+          body: rest,
+        };
+      },
+      invalidatesTags: ["staff"],
+    }),
+
     getSingleStaff: builder.query({
       query: (id) => ({
         url: `/user/staff/${id}`,
@@ -53,6 +65,15 @@ const staffApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["staff"],
     }),
+
+    getStaffSchedule: builder.query({
+      query: ({ date, staffId }) => ({
+        url: `/booking/weekly`,
+        method: "GET",
+        params: { date, staffId },
+      }),
+      providesTags: ["staff", "Booking"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -63,4 +84,6 @@ export const {
   useCreateStaffMutation,
   useGetSingleStaffQuery,
   useDeleteStaffMutation,
+  useUpdateStaffMutation,
+  useGetStaffScheduleQuery,
 } = staffApis;
