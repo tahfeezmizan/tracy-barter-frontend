@@ -23,6 +23,7 @@ const staffApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
+    
     getScheduledBookingsByDate: builder.query({
       query: (date: string) => ({
         url: "/booking/scheduled",
@@ -39,6 +40,8 @@ const staffApis = baseApi.injectEndpoints({
       }),
       transformResponse: (response: any) => response.data,
     }),
+
+    
   }),
 });
 

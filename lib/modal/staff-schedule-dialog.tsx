@@ -9,27 +9,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { useGetWeeklyScheduleQuery } from "@/redux/features/service/staffApis";
 import {
   ChevronLeft,
   ChevronRight,
   Clock,
   MapPin,
-  User
+  User,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-import {
-  useGetStaffScheduleQuery,
-} from "@/redux/features/service/staffApis";
 import { useState } from "react";
 
-type Appointment = {
+type Booking = {
   _id: string;
-  clientName: string;
-  serviceName: string;
-  time: string;
-  location: string;
-  status: "Completed" | "Pending" | "Cancelled";
+  user: {
+    name: string;
+  };
+  serviceType: {
+    title: string;
+  };
+  address: {
+    address: string;
+    city: string;
+  };
+  date: string;
+  startTime: string;
+  endTime: string;
+  status: string;
 };
 
 type Props = {
@@ -37,7 +43,7 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   staffName: string | undefined;
   specialty: string | undefined;
-  staffId: string;
+  staffId: string | undefined;
 };
 
 export function StaffScheduleDialog({
@@ -48,15 +54,27 @@ export function StaffScheduleDialog({
   staffId,
 }: Props) {
   const [dateParam, setDateParam] = useState<string | undefined>(undefined);
-  const { data, isLoading } = useGetStaffScheduleQuery(
+  const { data, isLoading } = useGetWeeklyScheduleQuery(
     { date: dateParam, staffId },
     { skip: !staffId || !open }
   );
 
-  const scheduleData = data?.data || [];
-  const weekRange = data?.weekRange || "This Week";
+  const bookings: Booking[] = data?.data || [];
 
-  // Get initials for avatar
+  // Group bookings by date
+  const groupedBookings = bookings.reduce((acc: any, booking) => {
+    const dateKey = new Date(booking.date).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
+    if (!acc[dateKey]) {
+      acc[dateKey] = [];
+    }
+    acc[dateKey].push(booking);
+    return acc;
+  }, {});
+
   const initials =
     staffName
       ?.split(" ")
@@ -99,7 +117,9 @@ export function StaffScheduleDialog({
             <ChevronLeft className="h-4 w-4 mr-2" />
             Previous Week
           </Button>
-          <span className="font-semibold text-[#475569]">{weekRange}</span>
+          <span className="font-semibold text-[#475569]">
+            {dateParam === "prev" ? "Previous Week" : dateParam === "next" ? "Next Week" : "This Week"}
+          </span>
           <Button
             variant="ghost"
             onClick={handleNext}
@@ -113,34 +133,27 @@ export function StaffScheduleDialog({
         {/* Schedule List */}
         <div className="mt-6 border-2 border-[#1E293B] rounded-2xl p-6 bg-white min-h-[400px] overflow-y-auto max-h-[60vh]">
           {isLoading ? (
-            <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center h-[300px]">
               <p className="text-[#64748B]">Loading schedule...</p>
             </div>
-          ) : scheduleData.length > 0 ? (
-            <div className="space-y-6">
-              {scheduleData.map((day: any) => (
-                <div key={day.date}>
+          ) : Object.keys(groupedBookings).length > 0 ? (
+            <div className="space-y-8">
+              {Object.entries(groupedBookings).map(([date, dayBookings]: [string, any]) => (
+                <div key={date}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-[#1E293B]">
-                        {day.dateLabel || day.date}
-                      </h3>
-                      {day.isToday && (
-                        <Badge className="bg-[#1E293B] hover:bg-[#1E293B] text-white rounded-md px-3 py-1 font-medium">
-                          Today
-                        </Badge>
-                      )}
+                      <h3 className="text-xl font-bold text-[#1E293B]">{date}</h3>
                     </div>
                     <span className="text-[#94A3B8] border border-[#E2E8F0] px-3 py-1 rounded-lg text-sm">
-                      {day.appointments.length} appointments
+                      {dayBookings.length} appointments
                     </span>
                   </div>
 
                   <div className="space-y-4">
-                    {day.appointments.map((appt: any) => (
+                    {dayBookings.map((appt: Booking) => (
                       <div
                         key={appt._id}
-                        className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm"
+                        className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm hover:shadow-md transition-shadow"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
@@ -148,33 +161,39 @@ export function StaffScheduleDialog({
                               <User className="h-4 w-4" />
                             </div>
                             <span className="font-bold text-[#1E293B] text-lg">
-                              {appt.clientName}
+                              {appt.user.name}
                             </span>
                             <Badge
                               variant="secondary"
                               className={cn(
-                                "font-medium px-3 rounded-full",
-                                appt.status === "Completed"
+                                "font-medium px-3 rounded-full capitalize",
+                                appt.status === "completed"
                                   ? "bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7]"
-                                  : "bg-[#FEF9C3] text-[#854D0E] hover:bg-[#FEF9C3]"
+                                  : appt.status === "scheduled" || appt.status === "pending"
+                                  ? "bg-[#FEF9C3] text-[#854D0E] hover:bg-[#FEF9C3]"
+                                  : "bg-red-100 text-red-700"
                               )}
                             >
                               {appt.status}
                             </Badge>
                           </div>
                           <span className="text-[#475569] font-medium">
-                            {appt.serviceName}
+                            {appt.serviceType.title}
                           </span>
                         </div>
 
                         <div className="space-y-2 text-[#64748B]">
                           <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4" />
-                            <span className="text-[15px]">{appt.time}</span>
+                            <span className="text-[15px]">
+                              {appt.startTime} - {appt.endTime}
+                            </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <MapPin className="h-4 w-4" />
-                            <span className="text-[15px]">{appt.location}</span>
+                            <span className="text-[15px]">
+                              {appt.address.address}, {appt.address.city}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -184,7 +203,7 @@ export function StaffScheduleDialog({
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center space-y-2 py-20">
+            <div className="flex flex-col items-center justify-center h-[300px] text-center space-y-2">
               <p className="text-xl font-bold text-[#1E293B]">No Appointments</p>
               <p className="text-[#64748B]">There are no scheduled services for this week.</p>
             </div>

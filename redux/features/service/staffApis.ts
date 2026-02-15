@@ -66,13 +66,14 @@ const staffApis = baseApi.injectEndpoints({
       invalidatesTags: ["staff"],
     }),
 
-    getStaffSchedule: builder.query({
+  
+    getWeeklySchedule: builder.query({
       query: ({ date, staffId }) => ({
-        url: `/booking/weekly`,
+        url: "/booking/weekly",
         method: "GET",
         params: { date, staffId },
       }),
-      providesTags: ["staff", "Booking"],
+      transformResponse: (response: any) => response.data,
     }),
   }),
   overrideExisting: true,
@@ -85,5 +86,5 @@ export const {
   useGetSingleStaffQuery,
   useDeleteStaffMutation,
   useUpdateStaffMutation,
-  useGetStaffScheduleQuery,
+  useGetWeeklyScheduleQuery,
 } = staffApis;
