@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useCreateServiceMutation } from "@/redux/features/service/serviceApis";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useGetStaffQuery } from "@/redux/features/service/clientApis";
 
 type ServiceType = {
   id: string;
@@ -48,12 +50,18 @@ type AddServiceForm = {
   image?: FileList;
   serviceTypes: ServiceType[];
   dynamicFields: DynamicField[];
+  staff: string[];
 };
 
 interface AddServiceDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+type SelectedItem = {
+  _id: string;
+  name: string;
+};
 
 export function AddServiceDialog({
   open,
@@ -69,6 +77,7 @@ export function AddServiceDialog({
       defaultValues: {
         serviceTypes: [],
         dynamicFields: [],
+        staff: [],
       },
     });
 
@@ -91,6 +100,10 @@ export function AddServiceDialog({
     control,
     name: "dynamicFields",
   });
+
+  const { data: staffData } = useGetStaffQuery();
+
+  console.log(staffData?.data)
 
   const handleAddServiceType = () => {
     if (!showServiceTypes) {
@@ -148,6 +161,23 @@ export function AddServiceDialog({
     setValue("image", undefined);
   };
 
+  const selectedStaff = watch("staff");
+
+  const toggleStaff = (id: string) => {
+    setValue(
+      "staff",
+      selectedStaff.includes(id)
+        ? selectedStaff.filter((v) => v !== id)
+        : [...selectedStaff, id],
+      { shouldValidate: true }
+    );
+  };
+
+  const selectedNames = (staffData?.data || [])
+    .filter((item: any) => selectedStaff.includes(item._id))
+    .map((item: any) => item.name)
+    .join(", ");
+
   const [createService, { isLoading }] = useCreateServiceMutation();
 
   const onSubmit = async (data: AddServiceForm) => {
@@ -184,6 +214,7 @@ export function AddServiceDialog({
         status: "active",
         serviceType: serviceTypeArray,
         fields: fieldsArray,
+        staff: data.staff,
       };
 
       console.log("Formatted Data for API:", payload);
@@ -307,6 +338,33 @@ export function AddServiceDialog({
               <p className="text-xs text-gray-500 mt-1">
                 Enter multiple occasions separated by commas
               </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Add Staff *</Label>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start truncate"
+                  >
+                    {selectedNames || "Select staff"}
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="bg-white">
+                  {(staffData?.data || []).map((item: any) => (
+                    <DropdownMenuCheckboxItem
+                      key={item._id}
+                      checked={selectedStaff.includes(item._id)}
+                      onCheckedChange={() => toggleStaff(item._id)}
+                    >
+                      {item.name}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
