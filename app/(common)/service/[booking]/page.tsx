@@ -28,9 +28,9 @@ export default function BookingPage() {
   const params = useParams();
   const id = params.booking as string;
 
-const { data } = useGetStaffProfileQuery(undefined);
+const { data: userData } = useGetStaffProfileQuery(undefined);
 
-console.log("data",data);
+console.log("userData",userData?.subscribe);
   
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;
@@ -152,6 +152,12 @@ console.log("data",data);
 
   const handleSubmit = async () => {
     // console.log("📦 FULL BOOKING FORM DATA:", formData);
+
+    if (!userData?.subscribe) {
+      toast.error("Please subscribe to a plan before booking a service.");
+      router.push("/pricing");
+      return;
+    }
 
     const payload = {
       service: id,
