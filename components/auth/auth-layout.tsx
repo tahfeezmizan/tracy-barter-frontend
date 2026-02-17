@@ -13,7 +13,7 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children }: AuthLayoutProps) {
   const pathname = usePathname();
-  console.log(pathname);
+  // console.log(pathname);
 
   const image = pathname === "signup" ? authImg2 : authImg;
 

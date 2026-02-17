@@ -41,11 +41,11 @@ const Report = () => {
   };
 
   const handleSubmitReport = async () => {
-    console.log({
-      priorityLevel,
-      subject,
-      description,
-    });
+    // console.log({
+    //   priorityLevel,
+    //   subject,
+    //   description,
+    // });
 
     try {
       const res = await createSupportTicket({
@@ -54,14 +54,14 @@ const Report = () => {
         message: description,
       });
 
-      console.log(res);
+      // console.log(res);
 
       if (res.data) {
         toast.success("Report submitted successfully");
         handleClearForm();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -21,7 +21,7 @@ export default function ReferralTable() {
   const [limit] = useState(10); 
 
   const { data, isLoading, isFetching } = useGetReferralQuery({ page, limit });
-  console.log(data);
+  // console.log(data);
 
   const handlePrevPage = () => {
     if (data?.meta?.page && data.meta.page > 1) {

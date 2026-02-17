@@ -20,7 +20,7 @@ export default function RecentServices({
   loading: boolean;
 }) {
   const pathname = usePathname();
-  console.log("staffRecentService", data);
+  // console.log("staffRecentService", data);
 
   const statusColor = {
     confirmed: "bg-green-100 text-green-700",

@@ -14,6 +14,8 @@ export default function ServicesItem({
   service,
   imagePosition,
 }: ServicesItemProps) {
+
+  // console.log("service",service);
   return (
     <section
       style={{

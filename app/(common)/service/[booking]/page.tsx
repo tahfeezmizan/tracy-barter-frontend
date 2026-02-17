@@ -18,8 +18,8 @@ import {
   useCreateBookingMutation,
   useGetSingleServiceQuery,
 } from "@/redux/features/service/serviceApis";
-import { CloudCog } from "lucide-react";
 import { toast } from "sonner";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 const TOTAL_STEPS = 5;
 
@@ -28,6 +28,10 @@ export default function BookingPage() {
   const params = useParams();
   const id = params.booking as string;
 
+const { data } = useGetStaffProfileQuery(undefined);
+
+console.log("data",data);
+  
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;
   }>({ id });
@@ -108,7 +112,7 @@ export default function BookingPage() {
 
   // Live console for all form data
   useEffect(() => {
-    console.log("📦 FULL BOOKING FORM DATA:", formData);
+    // console.log("📦 FULL BOOKING FORM DATA:", formData);
   }, [formData]);
 
   useEffect(() => {
@@ -163,7 +167,7 @@ export default function BookingPage() {
       notes: formData.note, // Mapped from note
     };
 
-    console.log("🚀 Payload to be sent:", payload);
+    // console.log("🚀 Payload to be sent:", payload);
 
     try {
       const res: any = await createBooking(payload);
@@ -179,10 +183,10 @@ export default function BookingPage() {
           res?.data?.message ||
           "Failed to create booking";
         toast.error(errorMessage);
-        console.log("Error response:", res);
+        // console.log("Error response:", res);
       }
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       toast.error(error?.data?.message || "Something went wrong");
     }
   };

@@ -27,13 +27,13 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
     const newStatus = !isAvailable;
     // Optimistic update
     setIsAvailable(newStatus);
-    console.log("Account Settings", newStatus);
+    // console.log("Account Settings", newStatus);
 
     try {
       const res = await updateAvailability({
         isAvailable: newStatus,
       }).unwrap();
-      console.log("Account Settings", res);
+      // console.log("Account Settings", res);
       toast.success(`Availability updated to ${newStatus ? "available" : "unavailable"}`);
     } catch (error) {
       console.error("Failed to update availability:", error);

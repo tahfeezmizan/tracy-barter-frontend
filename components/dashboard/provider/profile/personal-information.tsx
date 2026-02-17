@@ -47,7 +47,7 @@ export default function PersonalInformation({
   }, [data, reset]);
 
   const onSubmit = async (formData: any) => {
-    console.log("Personal Information Form Data:", formData);
+    // console.log("Personal Information Form Data:", formData);
 
     try {
       const res = await updateProfile({
@@ -57,14 +57,14 @@ export default function PersonalInformation({
         phone: formData.phone,
       });
 
-      console.log(res);
+      // console.log(res);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
       }
 
-      console.log(res);
+      // console.log(res);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

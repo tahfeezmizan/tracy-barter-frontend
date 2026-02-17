@@ -59,7 +59,7 @@ export default function ClientFeedback() {
   const { data } = useGetSupportQuery(undefined);
   const { data: review } = useGetReviewQuery(undefined);
 
-  console.log("useGetSupportQuery", review);
+  // console.log("useGetSupportQuery", review);
 
   const [updateSupportStatus, { isLoading }] = useUpdateSupportStatusMutation();
   const [updateReviewStatus, { isLoading: isReviewLoading }] =

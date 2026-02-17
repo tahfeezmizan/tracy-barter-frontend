@@ -23,7 +23,7 @@ const Review = () => {
 
   const [createReview, { isLoading }] = useCreateReviewMutation();
 
-  console.log("Order ID for review:", orderId);
+  // console.log("Order ID for review:", orderId);
 
   const handleClearForm = () => {
     setRating(0);

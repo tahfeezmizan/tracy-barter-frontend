@@ -21,7 +21,7 @@ export default function SetNewPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Login form data:", data);
+    // console.log("Login form data:", data);
   };
 
   return (
