@@ -72,11 +72,7 @@ export function AddStaffDialog({
     );
   };
 
-  // 🔹 Map selected IDs → names
-  const selectedNames = data
-    .filter((item: SelectedItem) => selectedSpecialties.includes(item._id))
-    .map((item: SelectedItem) => item.name)
-    .join(", ");
+
 
   const onSubmit = async (data: StaffFormValues) => {
     console.log(data);
@@ -145,13 +141,13 @@ export function AddStaffDialog({
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-start truncate"
+                    className="w-full justify-start"
                   >
-                    {selectedNames || "Select specialty"}
+                    Select specialty
                   </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="bg-white">
+                <DropdownMenuContent className="bg-white min-w-[200px] flex flex-col">
                   {data.map((item: SelectedItem) => (
                     <DropdownMenuCheckboxItem
                       key={item._id}
@@ -163,6 +159,29 @@ export function AddStaffDialog({
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Selected Specialties List */}
+              <div className="flex flex-col gap-2 mt-2">
+                {data
+                  .filter((item: SelectedItem) =>
+                    selectedSpecialties.includes(item._id)
+                  )
+                  .map((item: SelectedItem) => (
+                    <div
+                      key={item._id}
+                      className="flex items-center justify-between bg-slate-100 px-3 py-2 rounded-md text-sm"
+                    >
+                      <span>{item.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => toggleSpecialty(item._id)}
+                        className="text-red-500 hover:text-red-700 font-bold ml-2"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
 
