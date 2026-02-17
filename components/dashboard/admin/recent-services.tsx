@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -8,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { recentService } from "@/lib/types/recentServiceTypes";
+import { usePathname } from "next/navigation";
 
 export default function RecentServices({
   data,
@@ -16,6 +19,7 @@ export default function RecentServices({
   data: any;
   loading: boolean;
 }) {
+  const pathname = usePathname();
   console.log("staffRecentService", data);
 
   const statusColor = {
@@ -23,6 +27,8 @@ export default function RecentServices({
     inProgres: "bg-blue-100 text-blue-700",
     scheduled: "bg-yellow-100 text-yellow-700",
   };
+
+  const displayedData = pathname === "/dashboard" ? data?.slice(0, 5) : data;
 
   return (
     <Card className="w-full bg-white text-black">
@@ -38,7 +44,7 @@ export default function RecentServices({
           <LoadingSpinner />
         ) : (
           <div className="space-y-4">
-            {data?.map((item: recentService, i: string) => (
+            {displayedData?.map((item: recentService, i: number) => (
               <div
                 key={i}
                 className="flex flex-col md:flex-row md:items-center justify-between border rounded-lg p-4 bg-white"
@@ -49,7 +55,6 @@ export default function RecentServices({
                 </div>
 
                 <div className="flex items-center gap-4 mt-3 md:mt-0">
-                  {/* <p className="text-sm text-gray-800">{item.assignedTo}</p> */}
                   <Badge
                     className={`${
                       statusColor[item.status as keyof typeof statusColor]
