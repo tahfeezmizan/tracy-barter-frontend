@@ -241,7 +241,7 @@ export default function AllBookingTable() {
 
         {/* Search Bar */}
         <div className="flex items-center gap-2 mt-2">
-          <div className="relative w-full max-w-sm">
+          {/* <div className="relative w-full max-w-sm">
             <Input
               placeholder="Search by name, email, service, staff..."
               className="pl-10 pr-10"
@@ -262,7 +262,7 @@ export default function AllBookingTable() {
             <div className="text-sm text-gray-600">
               {totalItems} result{totalItems !== 1 ? "s" : ""} found
             </div>
-          )}
+          )} */}
         </div>
       </CardHeader>
 

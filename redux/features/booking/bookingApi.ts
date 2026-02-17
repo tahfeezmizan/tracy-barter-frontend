@@ -17,6 +17,18 @@ const bookingApi = baseApi.injectEndpoints({
     providesTags: ["Booking"],
         }),
 
+        getBookingStats: builder.query({
+            query: () => ({
+                url: "/stats/admin/booking-stats",
+                method: "GET",
+            }),
+            providesTags: ["Booking"],
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+          
+        }),
+
         updateBookingPrice: builder.mutation({
             query: ({ bookingId, price }: { bookingId: string; price: number }) => ({
                 url: `/booking/${bookingId}/add-price`,
@@ -29,4 +41,4 @@ const bookingApi = baseApi.injectEndpoints({
     overrideExisting: true,
 });
 
-export const { useGetBookingsQuery, useUpdateBookingPriceMutation } = bookingApi;
+export const { useGetBookingsQuery, useUpdateBookingPriceMutation, useGetBookingStatsQuery } = bookingApi;

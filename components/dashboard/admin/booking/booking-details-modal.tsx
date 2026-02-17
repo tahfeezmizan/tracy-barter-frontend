@@ -9,11 +9,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 
 type Booking = {
-  service: string;
-  location: string;
+  service?: string;
+  location?: string;
   price: number;
+  address?: {
+    address: string;
+    city: string;
+    zipCode: string;
+  };
+  googleMapsUrl?: string;
+  userPhoneUrl?: string;
 };
 
 interface Props {
@@ -25,6 +33,9 @@ interface Props {
 export function BookingDetailsModal({ open, onClose, booking }: Props) {
   if (!booking) return null;
 
+  console.log("booking",booking);
+  
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden">
@@ -32,8 +43,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold">
               Booking Details
-            </DialogTitle>
-            <p className="text-sm text-gray-500">View details</p>
+            </DialogTitle>            
           </DialogHeader>
 
           {/* Location */}
@@ -42,15 +52,19 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
               <MapPin className="h-4 w-4" />
               Location
             </div>
-            <p className="text-sm text-gray-700">
-              456 Oak Avenue <br />
-              San Francisco, CA 94107
+            <p className="text-sm text-gray-700 capitalize">
+              {booking?.address?.address} <br />
+              {booking?.address?.city}, {booking?.address?.zipCode}
             </p>
 
             <div className="flex gap-2 pt-2">
+              <Link href={booking?.googleMapsUrl || "#"} target="_blank">
               <Button variant="outline" size="sm" className="rounded-full">
                 Open in Maps
               </Button>
+              </Link>
+              
+              <Link href={booking.userPhoneUrl || "#"}>
               <Button
                 variant="outline"
                 size="sm"
@@ -59,6 +73,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
                 <Phone className="h-4 w-4" />
                 Call User
               </Button>
+              </Link>
             </div>
           </div>
 
@@ -101,9 +116,9 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
 
           {/* Actions */}
           <div className="flex gap-3 pt-2">
-            <Button className="flex-1 bg-slate-900 text-white">
+            {/* <Button className="flex-1 bg-slate-900 text-white">
               Edit
-            </Button>
+            </Button> */}
             <Button
               variant="outline"
               className="flex-1"
