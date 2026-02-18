@@ -187,6 +187,19 @@ export default function Header() {
                         </Link>
                       </DropdownMenuItem>
 
+                       <DropdownMenuItem
+                        asChild
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
+                      >
+                        <Link
+                          href="/user-profile/invoice"
+                          className="flex items-center space-x-2"
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                          <span>Invoice</span>
+                        </Link>
+                      </DropdownMenuItem>
+
                       <DropdownMenuItem
                         asChild
                         className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
