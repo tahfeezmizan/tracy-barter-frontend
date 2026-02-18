@@ -1,7 +1,8 @@
+"use client"
+
 import InvoiceCard from '@/components/invoice/invoice-card';
-import InvoiceStats from '@/components/invoice/invoice-stats';
-import { invoiceData } from '@/lib/invoice-data';
 import { Invoice } from '@/lib/types/invoice.types';
+import { useGetMyInvoicesQuery } from '@/redux/features/invoices/invoicesApi';
 
 
 interface InvoiceListProps {
@@ -9,9 +10,12 @@ interface InvoiceListProps {
 }
 
 export default function InvoiceList() {
-  const invoices = invoiceData;
+  const { data, isLoading } = useGetMyInvoicesQuery(undefined);
+const invoices = data?.data;
+  console.log(invoices);
   return (
-    <div className="min-h-screen bg-background space-y-6 sm:space-y-8 p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="flex items-center overflow-hidden max-w-7xl mx-auto px-4 xl:px-0 py-10 md:py-20 md:pt-24 lg:pt-24 ">
+        <div className="space-y-6 w-full p-6 bg-white rounded-2xl border">
       <div className="animate-fade-in space-y-1 sm:space-y-2">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
           Your Invoices
@@ -25,9 +29,9 @@ export default function InvoiceList() {
         <InvoiceStats invoices={invoices} />
       )} */}
 
-      {invoices.length > 0 ? (
+      {invoices?.length > 0 ? (
         <div className="grid gap-4">
-          {invoices.map((invoice, index) => (
+          {invoices?.map((invoice, index) => (
             <div
               key={invoice._id}
               className="animate-slide-up"
@@ -44,6 +48,7 @@ export default function InvoiceList() {
           <p className="text-muted-foreground">No invoices found</p>
         </div>
       )}
+      </div>
     </div>
   );
 }

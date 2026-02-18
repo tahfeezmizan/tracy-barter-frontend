@@ -11,12 +11,15 @@ import {
   CreditCard,
   ChevronDown,
   ChevronUp,
+  CloudCog,
 } from 'lucide-react';
 import { useState } from 'react';
 import { formatMonth } from '@/lib/utils';
 import InvoiceSummary from './invoice-summary';
 import InvoiceBookingTable from './invoice-booking-table';
 import { Invoice } from '@/lib/types/invoice.types';
+import { usePayInvoiceMutation } from '@/redux/features/invoices/invoicesApi';
+import { useRouter } from 'next/navigation';
 
 
 interface InvoiceCardProps {
@@ -24,7 +27,25 @@ interface InvoiceCardProps {
 }
 
 export default function InvoiceCard({ invoice }: InvoiceCardProps) {
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [payInvoice, { isLoading }] = usePayInvoiceMutation();
+
+
+  const handlePayNow = async (id: string) => {
+    console.log(id)
+
+    try {
+      const res = await payInvoice(id).unwrap();
+      console.log(res);
+      if(res.success){
+        router.push(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -94,7 +115,7 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
                 <span className="hidden sm:inline">Download PDF</span>
                 <span className="sm:hidden">Download</span>
               </Button>
-              <Button
+              {/* <Button
                 variant="outline"
                 size="sm"
                 className="flex items-center justify-center gap-2 text-xs sm:text-sm"
@@ -103,11 +124,12 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
                 <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="hidden sm:inline">View Details</span>
                 <span className="sm:hidden">Details</span>
-              </Button>
+              </Button> */}
               {invoice.status !== 'paid' && (
                 <Button 
                   size="sm"
-                  className="flex items-center justify-center gap-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-700"
+                  onClick={() => handlePayNow(invoice?._id)}
+                  className="flex items-center justify-center gap-2 text-xs sm:text-sm bg-primary hover:bg-primary/80"
                 >
                   <CreditCard className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Pay Now</span>
