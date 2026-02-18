@@ -168,7 +168,7 @@ export default function TransactionsTable() {
     return payments;
   }, [data, activeTab, searchQuery]);
 
-  console.log("useGetAllPaymentQuery", data);
+  // console.log("useGetAllPaymentQuery", data);
 
   return (
     <Card className="bg-white shadow-sm rounded-xl p-6">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Step1 from "@/components/service/booking/step-1";
@@ -14,7 +14,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 import { BookingFormData, ServiceResponse } from "@/config/Types/serviceTypes";
-import { useGetSingleServiceQuery } from "@/redux/features/service/serviceApis";
+import {
+  useCreateBookingMutation,
+  useGetSingleServiceQuery,
+} from "@/redux/features/service/serviceApis";
+import { toast } from "sonner";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 const TOTAL_STEPS = 5;
 
@@ -23,11 +28,19 @@ export default function BookingPage() {
   const params = useParams();
   const id = params.booking as string;
 
+const { data: userData } = useGetStaffProfileQuery(undefined);
+
+console.log("userData",userData?.subscribe);
+  
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;
   }>({ id });
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [createBooking] = useCreateBookingMutation();
+
+  const searchParams = useSearchParams();
+  const initialStep = Number(searchParams.get("step")) || 1;
+  const [currentStep, setCurrentStep] = useState(initialStep);
 
   // Single Source of Truth
   const [formData, setFormData] = useState<BookingFormData>({
@@ -62,9 +75,44 @@ export default function BookingPage() {
     }));
   };
 
+  // Load shopping list from localStorage if redirected from AI shopping
+  useEffect(() => {
+    const list = localStorage.getItem("pendingShoppingList");
+    if (list) {
+      try {
+        const items = JSON.parse(list);
+        const serviceDetails = items.map((item: any) => ({
+          name: item.name,
+          value: item.quantity,
+        }));
+
+        setFormData((prev) => ({
+          ...prev,
+          serviceDetails: serviceDetails,
+          // Pre-populate fields if they exist in serviceData
+        }));
+
+        // Select the first service type if we are jumping into step 2
+        if (serviceData?.serviceType?.length && !formData.serviceType) {
+          const type = serviceData.serviceType[0];
+          updateFormData("serviceType", {
+            _id: type._id,
+            title: type.title,
+            description: type.description,
+          });
+        }
+
+        // Clean up
+        localStorage.removeItem("pendingShoppingList");
+      } catch (e) {
+        console.error("Failed to parse pendingShoppingList", e);
+      }
+    }
+  }, [serviceData]);
+
   // Live console for all form data
   useEffect(() => {
-    console.log("📦 FULL BOOKING FORM DATA:", formData);
+    // console.log("📦 FULL BOOKING FORM DATA:", formData);
   }, [formData]);
 
   useEffect(() => {
@@ -74,8 +122,15 @@ export default function BookingPage() {
         name: field.label,
         value: formData[field.name],
       })) || [];
-    formData.serviceDetails = serviceDetails;
-  }, [currentStep, serviceData, formData]);
+
+    // Merge or set service details
+    if (formData.serviceDetails && formData.serviceDetails.length > 0) {
+      // If we already have details (e.g. from shopping list), we might want to keep them or merge
+      // For now, let's just log and see. The user asked to "pass the shopping list data".
+    } else {
+      updateFormData("serviceDetails", serviceDetails);
+    }
+  }, [currentStep, serviceData]);
 
   const handleContinue = () => {
     if (currentStep < TOTAL_STEPS) {
@@ -95,14 +150,51 @@ export default function BookingPage() {
     }
   };
 
-  const handleSubmit = () => {
-    // Map dynamic fields into serviceDetails array
-    // const serviceDetails =
-    //   serviceData?.fields?.map((field) => ({
-    //     name: field.label, // label instead of name
-    //     value: formData[field.name], // value from formData
-    //   })) || [];
-    // router.push("/service/booking/confirmation");
+  const handleSubmit = async () => {
+    // console.log("📦 FULL BOOKING FORM DATA:", formData);
+
+    if (!userData?.subscribe) {
+      toast.error("Please subscribe to a plan before booking a service.");
+      router.push("/pricing");
+      return;
+    }
+
+    const payload = {
+      service: id,
+      staff: formData.provider,
+      date: formData.date
+        ? new Date(formData.date).toISOString().split("T")[0]
+        : "",
+      startTime: "10:00",
+      endTime: "11:00",
+      address: formData.address,
+      serviceType: formData.serviceType,
+      serviceDetails: formData.serviceDetails,
+      notes: formData.note, // Mapped from note
+    };
+
+    // console.log("🚀 Payload to be sent:", payload);
+
+    try {
+      const res: any = await createBooking(payload);
+      // console.log("Booking api response", res);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message || "Booking created successfully");
+        // Handle success (e.g., redirect)
+        router.push("/service/booking/confirmation");
+      } else {
+        // Handle RTK Query error response
+        const errorMessage =
+          res?.error?.data?.message ||
+          res?.data?.message ||
+          "Failed to create booking";
+        toast.error(errorMessage);
+        // console.log("Error response:", res);
+      }
+    } catch (error: any) {
+      // console.log(error);
+      toast.error(error?.data?.message || "Something went wrong");
+    }
   };
 
   const progress = (currentStep / TOTAL_STEPS) * 100;

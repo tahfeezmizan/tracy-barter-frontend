@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { baseApi } from "../baseApi";
 
 const staffStatsApis = baseApi.injectEndpoints({
@@ -97,11 +99,12 @@ const staffStatsApis = baseApi.injectEndpoints({
     }),
 
     updateAvailability: builder.mutation({
-      query: (isAvailable) => ({
+      query: ({ isAvailable }) => ({
         url: "/user/availability",
-        method: "POST",
+        method: "PATCH",
         body: { isAvailable },
       }),
+      invalidatesTags: ["staff"],
     }),
   }),
   overrideExisting: true,

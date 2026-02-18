@@ -29,12 +29,9 @@ export default function PricingHero() {
 
       <div className="max-w-7xl mx-auto px-4 py-5 pt-28 lg:py-32 text-center">
         <div className="">
-          <Link
-            href={"#"}
-            className="text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-secondary "
-          >
+            <h2 className="text-3xl md:text-4xl font-bold text-black">
             Pricing & Plans
-          </Link>
+          </h2>
           <p className="text-xl md:text-2xl md:px-24 lg:px-0 py-10 leading-relaxed">
             Choose a simple membership that fits how you use your second home.
             Every plan is handled by vetted, insured local pros and comes with

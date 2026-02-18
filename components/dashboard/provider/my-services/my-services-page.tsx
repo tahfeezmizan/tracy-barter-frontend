@@ -7,7 +7,7 @@ import { useGetStaffStatsQuery } from "@/redux/features/staffdashboard/staffStat
 
 export default function MyServicesPage() {
   const { data } = useGetStaffStatsQuery(undefined);
-  console.log(data);
+  // console.log(data);
 
   const stats = [
     {

@@ -1,4 +1,5 @@
 import { BookingFormData } from "@/config/Types/serviceTypes";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 
 interface Step5Props {
   formData: BookingFormData;
@@ -6,7 +7,7 @@ interface Step5Props {
 }
 
 export default function Step5({ formData }: Step5Props) {
-  console.log("formData", formData);
+  const { data } = useGetStaffProfileQuery(undefined);
 
   return (
     <div className="space-y-6">
@@ -64,15 +65,15 @@ export default function Step5({ formData }: Step5Props) {
           <div className="space-y-1 text-sm">
             <p>
               <span className="text-gray-600">Name:</span>{" "}
-              <span className="font-medium">{formData.name || "N/A"}</span>
+              <span className="font-medium">{data?.name || "N/A"}</span>
             </p>
             <p>
               <span className="text-gray-600">Email:</span>{" "}
-              <span className="font-medium">{formData.email || "N/A"}</span>
+              <span className="font-medium">{data?.email || "N/A"}</span>
             </p>
             <p>
               <span className="text-gray-600">Phone:</span>{" "}
-              <span className="font-medium">{formData.phone || "N/A"}</span>
+              <span className="font-medium">{data?.phone || "N/A"}</span>
             </p>
             <p>
               <span className="text-gray-600">Address:</span>{" "}

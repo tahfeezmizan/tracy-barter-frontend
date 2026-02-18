@@ -11,7 +11,7 @@ import {
 export default function ServicesPage() {
   const { data, isLoading } = useGetServiceHomeQuery(undefined);
   const servicesData = data?.data;
-  // console.log("servicesData",servicesData);
+  console.log("servicesData",servicesData);
 
   return (
     <main>

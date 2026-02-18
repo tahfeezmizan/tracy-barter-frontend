@@ -21,6 +21,7 @@ export function SignInForm() {
     password: "",
     rememberMe: false,
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,7 +30,6 @@ export function SignInForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log("Login form data:", formData);
 
     try {
       const res = await loginUser({
@@ -38,10 +38,9 @@ export function SignInForm() {
         rememberMe: formData.rememberMe,
       });
 
-      console.log(res?.data?.data?.role);
-
       if (res?.data?.success) {
-        // store token on redux
+        toast.success(res?.data?.message || "Login successful");
+
         dispatch(
           setUser({
             data: {
@@ -50,18 +49,22 @@ export function SignInForm() {
             },
           })
         );
-        if (res?.data?.data?.role === "admin" || "staff") {
+
+        if (["admin", "staff"].includes(res?.data?.data?.role)) {
           router.push("/dashboard");
         } else {
-          router.push("/prifle");
+          router.push("/user-profile");
         }
-        // Redirect based on role
       } else if (res?.error) {
-        toast.error("Something went wrong");
+        const errorData = res?.error as any;
+        const errorMessage =
+          errorData?.data?.message ||
+          errorData?.data?.errorMessages?.[0]?.message ||
+          "Something went wrong";
+        toast.error(errorMessage);
       }
-      console.log(res);
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong");
     }
   };
 
@@ -89,6 +92,7 @@ export function SignInForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Email */}
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -103,6 +107,7 @@ export function SignInForm() {
           />
         </div>
 
+        {/* Password */}
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
           <div className="relative">
@@ -113,6 +118,7 @@ export function SignInForm() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleInputChange}
+              minLength={8}
               className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
@@ -132,6 +138,7 @@ export function SignInForm() {
           </div>
         </div>
 
+        {/* Remember & Forgot */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Checkbox
@@ -143,16 +150,13 @@ export function SignInForm() {
               Remember me
             </Label>
           </div>
-          <Button
-            variant="link"
-            className="px-0 text-blue-600 hover:text-blue-800"
-          >
-            Forgot password ?
-          </Button>
+          <Link href="/forgot-password">Forgot password ?</Link>
         </div>
 
+        {/* Submit */}
         <Button
           type="submit"
+          disabled={!formData.rememberMe || isLoading}
           className="w-full bg-secondary text-2xl text-white mt-6 py-6 duration-300"
         >
           {isLoading ? <Loader className="animate-spin size-8" /> : "Login"}
@@ -161,10 +165,11 @@ export function SignInForm() {
 
       <div className="text-center">
         <p className="text-sm text-muted-foreground">Dont have an account? </p>
-        <Link href="/signup">
-          <Button variant="outline" size="sm">
-            Sign up
-          </Button>
+        <Link
+          href="/signup"
+          className="text-primary font-bold hover:text-secondary"
+        >
+          Sign up
         </Link>
       </div>
     </div>

@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MessageCircle, Check } from "lucide-react";
-import { ShoppingListForm } from "./shopping-list-form";
-import { ShoppingListDisplay } from "./shopping-list-display";
+import { useConfirmChatMutation } from "@/redux/features/AIforGrocery/AIforGrocery";
+import { useGetServiceHomeQuery } from "@/redux/features/service/serviceApis";
+import { Check, MessageCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ChatbotModal } from "./chatbot-modal";
+import { ShoppingListDisplay } from "./shopping-list-display";
+import { ShoppingListForm } from "./shopping-list-form";
 
 export interface ShoppingItem {
   id: string;
@@ -18,12 +21,17 @@ export interface ShoppingItem {
 export function ShoppingListPage() {
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  const [confirmChat, { isLoading }] = useConfirmChatMutation();
+  const { data: servicesData } = useGetServiceHomeQuery(undefined);
+  const router = useRouter();
 
   // Add item from form or chatbot
   const addItem = (
     name: string,
     quantity: number,
-    source: "manual" | "chatbot" = "manual"
+    source: "manual" | "chatbot" = "manual",
   ) => {
     const newItem: ShoppingItem = {
       id: Date.now().toString(),
@@ -31,7 +39,13 @@ export function ShoppingListPage() {
       quantity,
       source,
     };
-    setItems([...items, newItem]);
+
+    const updatedItems = [...items, newItem];
+    setItems(updatedItems);
+
+    // ✅ log instantly when item is added
+    console.log("Item added:", newItem);
+    console.log("Updated shopping list:", updatedItems);
   };
 
   // Delete item
@@ -39,14 +53,34 @@ export function ShoppingListPage() {
     setItems(items.filter((item) => item.id !== id));
   };
 
-  // Handle submit - log to console
-  const handleSubmit = () => {
-    console.log("Shopping List Data:", {
-      items,
-      timestamp: new Date().toISOString(),
-      totalItems: items.length,
-    });
-    alert("Shopping list submitted! Check the console for details.");
+  // Handle submit - log to console and redirect
+  const handleSubmit = async () => {
+    try {
+      const res = await confirmChat({ sessionId: sessionId });
+      console.log("res", res);
+
+      // Find the Grocery Shopping service ID
+      const groceryService = servicesData?.data?.find(
+        (service: any) =>
+          service.name.toLowerCase().includes("grocery") ||
+          service.name.toLowerCase().includes("shopping"),
+      );
+
+      if (groceryService) {
+        // Save items to localStorage for the booking page to pick up
+        localStorage.setItem("pendingShoppingList", JSON.stringify(items));
+
+        // Redirect to booking page directly to Step 2
+        router.push(`/service/${groceryService._id}?step=2`);
+      } else {
+        console.error("Grocery service not found");
+        // Fallback or alert user
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+
+    console.log("Submitted Shopping List Data:", items);
   };
 
   return (
@@ -160,6 +194,10 @@ export function ShoppingListPage() {
         open={chatbotOpen}
         onOpenChange={setChatbotOpen}
         onAddItem={addItem}
+        onSessionIdReceived={(sessionId) => {
+          setSessionId(sessionId);
+          // console.log("Session ID received in ShoppingListPage:", sessionId);
+        }}
       />
     </div>
   );

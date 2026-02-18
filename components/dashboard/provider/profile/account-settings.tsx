@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import { useUpdateAvailabilityMutation } from "@/redux/features/staffdashboard/staffStatsApis";
 import { StaffProfileResponse } from "@/lib/types/staff.types";
+import Link from "next/link";
+import { toast } from "sonner";
 
 interface AccountSettingsProps {
   data?: StaffProfileResponse["data"];
@@ -13,25 +15,30 @@ interface AccountSettingsProps {
 
 const AccountSettings = ({ data }: AccountSettingsProps) => {
   // Initialize based on data?.status
-  const [isAvailable, setIsAvailable] = useState(data?.status === "active");
+  const [isAvailable, setIsAvailable] = useState(!!data?.isAvailable);
   const [updateAvailability, { isLoading }] = useUpdateAvailabilityMutation();
 
   useEffect(() => {
-    setIsAvailable(data?.status === "active");
-  }, [data?.status]);
+  setIsAvailable(!!data?.isAvailable);
+}, [data?.isAvailable]);
+
 
   const handleToggle = async () => {
     const newStatus = !isAvailable;
+    // Optimistic update
     setIsAvailable(newStatus);
-    console.log("Account Settings", newStatus);
+    // console.log("Account Settings", newStatus);
 
     try {
       const res = await updateAvailability({
         isAvailable: newStatus,
       }).unwrap();
-      console.log(res);
+      // console.log("Account Settings", res);
+      toast.success(`Availability updated to ${newStatus ? "available" : "unavailable"}`);
     } catch (error) {
       console.error("Failed to update availability:", error);
+      toast.error("Failed to update availability. Please try again.");
+      // Revert state on error
       setIsAvailable(!newStatus);
     }
   };
@@ -52,7 +59,8 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
         <Switch
           checked={isAvailable}
           onCheckedChange={handleToggle}
-          disabled={isLoading || data?.status === "inactive"}
+          disabled={isLoading} 
+          className="bg-gray-200 h-5"
         />
       </div>
 
@@ -61,13 +69,15 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
           <h3 className="font-medium">Change Password</h3>
           <p className="text-slate-500">Update your account password</p>
         </div>
+        
+        <Link href="/user-profile/change-password">
         <Button
-          className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white"
-          onClick={() => alert("Change password functionality")}
-        >
+          className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white"          
+          >
           <Lock />
           Change Password
         </Button>
+          </Link>
       </div>
     </div>
   );

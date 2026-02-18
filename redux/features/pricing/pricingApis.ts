@@ -18,8 +18,20 @@ const pricingApis = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+
+    updatePricingPlan: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/plan/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Pricing"],
+    }),
   }),
 });
 
-export const { useGetPricingPlansQuery, useCreateSubscriptionMutation } =
-  pricingApis;
+export const {
+  useGetPricingPlansQuery,
+  useCreateSubscriptionMutation,
+  useUpdatePricingPlanMutation,
+} = pricingApis;

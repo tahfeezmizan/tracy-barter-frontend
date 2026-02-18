@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Camera, CreditCard, Shield, SquareCheck } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   const data = [
@@ -79,9 +80,12 @@ export default function HeroSection() {
               by vetted locals. Or, join as a provider and get steady, well-paid
               work.
             </p>
+<Link href="/service">
             <Button className="bg-secondary py-6 text-2xl text-white mt-6">
+
               I need home services
             </Button>
+</Link>
 
             <div className="grid grid-cols-4 gap-6 mt-10 md:mt-20">
               {data.map((item, index) => {

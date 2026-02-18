@@ -142,7 +142,7 @@ export default function Step3({ formData, updateFormData, data }: Step3Props) {
                   key={staff._id}
                   onClick={() => {
                     updateFormData("provider", staff._id);
-                    updateFormData("providerName", staff.name); // store staff.name
+                    updateFormData("providerName", staff.name);
                   }}
                   className={`
                     flex items-center justify-between p-4 py-3 border rounded-lg cursor-pointer

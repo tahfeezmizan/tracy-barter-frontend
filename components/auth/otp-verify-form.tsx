@@ -82,7 +82,7 @@ export default function OtpVerify() {
   const handleVerify = async () => {
     setIsLoading(true);
     await new Promise((r) => setTimeout(r, 2000));
-    // console.log("Verifying OTP:", otp.join(""));
+    console.log("Verifying OTP:", otp.join(""));
 
     try {
       const res = await verifyOTP({
@@ -116,9 +116,9 @@ export default function OtpVerify() {
         toast.error(err?.data?.message || "Something went wrong");
       }
 
-      console.log("API Res", res);
+      // console.log("API Res", res);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     setIsLoading(false);
@@ -135,7 +135,7 @@ export default function OtpVerify() {
         authType: authType || "createAccount",
       });
 
-      console.log(res);
+      // console.log(res);
 
       if (res?.data?.success) {
         toast.success(res?.data?.message || "OTP resent sucessfully");
@@ -146,13 +146,13 @@ export default function OtpVerify() {
           error?.message ||
           "Something went wrong during signup";
         toast.error(message);
-        console.log("Signup error:", error);
+        // console.log("Signup error:", error);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
-    console.log("Resending OTP...");
+    // console.log("Resending OTP...");
   };
 
   const isComplete = otp.every(Boolean);

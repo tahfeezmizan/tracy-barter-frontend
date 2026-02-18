@@ -9,21 +9,21 @@ export interface ReferralStep {
 const defaultSteps: ReferralStep[] = [
   {
     stepNumber: 1,
-    title: "Send Us a Client",
+    title: "Send Us a Client ",
     description:
-      "Fill out the form on the bottom of this page to connect us with one of your clients.",
+      "Fill out the form on the bottom of this page to connect us with one of your connections (please make a link available for this – need their name, phone number and email address).",
   },
   {
     stepNumber: 2,
     title: "We Reach Out",
     description:
-      "We will touch base with your client, walk them through our sales process, and answer any questions.",
+      "We will touch base with your referral, walk them through our real estate sales process, and answer any questions.",
   },
   {
     stepNumber: 3,
-    title: "We Pay You",
+    title: "We Reward You",
     description:
-      "We’ll send you a gift card to a Happy Valley restaurant of your choice!",
+      "We’ll send you a gift card to a Happy Valley restaurant of your choice!",
   },
 ];
 

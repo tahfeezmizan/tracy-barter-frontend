@@ -1,244 +1,8 @@
-// "use client";
-
-// import { Button } from "@/components/ui/button";
-// import { Card } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { AppointmentDetailsModal } from "@/lib/modal/appointment-details-modal";
-// import { AppointmentsBooking } from "@/lib/types/schedule.types";
-// import {
-//   useGetMyServicesStaffQuery,
-//   useUpdateBookingStatusMutation,
-// } from "@/redux/features/staffdashboard/staffStatsApis";
-// import {
-//   CheckCircle,
-//   CircleCheckBig,
-//   CircleX,
-//   Clock,
-//   Clock9,
-//   Eye,
-//   MapPin,
-//   Play,
-// } from "lucide-react";
-// import { useState } from "react";
-// import { toast } from "sonner";
-// import { AvatarBlock } from "../schedule/appointment-list";
-// import { formatDateOnly } from "@/lib/utils";
-
-// type ServiceItem = {
-//   id: number;
-//   initials: string;
-//   title: string;
-//   client: string;
-//   date: string;
-//   time: string;
-//   address: string;
-//   rating?: number;
-//   status: "Scheduled" | "Completed" | "Cancelled";
-// };
-
-// const STATUS_COLOR = {
-//   confirmed: "bg-purple-100 text-purple-700 border-purple-200",
-//   scheduled: "bg-yellow-100 text-yellow-700 border-yellow-200",
-//   inProgress: "bg-blue-100 text-blue-700 border-blue-200",
-//   completed: "bg-green-100 text-green-700 border-green-200",
-//   cancelled: "bg-red-100 text-red-700 border-red-200",
-//   requested: "bg-gray-100 text-gray-700 border-gray-300",
-// };
-
-// export default function ServiceList() {
-//   const [openId, setOpenId] = useState<string | null>(null);
-
-//   const [filter, setFilter] = useState<
-//     "All" | "Scheduled" | "Completed" | "Cancelled"
-//   >("All");
-
-//   const { data } = useGetMyServicesStaffQuery(undefined);
-//   console.log(data);
-
-//   const [updateBookingStatus, { isLoading }] = useUpdateBookingStatusMutation();
-
-//   // services status update
-//   const handleUpdateStatus = async (
-//     bookingId: string,
-//     currentStatus: string
-//   ) => {
-//     let nextStatus = "";
-
-//     if (currentStatus === "scheduled") nextStatus = "inProgress";
-//     else if (currentStatus === "inProgress") nextStatus = "completed";
-//     else return;
-
-//     try {
-//       await updateBookingStatus({
-//         bookingId,
-//         status: nextStatus,
-//       }).unwrap();
-
-//       toast.success(
-//         nextStatus === "inProgress"
-//           ? "Service started successfully"
-//           : "Service completed successfully"
-//       );
-//     } catch (error: any) {
-//       toast.error(error?.data?.message || "Failed to update booking status");
-//     }
-//   };
-
-//   return (
-//     <div className="w-full  rounded-xl">
-//       {/* Search + Status Filter Row */}
-//       <div className="">
-//         <Input
-//           placeholder="Search by client or service?._.."
-//           className="bg-white text-black py-5 text-xl!"
-//         />
-//       </div>
-
-//       {/* Tabs Filter */}
-//       <Tabs defaultValue="all" className="mt-6">
-//         <TabsList className=" bg-white text-black px-2 py-1.5 rounded-md">
-//           <TabsTrigger
-//             className="text-lg"
-//             value="all"
-//             onClick={() => setFilter("All")}
-//           >
-//             All
-//           </TabsTrigger>
-//           <TabsTrigger
-//             className="text-lg"
-//             value="scheduled"
-//             onClick={() => setFilter("Scheduled")}
-//           >
-//             Scheduled
-//           </TabsTrigger>
-//           <TabsTrigger
-//             className="text-lg"
-//             value="completed"
-//             onClick={() => setFilter("Completed")}
-//           >
-//             Completed
-//           </TabsTrigger>
-//           <TabsTrigger
-//             className="text-lg"
-//             value="cancelled"
-//             onClick={() => setFilter("Cancelled")}
-//           >
-//             Cancelled
-//           </TabsTrigger>
-//         </TabsList>
-//       </Tabs>
-
-//       {/* Grid of Cards */}
-//       <div className="grid gap-4 mt-6 grid-cols-1 md:grid-cols-2">
-//         {data?.data?.map((service: AppointmentsBooking) => (
-//           <Card
-//             key={service?._id}
-//             className="p-5 bg-white text-black rounded-xl overflow-hidden gap-2"
-//           >
-//             <div className="flex items-center justify-between">
-//               <div className="flex items-center gap-3">
-//                 {/* <div className="w-12 h-12 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center font-semibold">
-//                   {service?.user?.name}
-//                 </div> */}
-//                 <AvatarBlock name={service?.user?.name} />
-//                 <div>
-//                   <h3 className="font-semibold text-lg text-black">
-//                     {service?.serviceType?.title}
-//                   </h3>
-//                   <p className="text-gray-500 text-sm">{service?.user?.name}</p>
-//                 </div>
-//               </div>
-
-//               <div className="flex items-center gap-2">
-//                 <span
-//                   className={`text-xs px-2 py-1 rounded-full  border capitalize ${
-//                     STATUS_COLOR[
-//                       service?.status as keyof typeof STATUS_COLOR
-//                     ] ?? "bg-gray-100 text-gray-600"
-//                   }`}
-//                 >
-//                   {service?.status?.replace(/([A-Z])/g, " $1")}
-//                 </span>
-//               </div>
-//             </div>
-
-//             <p className="mt-3 text-sm flex items-center gap-2">
-//               <Clock9 size={16} />
-//               <span className="truncate">{formatDateOnly(service?.date)}</span>
-//             </p>
-//             <p className="text-sm flex items-center gap-2">
-//               <MapPin size={16} />
-//               <span className="truncate">{service?.address?.address}</span>
-//             </p>
-
-//             {/* Buttons */}
-//             <div className="flex flex-col sm:flex-row gap-3">
-//               <button
-//                 className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200"
-//                 onClick={() => {
-//                   setOpenId(service._id);
-//                   console.log("Clicked appointment ID:", service._id);
-//                 }}
-//               >
-//                 <Eye size={16} />
-//                 View Details
-//               </button>
-
-//               {(service?.status === "scheduled" ||
-//                 service?.status === "inProgress") && (
-//                 <Button
-//                   disabled={isLoading}
-//                   onClick={() =>
-//                     handleUpdateStatus(service?._id, service?.status)
-//                   }
-//                   className="w-full flex-1 flex items-center gap-1 px-4 py-2 rounded-lg text-sm text-white bg-secondary hover:bg-primary"
-//                 >
-//                   {service?.status === "scheduled" ? (
-//                     <Play size={16} />
-//                   ) : (
-//                     <CheckCircle size={16} />
-//                   )}
-
-//                   {service?.status === "scheduled"
-//                     ? "Start Service"
-//                     : "Complete Service"}
-//                 </Button>
-//               )}
-//             </div>
-
-//             {/* MODAL */}
-//             <AppointmentDetailsModal
-//               open={openId === service._id}
-//               onOpenChange={(open) => {
-//                 if (!open) setOpenId(null);
-//               }}
-//               serviceId={service._id}
-//             />
-//           </Card>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AppointmentDetailsModal } from "@/lib/modal/appointment-details-modal";
-import { AppointmentsBooking } from "@/lib/types/schedule.types";
-import {
-  useGetMyServicesStaffQuery,
-  useUpdateBookingStatusMutation,
-} from "@/redux/features/staffdashboard/staffStatsApis";
-import { CheckCircle, Eye, MapPin, Play, Clock9 } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
-import { toast } from "sonner";
-import { AvatarBlock } from "../schedule/appointment-list";
-import { formatDateOnly } from "@/lib/utils";
 import {
   Pagination,
   PaginationContent,
@@ -247,6 +11,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AppointmentsBooking } from "@/lib/types/schedule.types";
+import { formatDateOnly } from "@/lib/utils";
+import {
+  useGetMyServicesStaffQuery,
+  useUpdateBookingStatusMutation,
+} from "@/redux/features/staffdashboard/staffStatsApis";
+import { CheckCircle, Clock9, Eye, MapPin, Play } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import { AvatarBlock } from "../schedule/appointment-list";
+import { AppointmentDetailsModal } from "@/lib/modal/appointment-details-modal";
 
 const STATUS_COLOR = {
   confirmed: "bg-purple-100 text-purple-700 border-purple-200",
@@ -653,7 +429,7 @@ export default function ServiceList() {
                   className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200"
                   onClick={() => {
                     setOpenId(service._id);
-                    console.log("Clicked appointment ID:", service._id);
+                    // console.log("Clicked appointment ID:", service._id);
                   }}
                 >
                   <Eye size={16} />
@@ -682,14 +458,6 @@ export default function ServiceList() {
                 )}
               </div>
 
-              {/* MODAL */}
-              <AppointmentDetailsModal
-                open={openId === service._id}
-                onOpenChange={(open) => {
-                  if (!open) setOpenId(null);
-                }}
-                serviceId={service._id}
-              />
             </Card>
           ))
         ) : (
@@ -739,6 +507,17 @@ export default function ServiceList() {
             services
           </div> */}
         </div>
+      )}
+
+      {/* MODAL */}
+      {openId && (
+        <AppointmentDetailsModal
+          open={!!openId}
+          onOpenChange={(open) => {
+            if (!open) setOpenId(null);
+          }}
+          serviceId={openId!}
+        />
       )}
     </div>
   );

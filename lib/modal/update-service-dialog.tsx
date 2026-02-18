@@ -31,6 +31,18 @@ import {
   useUpdateServiceMutation,
 } from "@/redux/features/service/serviceApis";
 import { getImageUrl } from "../utils";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useGetStaffQuery } from "@/redux/features/service/clientApis";
+
+type SelectedItem = {
+  _id: string;
+  name: string;
+};
 
 type UpdateServiceForm = {
   name: string;
@@ -40,6 +52,7 @@ type UpdateServiceForm = {
   image?: FileList;
   serviceTypes: any[];
   dynamicFields: any[];
+  staff: string[];
 };
 
 interface Props {
@@ -60,6 +73,8 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
     { skip: !serviceId }
   );
 
+  console.log("Update Service Data",service)
+
   const [updateService, { isLoading }] = useUpdateServiceMutation();
 
   const { register, handleSubmit, reset, control, setValue, watch } =
@@ -67,6 +82,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
       defaultValues: {
         serviceTypes: [],
         dynamicFields: [],
+        staff: [],
       },
     });
 
@@ -99,6 +115,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
       occasions: service.occasions?.join(", "),
       serviceTypes: service.serviceType || [],
       dynamicFields: service.fields || [],
+      staff: service.staff?.map((s: any) => s._id || s) || [],
     });
 
     setShowServiceTypes(!!service.serviceType?.length);
@@ -108,6 +125,24 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
       setImagePreview(service?.image);
     }
   }, [service, reset]);
+
+  const { data: staffData } = useGetStaffQuery();
+  const selectedStaff = watch("staff");
+
+  const toggleStaff = (id: string) => {
+    setValue(
+      "staff",
+      selectedStaff.includes(id)
+        ? selectedStaff.filter((v) => v !== id)
+        : [...selectedStaff, id],
+      { shouldValidate: true }
+    );
+  };
+
+  const selectedNames = (staffData?.data || [])
+    .filter((item: any) => selectedStaff.includes(item._id))
+    .map((item: any) => item.name)
+    .join(", ");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -140,6 +175,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
         occasions: data.occasions.split(",").map((i) => i.trim()),
         serviceType: data.serviceTypes,
         fields: data.dynamicFields,
+        staff: data.staff,
         removeImage: imageRemoved, // 👈 IMPORTANT
       };
 
@@ -200,6 +236,33 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
 
             <Label>Occasions *</Label>
             <Input {...register("occasions")} />
+
+            <div className="space-y-2">
+              <Label>Add Staff *</Label>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start truncate bg-transparent"
+                  >
+                    {selectedNames || "Select staff"}
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="bg-white">
+                  {(staffData?.data || []).map((item: any) => (
+                    <DropdownMenuCheckboxItem
+                      key={item._id}
+                      checked={selectedStaff.includes(item._id)}
+                      onCheckedChange={() => toggleStaff(item._id)}
+                    >
+                      {item.name}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
 
           {/* SERVICE TYPES */}

@@ -1,0 +1,473 @@
+
+> tracy-barter-frontend@0.1.0 lint
+> eslint
+
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(common)\page.tsx
+  1:10  warning  'ChatWidget' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(common)\service\[booking]\page.tsx
+   21:10  warning  'CloudCog' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   80:49  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   85:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(common)\service\[booking]\page.tsx:85:9
+  83 |         }));
+  84 |
+> 85 |         setFormData((prev) => ({
+     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  86 |           ...prev,
+  87 |           serviceDetails: serviceDetails,
+  88 |           // Pre-populate fields if they exist in serviceData                                          react-hooks/set-state-in-effect
+  107:6   warning  React Hook useEffect has a missing dependency: 'formData.serviceType'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/exhaustive-deps
+  127:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(common)\service\[booking]\page.tsx:127:7
+  125 |       // For now, let's just log and see. The user asked to "pass the shopping list data".
+  126 |     } else {
+> 127 |       updateFormData("serviceDetails", serviceDetails);
+      |       ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  128 |     }
+  129 |   }, [currentStep, serviceData]);
+  130 |  react-hooks/set-state-in-effect
+  129:6   warning  React Hook useEffect has a missing dependency: 'formData'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/exhaustive-deps
+  169:18  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  184:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(dashboard)\dashboard\page.tsx
+  12:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\app\(dashboard)\dashboard\page.tsx:12:5
+  10 |   useEffect(() => {
+  11 |     const storedRole = localStorage.getItem("userRole") || "admin";
+> 12 |     setRole(storedRole);
+     |     ^^^^^^^ Avoid calling setState() directly within an effect
+  13 |   }, []);
+  14 |
+  15 |   if (!role) return null;  react-hooks/set-state-in-effect
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\auth\auth-layout.tsx
+  36:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\auth\forgot-password-form.tsx
+  40:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\auth\login-form.tsx
+  62:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  67:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\booking\AllBookingTable.tsx
+  168:3   warning  'Trash2' is defined but never used                    @typescript-eslint/no-unused-vars
+  179:58  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  181:14  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  183:24  warning  'setItemsPerPage' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  226:21  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  312:43  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\clients\all-clients.tsx
+  12:15  warning  'Pencil' is defined but never used        @typescript-eslint/no-unused-vars
+  19:54  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  63:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  83:56  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\clients\client-details-modal.tsx
+  18:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\payments\payments-page.tsx
+  3:33  warning  'Download' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\payments\transactions-table.tsx
+  125:16  warning  'TabsContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\recent-services.tsx
+  16:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\admin\services\all-services-table.tsx
+  221:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\app-sidebar.tsx
+  29:10  warning  'token' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  33:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\app-sidebar.tsx:33:5
+  31 |
+  32 |   useEffect(() => {
+> 33 |     setToken(!!Cookies.get("token"));
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |     setMounted(true);
+  35 |   }, []);
+  36 |  react-hooks/set-state-in-effect
+  56:20  error    A `require()` style import is forbidden                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\dash-home\provider-dash.tsx
+  3:54  warning  'User' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\my-services\service-list.tsx
+  137:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\profile\account-settings.tsx
+  22:3  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\profile\account-settings.tsx:22:3
+  20 |
+  21 |   useEffect(() => {
+> 22 |   setIsAvailable(!!data?.isAvailable);
+     |   ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  23 | }, [data?.isAvailable]);
+  24 |
+  25 |  react-hooks/set-state-in-effect
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\profile\personal-information.tsx
+  49:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\profile\provider-profile.tsx
+  21:10  warning  'file' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\schedule\appointment-list.tsx
+   84:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  223:21  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\schedule\weekly-overview.tsx
+  21:54  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\service-metails-modal.tsx
+  21:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\provider\today-schedule.tsx
+  50:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  58:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  69:31  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\dashboard\stats-card.tsx
+   5:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\faq\index.tsx
+  22:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  29:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\header\index.tsx
+  44:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\header\index.tsx:44:5
+  42 |   useEffect(() => {
+  43 |     // setIsMounted(true);
+> 44 |     setToken(!!Cookies.get("token"));
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  45 |   }, []);
+  46 |
+  47 |   useEffect(() => {  react-hooks/set-state-in-effect
+  87:24  error  A `require()` style import is forbidden                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\modules\about-tracy\index.tsx
+  15:20  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+  38:23  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  39:18  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\modules\grocery-assistant\index.tsx
+  23:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  30:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  40:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  47:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  59:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\modules\hero\index.tsx
+   37:16  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+   44:16  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+   53:16  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+   60:16  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+   75:17  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   76:17  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  109:20  error  A `require()` style import is forbidden                          @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\pricing\pricing-comparison-table.tsx
+  28:3  warning  'title' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\pricing\pricing-hero.tsx
+   3:8   warning  'Link' is defined but never used         @typescript-eslint/no-unused-vars
+  15:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  22:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\pricing\pricing-plan.tsx
+  17:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\realtor-referrals\referral-form.tsx
+  1:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\realtor-referrals\referrals-hero.tsx
+  15:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  22:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\realtor-referrals\why-partner-section.tsx
+  6:11  warning  'WhyPartnerSectionProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\review\Review.tsx
+  22:10  warning  'photos' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  52:21  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\service\booking\step-1.tsx
+  20:52  warning  'index' is defined but never used         @typescript-eslint/no-unused-vars
+  39:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\service\booking\step-2.tsx
+  50:10  warning  'Input' is defined but never used                                @typescript-eslint/no-unused-vars
+  71:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\service\booking\step-3.tsx
+   88:22  warning  'RadioGroupItem' is defined but never used  @typescript-eslint/no-unused-vars
+  101:10  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  132:23  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  140:38  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\service\booking\step-5.tsx
+  6:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\service\service-hero.tsx
+   3:10  warning  'Button' is defined but never used       @typescript-eslint/no-unused-vars
+   4:8   warning  'Link' is defined but never used         @typescript-eslint/no-unused-vars
+  16:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  23:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\shopping-with-ai\chatbot-modal.tsx
+  275:88  error    Unexpected any. Specify a different type                             @typescript-eslint/no-explicit-any
+  320:18  error    Unexpected any. Specify a different type                             @typescript-eslint/no-explicit-any
+  331:62  error    Unexpected any. Specify a different type                             @typescript-eslint/no-explicit-any
+  361:9   warning  'parseSuggestedItemsFromContent' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\shopping-with-ai\shopping-list-page.tsx
+  26:25  warning  'isLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  64:19  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\terms-conditions\terms-conditions-hero.tsx
+   2:10  warning  'BookmarkMinus' is defined but never used  @typescript-eslint/no-unused-vars
+   4:8   warning  'Link' is defined but never used           @typescript-eslint/no-unused-vars
+  16:16  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+  23:16  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\ui\accordion.tsx
+  5:10  warning  'ChevronDownIcon' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\ui\sidebar.tsx
+    6:16  warning  'PanelLeftIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  612:26  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\ui\sidebar.tsx:612:26
+  610 |   // Random width between 50 to 90%.
+  611 |   const width = React.useMemo(() => {
+> 612 |     return `${Math.floor(Math.random() * 40) + 50}%`;
+      |                          ^^^^^^^^^^^^^ Cannot call impure function
+  613 |   }, []);
+  614 |
+  615 |   return (  react-hooks/purity
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\user-profile\change-password.tsx
+  62:5   error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `router`, but the source dependencies were [formData, changePassword]. Inferred different dependency than source.
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\user-profile\change-password.tsx:62:5
+  60 |
+  61 |   const handleSubmit = useCallback(
+> 62 |     async (e: FormSubmitEvent) => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |       e.preventDefault();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 86 |       }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 87 |     },
+     | ^^^^^^ Could not preserve existing manual memoization
+  88 |     [formData, changePassword],
+  89 |   );
+  90 |  react-hooks/preserve-manual-memoization
+  83:23  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  88:5   warning  React Hook useCallback has a missing dependency: 'router'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\user-profile\my-order.tsx
+   15:3   warning  'CheckCircle2' is defined but never used        @typescript-eslint/no-unused-vars
+   16:3   warning  'Clock' is defined but never used               @typescript-eslint/no-unused-vars
+   17:3   warning  'DollarSign' is defined but never used          @typescript-eslint/no-unused-vars
+   21:3   warning  'X' is defined but never used                   @typescript-eslint/no-unused-vars
+   31:25  warning  'isLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   31:36  warning  'isError' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   36:62  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  118:37  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\user-profile\personal-information.tsx
+  254:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\components\user-profile\personal-information.tsx:254:5
+  252 |     };
+  253 |
+> 254 |     setFormData(mappedData);
+      |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  255 |     setOriginalData(mappedData);
+  256 |   }, [data]);
+  257 |  react-hooks/set-state-in-effect
+  278:22  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\config\Types\apiTypes.ts
+   4:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\config\Types\serviceTypes.ts
+   4:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\config\Types\types.ts
+  89:11  warning  'SignUpSuccess' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\config\menuConfig.ts
+  17:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\PriceEditModal.tsx
+  33:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\PriceEditModal.tsx:33:5
+  31 |
+  32 |   useEffect(() => {
+> 33 |     setPrice(currentPrice.toString());
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |   }, [currentPrice, open]);
+  35 |
+  36 |   const handleSave = () => {  react-hooks/set-state-in-effect
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\add-service-dialog.tsx
+    5:41  warning  'ImageIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   75:9   warning  'imageFile' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   75:21  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\add-service-dialog.tsx:75:21
+  73 |     });
+  74 |
+> 75 |   const imageFile = watch("image");
+     |                     ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  76 |
+  77 |   const {
+  78 |     fields: serviceTypeFields,  react-hooks/incompatible-library
+  169:57  warning  'id' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  173:53  warning  'id' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  215:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  226:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\add-staff-dialog.tsx
+  59:31  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\add-staff-dialog.tsx:59:31
+  57 |
+  58 |   const { data = [] } = useGetStaffSpecialtyServicesQuery(undefined);
+> 59 |   const selectedSpecialties = watch("specialty");
+     |                               ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  60 |
+  61 |   const [AddStaff] = useCreateStaffMutation({});
+  62 |  react-hooks/incompatible-library
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\staff-details-dialog.tsx
+  19:6   warning  'Staff' is defined but never used               @typescript-eslint/no-unused-vars
+  51:17  warning  'isLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\update-service-dialog.tsx
+   41:17  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   42:18  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  300:35  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\modal\update-service-dialog.tsx:300:35
+  298 |
+  299 |                   <Select
+> 300 |                     defaultValue={watch(`dynamicFields.${index}.type`)}
+      |                                   ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  301 |                     onValueChange={(value) =>
+  302 |                       setValue(`dynamicFields.${index}.type`, value as any)
+  303 |                     }  react-hooks/incompatible-library
+  302:72  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  330:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+  366:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\types\schedule.types.ts
+  31:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\types\service.types.ts
+  15:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\lib\types\support.types.ts
+  8:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\redux\features\admindashboard\adminStatsApis.ts
+  10:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\redux\features\booking\bookingApi.ts
+  11:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\redux\features\faq\faqApis.ts
+  10:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\redux\features\payments\paymentsApis.ts
+  10:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Tahfeez Mizan\tracy-barter-frontend\redux\features\pricing\pricingApis.ts
+  10:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 149 problems (102 errors, 47 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

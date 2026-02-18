@@ -11,7 +11,7 @@ type LoginFormData = {
   password: string;
 };
 
-export default function ForgotPasswordForm() {
+export default function SetNewPasswordForm() {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ export default function ForgotPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Login form data:", data);
+    // console.log("Login form data:", data);
   };
 
   return (

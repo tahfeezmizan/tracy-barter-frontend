@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import LoadingSpinner from "@/lib/loading-spinner";
 import { ReviewItemType } from "@/lib/types/review.types";
+import { getImageUrl } from "@/lib/utils";
 import { useGetReviewQuery } from "@/redux/features/review/reviewApis";
 import { ChevronLeft, ChevronRight, CircleUserRound } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +13,7 @@ import { useState } from "react";
 export default function ClientReview() {
   const { data, isLoading } = useGetReviewQuery(undefined);
   const reviews = data?.data || [];
-  console.log("Revieew", data?.data);
+  // console.log("Revieew", data?.data);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -47,7 +48,7 @@ export default function ClientReview() {
   return (
     <div className="overflow-hidden bg-secondary py-16 md:px-4 pr-4 lg:px-8">
       <div className="max-w-7xl mx-auto pl-4 lg:px-4 overflow-hidden">
-        <h1 className="text-4xl md:text-5xl text-white text-center font-bold mb-9">
+        <h1 className="text-3xl md:text-4xl text-white text-center font-bold mb-9">
           What Our Clients <br className="lg:hidden" /> Say About Us
         </h1>
 
@@ -80,7 +81,7 @@ export default function ClientReview() {
                         {service?.reviewer?.profile ? (
                           <Image
                             src={
-                              service?.reviewer?.profile || "Defult Image url"
+                              getImageUrl(service?.reviewer?.profile) || "Defult Image url"
                             }
                             alt={service?.reviewer?.name}
                             width={400}

@@ -60,6 +60,15 @@ const serviceApis = baseApi.injectEndpoints({
       invalidatesTags: ["Service"],
     }),
 
+    createBooking: builder.mutation({
+      query: (data) => ({
+        url: "/booking",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Service"],
+    }),
+
     updateService: builder.mutation({
       query: ({ id, data }) => ({
         url: `/service/${id}`,
@@ -87,5 +96,6 @@ export const {
   useGetServiceStatsQuery,
   useCreateServiceMutation,
   useUpdateServiceMutation,
+  useCreateBookingMutation,
   useDeleteServiceMutation,
 } = serviceApis;

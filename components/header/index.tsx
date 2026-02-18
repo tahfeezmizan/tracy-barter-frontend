@@ -7,10 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn, getImageUrl } from "@/lib/utils";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
+import Cookies from "js-cookie";
 import {
   CircleUserRound,
-  ListOrdered,
   LogOut,
   Menu,
   RotateCcwKey,
@@ -23,16 +25,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
+import { Avatar } from "../ui/avatar";
 
 export default function Header() {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
+  const { data } = useGetStaffProfileQuery(undefined);
 
-  // console.log(role);
+  // console.log("data", data);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,7 +64,7 @@ export default function Header() {
   const handleLogout = () => {
     Cookies.remove("token");
     dispatch(removeUser());
-    setToken(false); // instant UI update
+    setToken(false);
     router.push("/");
   };
 
@@ -105,7 +107,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-2 text-2xl font-bold"
+                  className={cn(
+                    "px-2 text-2xl font-bold rounded-lg transition-all duration-300 py-1",
+                    pathname === link.href && "bg-secondary text-white"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -129,11 +134,19 @@ export default function Header() {
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button className="flex items-center space-x-2 p-1 rounded-full hover:bg-white/10 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                          <CircleUserRound className="size-9 text-white" />
-                        </div>
-                      </Button>
+                      <Avatar className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                        {data?.profile ? (
+                          <Image
+                            src={getImageUrl(data?.profile)}
+                            width={200}
+                            height={200}
+                            alt={data?.name || "Profile"}
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        ) : (
+                          <User className="h-6 w-6 text-white" />
+                        )}
+                      </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
@@ -266,7 +279,9 @@ export default function Header() {
                               </Link>
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
+                            <DropdownMenuItem
+                            onClick={handleLogout}
+                            className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
                               <LogOut className="h-4 w-4" />
                               <span>Logout</span>
                             </DropdownMenuItem>
@@ -298,9 +313,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "px-3 py-2 text-base font-semibold transition-colors",
+                      "px-3 py-2 text-base font-semibold transition-colors rounded-lg",
                       pathname === "/" ? "text-white" : "text-black",
                       pathname === "/" && isScrolled && "text-green-900",
+                      pathname === link.href && "bg-secondary text-white"
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

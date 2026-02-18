@@ -40,8 +40,18 @@ export const menuItems: Record<string, MenuItem[]> = {
       icon: Briefcase,
     },
     {
+      title: "Bookings",
+      url: "/dashboard/booking",
+      icon: Calendar,
+    },
+    {
       title: "Payments",
       url: "/dashboard/payments",
+      icon: CreditCard,
+    },
+    {
+      title: "Pricing Plans",
+      url: "/dashboard/pricing-plans",
       icon: CreditCard,
     },
     {

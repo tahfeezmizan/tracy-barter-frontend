@@ -22,6 +22,14 @@ const paymentsApis = baseApi.injectEndpoints({
       },
     }),
 
+    exportPayment: builder.query({
+      query: () => ({
+        url: "/payment/export",
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
+
     // getSingleService: builder.query({
     //   query: ({ id }) => ({
     //     url: `/service/${id}`,
@@ -35,4 +43,9 @@ const paymentsApis = baseApi.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetAllPaymentQuery, useGetPaymentStatsQuery } = paymentsApis;
+export const {
+  useGetAllPaymentQuery,
+  useGetPaymentStatsQuery,
+  useExportPaymentQuery,
+  useLazyExportPaymentQuery,
+} = paymentsApis;

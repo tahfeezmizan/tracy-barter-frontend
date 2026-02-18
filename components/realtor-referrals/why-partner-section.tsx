@@ -44,7 +44,7 @@ export function WhyPartnerSection() {
               className="flex flex-col items-center justify-center rounded-xl bg-white p-8 text-center w-full lg:w-[430px] h-52 mx-auto"
             >
               <h3 className="mb-4 text-2xl font-semibold text-primary">
-                {benefit.title}
+                ❝{benefit.title}❞
               </h3>
               <p className="text-base md:text-lg text-secondary">
                 {benefit.description}

@@ -10,7 +10,6 @@ import { SignUpError } from "@/config/Types/types";
 
 interface ReferralFormData {
   name: string;
-  brokerage: string;
   email: string;
   phone: string;
   referralName: string;
@@ -27,7 +26,6 @@ export function ReferralForm() {
     mode: "onBlur",
     defaultValues: {
       name: "",
-      brokerage: "",
       email: "",
       phone: "",
       referralName: "",
@@ -38,7 +36,7 @@ export function ReferralForm() {
   const [createReferral, { isLoading }] = useCreateReferralMutation({});
 
   const onSubmit = async (data: ReferralFormData) => {
-    console.log("Form submitted:", data);
+    // console.log("Form submitted:", data);
 
     try {
       const res = await createReferral({
@@ -48,7 +46,7 @@ export function ReferralForm() {
         referralPhone: data.phone,
         notes: data.notes,
       });
-      console.log("Referral created:", res);
+      // console.log("Referral created:", res);
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);
@@ -60,7 +58,7 @@ export function ReferralForm() {
           error?.message ||
           "Something went wrong during signup";
         toast.error(message);
-        console.log("Signup error:", error);
+        // console.log("Signup error:", error);
       }
     } catch {}
   };
@@ -82,7 +80,7 @@ export function ReferralForm() {
               htmlFor="name"
               className="block text-xl font-semibold text-gray-900 mb-2"
             >
-              Your name
+              Your Name
             </label>
             <input
               {...register("name", {
@@ -98,8 +96,32 @@ export function ReferralForm() {
             )}
           </div>
 
-          {/* Brokerage / Company field */}
+          {/* Referral name field */}
           <div>
+            <label
+              htmlFor="referralName"
+              className="block text-xl font-semibold text-gray-900 mb-2"
+            >
+              Referral Name
+            </label>
+            <input
+              {...register("referralName", {
+                required: "Referral name is required",
+              })}
+              id="referralName"
+              type="text"
+              placeholder="Enter the referral client's name"
+              className="w-full px-4 py-3 bg-gray-200/70 rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white transition"
+            />
+            {errors.referralName && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.referralName.message}
+              </p>
+            )}
+          </div>
+
+          {/* Brokerage / Company field */}
+          {/* <div>
             <label
               htmlFor="brokerage"
               className="block text-xl font-semibold text-gray-900 mb-2"
@@ -120,7 +142,7 @@ export function ReferralForm() {
                 {errors.brokerage.message}
               </p>
             )}
-          </div>
+          </div> */}
 
           {/* Email and Phone fields - two columns */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -129,7 +151,7 @@ export function ReferralForm() {
                 htmlFor="email"
                 className="block text-xl font-semibold text-gray-900 mb-2"
               >
-                Email<span className="text-red-500">*</span>
+                Referral Email<span className="text-red-500">*</span>
               </label>
               <input
                 {...register("email", {
@@ -156,7 +178,7 @@ export function ReferralForm() {
                 htmlFor="phone"
                 className="block text-xl font-semibold text-gray-900 mb-2"
               >
-                Phone
+                Referral Phone
               </label>
               <input
                 id="phone"
@@ -172,29 +194,7 @@ export function ReferralForm() {
             </div>
           </div>
 
-          {/* Referral name field */}
-          <div>
-            <label
-              htmlFor="referralName"
-              className="block text-xl font-semibold text-gray-900 mb-2"
-            >
-              Referral name
-            </label>
-            <input
-              {...register("referralName", {
-                required: "Referral name is required",
-              })}
-              id="referralName"
-              type="text"
-              placeholder="Enter the referral client's name"
-              className="w-full px-4 py-3 bg-gray-200/70 rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white transition"
-            />
-            {errors.referralName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.referralName.message}
-              </p>
-            )}
-          </div>
+          
 
           {/* Notes field */}
           <div>

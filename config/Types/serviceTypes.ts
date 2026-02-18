@@ -1,15 +1,16 @@
 export interface BookingFormData {
-  serviceType: string | null;
+  serviceType: ServiceType | null;
 
-  // 🔹 Dynamic fields (keyed by field.name from service config)
   [key: string]: any;
 
   provider: string;
-  date?: Date;
-  startTime: string;
-  endTime: string;
+  providerName: string;
+  isOutdoor: boolean;
 
-  // ✅ Nested address (matches backend + avoids React warnings)
+  date?: Date;
+  startTime?: string;
+  endTime?: string;
+
   address: {
     address: string;
     city: string;

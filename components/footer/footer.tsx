@@ -1,4 +1,5 @@
 import { Home, Mail, Phone, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -30,18 +31,28 @@ export default function Footer() {
               </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">
-                    info@happyvalleyconcierge.com
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">814-883-5114</span>
-                </div>
+  <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+  <Link
+    href="mailto:tracy@HappyValleyHomeConcierge.com"
+    className="text-slate-300 hover:underline"
+  >
+    tracy@HappyValleyHomeConcierge.com
+  </Link>
+</div>
+
+<div className="flex items-start gap-3">
+  <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+  <Link
+    href="tel:8148835114"
+    className="text-slate-300 hover:underline"
+  >
+    8148835114
+  </Link>
+</div>
+
                 <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Happy Valley, PA</span>
+                  <span className="text-slate-300">Happy Valley, USA</span>
                 </div>
               </div>
             </div>
@@ -53,7 +64,7 @@ export default function Footer() {
               <div className="space-y-4">
                 <div>
                   <p className="text-slate-300 font-medium">Monday – Friday</p>
-                  <p className="text-slate-400">8:30 AM – 5:00 PM</p>
+                  
                 </div>
                 <div>
                   <p className="text-slate-300 font-medium">
@@ -65,11 +76,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-700 pt-8">
-          <p className="text-center text-slate-400 text-sm">
-            © 2025 Happy Valley Home Concierge, LLC. All rights reserved.
-          </p>
-        </div>
+       <div className="border-t border-slate-700 pt-8">
+  <p className="text-center text-slate-400 text-sm">
+    © {new Date().getFullYear()} Happy Valley Home Concierge, LLC. All rights reserved.
+  </p>
+</div>
+
       </div>
     </footer>
   );

@@ -39,13 +39,13 @@ export default function TermsConditionsHero() {
           <p className="text-xl md:text-3xl font-medium leading-relaxed mb-6">
             Last updated: 2025-01-28
           </p>
-          <Link
+          {/* <Link
             href={"#"}
             className="w-96 text-2xl text-primary px-4 py-1.5 flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary rounded-lg"
           >
             <BookmarkMinus className="size-6 text-primary group-hover:text-secondary" />
             Continue
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

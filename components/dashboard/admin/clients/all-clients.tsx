@@ -1,21 +1,42 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Eye, Pencil, Search } from "lucide-react";
-import { useGetClientsQuery } from "@/redux/features/service/clientApis";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious
+} from "@/components/ui/pagination";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { useGetClientsQuery } from "@/redux/features/service/clientApis";
+import { Eye, Search } from "lucide-react";
+import { useState } from "react";
+import ClientDetailsModal from "./client-details-modal";
 
 export default function AllClientsTable() {
-  const { data, isLoading } = useGetClientsQuery("client");
-  console.log("client", data?.data);
+const [selectedClient, setSelectedClient] = useState<any>(null);
+const [modalMode, setModalMode] = useState<"view" | "edit">("view");
+const [open, setOpen] = useState(false);
+const [searchTerm, setSearchTerm] = useState("");
+const [currentPage, setCurrentPage] = useState(1);
+
+
+  const { data, isLoading } = useGetClientsQuery({
+    role: "client",
+    searchTerm: searchTerm,
+    page: currentPage,
+  });
+  // console.log("client", data);
 
   return (
     <Card className="w-full bg-white text-black">
@@ -25,7 +46,15 @@ export default function AllClientsTable() {
 
         {/* Search Bar */}
         <div className="relative mt-2 w-full max-w-sm">
-          <Input placeholder="Search clients..." className="pl-10" />
+          <Input 
+            placeholder="Search clients..." 
+            className="pl-10" 
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1); // Reset to first page on search
+            }}
+          />
           <Search className="size-5 absolute left-3 top-2 text-gray-400" />
         </div>
       </CardHeader>
@@ -39,7 +68,7 @@ export default function AllClientsTable() {
                 <th className="p-4">Email</th>
                 <th className="p-4">Phone</th>
                 <th className="p-4">Subscribe</th>
-                <th className="p-4">Services</th>
+                {/* <th className="p-4">Services</th> */}
                 <th className="p-4">Total Spent</th>
                 <th className="p-4 text-center">Actions</th>
               </tr>
@@ -71,7 +100,7 @@ export default function AllClientsTable() {
                       </Badge>
                     </td>
 
-                    <td className="p-4">
+                    {/* <td className="p-4">
                       {client?.services?.length > 0 ? (
                         client?.services.map((service: any, i: number) => (
                           <Badge
@@ -88,25 +117,93 @@ export default function AllClientsTable() {
                           No services
                         </span>
                       )}
-                    </td>
+                    </td> */}
 
                     <td className="p-4">${client?.totalSpent || "0"}</td>
 
-                    <td className="p-4 text-center flex items-center justify-center gap-3">
+                    {/* <td className="p-4 text-center flex items-center justify-center gap-3">
                       <button>
                         <Eye className="h-5 w-5 text-gray-600 hover:text-black" />
                       </button>
                       <button>
                         <Pencil className="h-5 w-5 text-gray-600 hover:text-black" />
                       </button>
-                    </td>
+                    </td> */}
+                    <td className="p-4 text-center flex items-center justify-center gap-3">
+  <button
+    onClick={() => {
+      setSelectedClient(client);
+      setModalMode("view");
+      setOpen(true);
+    }}
+  >
+    <Eye className="h-5 w-5 text-gray-600 hover:text-black" />
+  </button>
+
+  {/* <button
+    onClick={() => {
+      setSelectedClient(client);
+      setModalMode("edit");
+      setOpen(true);
+    }}
+  >
+    <Pencil className="h-5 w-5 text-gray-600 hover:text-black" />
+  </button> */}
+</td>
+
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
+        
+        {/* Pagination */}
+        {!isLoading && data?.meta && data.meta.totalPages > 1 && (
+          <div className="mt-4">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: data.meta.totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage((p) => Math.min(data.meta.totalPages, p + 1))}
+                    className={currentPage === data.meta.totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+
+        {selectedClient && (
+  <ClientDetailsModal
+    open={open}
+    onClose={() => setOpen(false)}
+    mode={modalMode}
+    client={selectedClient}
+  />
+)}
+
       </CardContent>
     </Card>
+    
   );
 }
