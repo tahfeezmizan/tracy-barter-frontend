@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronUp,
   CloudCog,
+  Loader2,
 } from 'lucide-react';
 import { useState } from 'react';
 import { formatMonth } from '@/lib/utils';
@@ -107,7 +108,7 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
             <div className="flex flex-col gap-2 sm:gap-3 border-t border-border pt-4 sm:pt-6 sm:flex-row">
               <Button
                 variant="outline"
-                size="sm"
+                
                 className="flex items-center justify-center gap-2 text-xs sm:text-sm"
                 onClick={() => alert('Download PDF functionality')}
               >
@@ -127,11 +128,15 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
               </Button> */}
               {invoice.status !== 'paid' && (
                 <Button 
-                  size="sm"
+                  
                   onClick={() => handlePayNow(invoice?._id)}
                   className="flex items-center justify-center gap-2 text-xs sm:text-sm bg-primary hover:bg-primary/80"
                 >
-                  <CreditCard className="h-3 w-3 sm:h-4 sm:w-4" />
+                  {isLoading ? (
+                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                  ) : (
+                    <CreditCard className="h-3 w-3 sm:h-4 sm:w-4" />
+                  )}
                   <span className="hidden sm:inline">Pay Now</span>
                   <span className="sm:hidden">Pay</span>
                 </Button>
