@@ -77,15 +77,13 @@ export default function HeroSection() {
             </h2>
             <p className="text-lg md:text-2xl leading-snug md:pr-44 lg:pr-0">
               Cleaning, landscaping, grocery stocking, and occasional check-ins
-              by vetted locals. Or, join as a provider and get steady, well-paid
-              work.
+              by vetted locals.
             </p>
-<Link href="/service">
-            <Button className="bg-secondary py-6 text-2xl text-white mt-6">
-
-              I need home services
-            </Button>
-</Link>
+            <Link href="/service">
+              <Button className="bg-secondary py-6 text-2xl text-white mt-6">
+                I need home services
+              </Button>
+            </Link>
 
             <div className="grid grid-cols-4 gap-6 mt-10 md:mt-20">
               {data.map((item, index) => {
