@@ -4,14 +4,9 @@ import InvoiceCard from '@/components/invoice/invoice-card';
 import { Invoice } from '@/lib/types/invoice.types';
 import { useGetMyInvoicesQuery } from '@/redux/features/invoices/invoicesApi';
 
-
-interface InvoiceListProps {
-  invoices: Invoice[];
-}
-
 export default function InvoiceList() {
   const { data, isLoading } = useGetMyInvoicesQuery(undefined);
-const invoices = data?.data;
+const invoices: Invoice[] = data?.data;
   console.log(invoices);
   return (
     <div className="flex items-center overflow-hidden max-w-7xl mx-auto px-4 xl:px-0 py-10 md:py-20 md:pt-24 lg:pt-24 ">
