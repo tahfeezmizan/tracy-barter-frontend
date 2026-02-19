@@ -8,6 +8,7 @@ export interface PricingPlanType {
   paymentType: string;
   status: string;
   features: string[];
+  idealFor?: string;
 
   limits: {
     session: number;
