@@ -21,9 +21,7 @@ export default function JoinOurTeamPage() {
   };
 
   return (
-    <section className="text-slate-100 min-h-screen py-24" style={{
-        background: `linear-gradient(to bottom, #fbf8f0 92%, #f0f1f5ad 80%)`,
-      }}>
+    <section className="text-slate-100 bg-[#fbf8f0] h-screen py-24">
       <div className="max-w-7xl mx-auto p-6 bg-white rounded-2xl border text-black">
         
        <div className="w-full md:max-w-3xl mx-auto text-center">
