@@ -30,7 +30,7 @@ export default function BookingPage() {
 
 const { data: userData } = useGetStaffProfileQuery(undefined);
 
-console.log("userData",userData?.subscribe);
+// console.log("userData",userData?.subscribe);
   
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;

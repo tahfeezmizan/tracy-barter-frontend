@@ -16,7 +16,7 @@ export default function JoinOurTeamPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // You will connect this to your API route later
-    console.log(form);
+    // console.log(form);
     alert("Thank you! We will contact you soon.");
   };
 
