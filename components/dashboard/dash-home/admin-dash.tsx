@@ -47,7 +47,7 @@ export default function AdminDash() {
       icon: Briefcase,
     },
     {
-      title: "Total Revenew",
+      title: "Total Revenue",
       value: data?.totalRevenue,
       icon: DollarSign,
     },
