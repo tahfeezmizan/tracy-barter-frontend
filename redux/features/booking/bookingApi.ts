@@ -37,8 +37,19 @@ const bookingApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Booking"],
         }),
+
+        updateAssingStaff: builder.mutation({
+            query: ({ bookingId, price }: { bookingId: string; price: number }) => ({
+                url: `/booking/${bookingId}/assign-staff`,
+                method: "PATCH",
+                body: { price },
+            }),
+            invalidatesTags: ["Booking"],
+        }),
+
+
     }),
     overrideExisting: true,
 });
 
-export const { useGetBookingsQuery, useUpdateBookingPriceMutation, useGetBookingStatsQuery } = bookingApi;
+export const { useGetBookingsQuery, useUpdateBookingPriceMutation, useGetBookingStatsQuery, useUpdateAssingStaffMutation } = bookingApi;

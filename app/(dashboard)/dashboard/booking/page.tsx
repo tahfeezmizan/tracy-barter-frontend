@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import AllBookingTable from "@/components/dashboard/admin/booking/AllBookingTable";
 import DynamicHeader from "@/components/dashboard/dynamic-header";
@@ -6,10 +6,9 @@ import StatsCard from "@/components/dashboard/stats-card";
 import { useGetBookingStatsQuery } from "@/redux/features/booking/bookingApi";
 
 export default function BookingPage() {
+  const { data } = useGetBookingStatsQuery(undefined);
 
-  const {data} = useGetBookingStatsQuery(undefined)  
-
-const stats = [
+  const stats = [
     {
       title: "Scheduled",
       value: data?.scheduled?.revenue,
@@ -28,14 +27,14 @@ const stats = [
     },
   ];
 
-    return (
-        <div className="space-y-6">
-            <DynamicHeader
-                    title={"Booking Management"}
-                    des="View and manage your booking requests"
-                  />
-            <StatsCard stats={stats} />
-            <AllBookingTable />
-        </div>
-    );
+  return (
+    <div className="space-y-6">
+      <DynamicHeader
+        title={"Booking Management"}
+        des="View and manage your booking requests"
+      />
+      <StatsCard stats={stats} />
+      <AllBookingTable />
+    </div>
+  );
 }
