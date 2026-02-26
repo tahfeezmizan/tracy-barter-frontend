@@ -36,14 +36,14 @@ export default function PricingPlan() {
   const pathname = usePathname();
   const router = useRouter();
 
-const isPricingPage = pathname === "/dashboard/pricing-plans";
-
+  const isPricingPage = pathname === "/dashboard/pricing-plans";
 
   // Fetch pricing plans
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
   const { user } = useSelector(selectUser);
-  
-  const [createSubscription, {isLoading:isCreatingSubscription}] = useCreateSubscriptionMutation();
+
+  const [createSubscription, { isLoading: isCreatingSubscription }] =
+    useCreateSubscriptionMutation();
   const [deletePricingPlan] = useDeletePricingPlanMutation();
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
@@ -84,15 +84,11 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
 
   return (
     <div
-  className={`bg-white px-4 sm:px-6 lg:px-8  ${
-    isPricingPage ? "py-10 rounded-2xl" : "py-32 faq-gradient-bg"
-  }`}
->
-  <div className={clsx(
-      !isPricingPage && "max-w-7xl mx-auto px-4"
-    )}
->
-
+      className={`bg-white px-4 sm:px-6 lg:px-8  ${
+        isPricingPage ? "py-10 rounded-2xl" : "py-32 faq-gradient-bg"
+      }`}
+    >
+      <div className={clsx(!isPricingPage && "max-w-7xl mx-auto px-4")}>
         {pathname !== "/dashboard/pricing-plans" && (
           <div className="text-center mb-8 md:mb-10">
             <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
@@ -109,7 +105,7 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
           <LoadingSpinner />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            {data?.map((plan: PricingPlanType) => (
+            {data?.map((plan: PricingPlanType, index: number) => (
               <Card
                 key={plan._id}
                 className="border border-primary/70 transition-all duration-300 flex flex-col bg-white rounded-2xl overflow-hidden "
@@ -122,7 +118,7 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
 
                     <div className="flex items-center justify-center">
                       <span className="text-3xl font-bold text-neutral-900">
-                        ${plan.price}  
+                        ${plan.price}
                       </span>
                       <span className="text-neutral-600 text-lg">
                         / {plan.paymentType}
@@ -145,7 +141,8 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
                     </CardDescription>
                     {plan.idealFor && (
                       <p className="text-lg text-start text-neutral-500 mt-2">
-                        <span className="font-semibold">Ideal for:</span> {plan.idealFor}
+                        <span className="font-semibold">Ideal for:</span>{" "}
+                        {plan.idealFor}
                       </p>
                     )}
                   </div>
@@ -154,27 +151,23 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
                     {isPricingPage ? (
                       <div className="flex flex-col gap-2">
                         <EditPlanDialog plan={plan} />
-                        {/* <Button
-                          variant="outline"
-                          className="border border-red-500 text-red-500 hover:bg-red-50 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full"
-                          onClick={() => handleDelete(plan._id)}
-                        >
-                          Delete
-                        </Button> */}
                       </div>
                     ) : (
-                      <Button
-                        onClick={() => handleSubscription(plan?._id)}
-                        disabled={isCreatingSubscription}
-                        variant="outline"
-                        className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isCreatingSubscription && loadingPlanId === plan?._id ? (
-                          <LoadingSpinner />
-                        ) : (
-                          "Get started"
-                        )}
-                      </Button>
+                      index !== 0 && (
+                        <Button
+                          onClick={() => handleSubscription(plan?._id)}
+                          disabled={isCreatingSubscription}
+                          variant="outline"
+                          className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isCreatingSubscription &&
+                          loadingPlanId === plan?._id ? (
+                            <LoadingSpinner />
+                          ) : (
+                            "Get started"
+                          )}
+                        </Button>
+                      )
                     )}
                   </div>
                 </CardHeader>
@@ -182,8 +175,6 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
             ))}
           </div>
         )}
-
-        
       </div>
     </div>
   );
@@ -212,7 +203,13 @@ function EditPlanDialog({ plan }: { plan: PricingPlanType }) {
   );
 }
 
-function EditPlanForm({ plan, onSuccess }: { plan: PricingPlanType; onSuccess: () => void }) {
+function EditPlanForm({
+  plan,
+  onSuccess,
+}: {
+  plan: PricingPlanType;
+  onSuccess: () => void;
+}) {
   const [updatePlan, { isLoading: isUpdating }] =
     useUpdatePricingPlanMutation();
   const [formData, setFormData] = useState({
@@ -233,7 +230,9 @@ function EditPlanForm({ plan, onSuccess }: { plan: PricingPlanType; onSuccess: (
         id: plan._id,
         data: {
           ...formData,
-          features: formData.features.split("\n").filter((f: string) => f.trim() !== ""),
+          features: formData.features
+            .split("\n")
+            .filter((f: string) => f.trim() !== ""),
           idealFor: formData.idealFor,
           limits: {
             session: Number(formData.session),
@@ -298,7 +297,9 @@ function EditPlanForm({ plan, onSuccess }: { plan: PricingPlanType; onSuccess: (
         <Textarea
           id="features"
           value={formData.features}
-          onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, features: e.target.value })
+          }
           className="h-32"
           required
         />

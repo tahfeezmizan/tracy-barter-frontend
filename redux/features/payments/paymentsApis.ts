@@ -30,6 +30,13 @@ const paymentsApis = baseApi.injectEndpoints({
       }),
     }),
 
+    purchaseSubscription: builder.mutation({
+      query: (bookingId: string) => ({
+        url: `/payment/pay-booking-fee/${bookingId}`,
+        method: "POST",
+      }),
+    }),
+
     // getSingleService: builder.query({
     //   query: ({ id }) => ({
     //     url: `/service/${id}`,
@@ -48,4 +55,5 @@ export const {
   useGetPaymentStatsQuery,
   useExportPaymentQuery,
   useLazyExportPaymentQuery,
+  usePurchaseSubscriptionMutation,
 } = paymentsApis;

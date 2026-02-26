@@ -74,10 +74,12 @@ export function AssignStaffModal({
     const toastId = toast.loading("Updating staff...");
 
     try {
-      await updateAssingStaff({
+      const res = await updateAssingStaff({
         bookingId,
         staffId,
       }).unwrap();
+
+      console.log(res);
 
       toast.success("Staff assigned successfully", { id: toastId });
       onClose();
@@ -96,13 +98,13 @@ export function AssignStaffModal({
             <DialogTitle className="text-xl font-semibold text-gray-900">
               Assign Staff
             </DialogTitle>
-            <button
+            {/* <button
               onClick={onClose}
               className="rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 disabled:pointer-events-none"
             >
               <X className="h-5 w-5" />
               <span className="sr-only">Close</span>
-            </button>
+            </button> */}
           </div>
         </DialogHeader>
 
@@ -116,7 +118,7 @@ export function AssignStaffModal({
               <SelectTrigger className="w-full text-gray-900">
                 <SelectValue placeholder="Select Staff" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white">
                 {isLoading ? (
                   <SelectItem value="loading" disabled>
                     Loading...

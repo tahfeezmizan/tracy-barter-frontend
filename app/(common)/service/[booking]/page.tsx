@@ -20,6 +20,7 @@ import {
 } from "@/redux/features/service/serviceApis";
 import { toast } from "sonner";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { usePurchaseSubscriptionMutation } from "@/redux/features/payments/paymentsApis";
 
 const TOTAL_STEPS = 5;
 
@@ -28,10 +29,10 @@ export default function BookingPage() {
   const params = useParams();
   const id = params.booking as string;
 
-const { data: userData } = useGetStaffProfileQuery(undefined);
+  const { data: userData } = useGetStaffProfileQuery(undefined);
 
-// console.log("userData",userData?.subscribe);
-  
+  // console.log("userData",userData?.subscribe);
+
   const { data: serviceData } = useGetSingleServiceQuery<{
     data: ServiceResponse;
   }>({ id });
@@ -150,15 +151,9 @@ const { data: userData } = useGetStaffProfileQuery(undefined);
     }
   };
 
+  const [purchaseSubscription] = usePurchaseSubscriptionMutation();
+
   const handleSubmit = async () => {
-    // console.log("📦 FULL BOOKING FORM DATA:", formData);
-
-    if (!userData?.subscribe) {
-      toast.error("Please subscribe to a plan before booking a service.");
-      router.push("/pricing");
-      return;
-    }
-
     const payload = {
       service: id,
       staff: formData.provider,
@@ -170,29 +165,33 @@ const { data: userData } = useGetStaffProfileQuery(undefined);
       address: formData.address,
       serviceType: formData.serviceType,
       serviceDetails: formData.serviceDetails,
-      notes: formData.note, // Mapped from note
+      notes: formData.note,
     };
-
-    // console.log("🚀 Payload to be sent:", payload);
 
     try {
       const res: any = await createBooking(payload);
-      // console.log("Booking api response", res);
+
+      console.log(res);
+
       if (res?.data?.success) {
         toast.success(res?.data?.message || "Booking created successfully");
-        // Handle success (e.g., redirect)
-        router.push("/service/booking/confirmation");
+        // ✅ Redirect AFTER booking is created
+        if (userData?.subscribe) {
+          router.push("/service/booking/confirmation");
+        } else {
+          toast.info("Please subscribe to continue.");
+          const response = await purchaseSubscription(res?.data?.data?._id);
+          router.push(`${response?.data?.data}`);
+        }
       } else {
-        // Handle RTK Query error response
         const errorMessage =
           res?.error?.data?.message ||
           res?.data?.message ||
           "Failed to create booking";
+
         toast.error(errorMessage);
-        // console.log("Error response:", res);
       }
     } catch (error: any) {
-      // console.log(error);
       toast.error(error?.data?.message || "Something went wrong");
     }
   };

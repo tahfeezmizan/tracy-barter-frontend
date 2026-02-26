@@ -227,7 +227,7 @@ export default function AllServicesTable() {
         Swal.fire(
           "Error!",
           "Something went wrong while deleting service.",
-          "error"
+          "error",
         );
       }
     }
@@ -253,9 +253,6 @@ export default function AllServicesTable() {
                 </TableHead>
                 <TableHead className="text-gray-700 font-semibold">
                   Description
-                </TableHead>
-                <TableHead className="text-gray-700 font-semibold">
-                  Price
                 </TableHead>
                 <TableHead className="text-gray-700 font-semibold">
                   Bookings
@@ -291,7 +288,7 @@ export default function AllServicesTable() {
                     <TableCell className="max-w-xs truncate">
                       {service?.description}
                     </TableCell>
-                    <TableCell>${service?.price || "0"}</TableCell>
+
                     <TableCell>{service?.bookings || "0"}</TableCell>
                     <TableCell>
                       {service?.status === "active" ? (
@@ -370,7 +367,7 @@ export default function AllServicesTable() {
                     >
                       {pageNum}
                     </Button>
-                  )
+                  ),
                 )}
               </div>
 

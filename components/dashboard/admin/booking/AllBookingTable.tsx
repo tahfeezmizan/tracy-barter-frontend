@@ -82,19 +82,6 @@ export default function AllBookingTable() {
     }
   };
 
-  const handleAssingStaff = async (bookingId: string, newPrice: number) => {
-    const toastId = toast.loading("Updating price...");
-    try {
-      await updateAssingStaff({ bookingId, price: newPrice }).unwrap();
-      toast.success("Price updated successfully", { id: toastId });
-      setAssingStaffOpen(false);
-    } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to update price", {
-        id: toastId,
-      });
-    }
-  };
-
   const startItem = totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
