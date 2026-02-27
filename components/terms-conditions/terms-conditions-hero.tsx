@@ -31,14 +31,13 @@ export default function TermsConditionsHero() {
       <div className="max-w-7xl mx-auto px-4 py-28">
         <div className="space-y-1.5">
           <p className="text-xl md:text-3xl font-medium leading-relaxed">
-            Policies & Procedures
+            {/* Policies & Procedures */}
+            Our Process
           </p>
           <p className="text-xl md:text-3xl font-medium leading-relaxed">
             Happy Valley Home Concierge Service Agreement
           </p>
-          <p className="text-xl md:text-3xl font-medium leading-relaxed mb-6">
-            Last updated: 2025-01-28
-          </p>
+          
           {/* <Link
             href={"#"}
             className="w-96 text-2xl text-primary px-4 py-1.5 flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary rounded-lg"

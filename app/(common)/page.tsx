@@ -1,21 +1,15 @@
-import FAQSection from "@/components/faq";
 import AboutTracy from "@/components/modules/about-tracy";
 import ClientReview from "@/components/modules/client-review";
-import GroceryAssistant from "@/components/modules/grocery-assistant";
 import HeroSection from "@/components/modules/hero";
 import ServiceSection from "@/components/modules/service";
-import PricingPlan from "@/components/pricing/pricing-plan";
 
 export default function Page() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <ServiceSection />
-      <GroceryAssistant />
+      <ServiceSection />      
       <AboutTracy />
-      <PricingPlan />
-      <ClientReview />
-      <FAQSection />      
+      <ClientReview /> 
     </div>
   );
 }

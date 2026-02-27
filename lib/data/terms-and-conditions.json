@@ -8,149 +8,102 @@
       "content": "At Happy Valley Home Concierge, our mission is to deliver trusted, personalized home management and concierge services that provide peace of mind to homeowners. We strive to maintain each property with the highest standards of care, attention to detail, and local expertise."
     },
     {
-      "id": "scope-of-services",
-      "serial": "2",
-      "title": "Scope of Services",
-      "content": "Happy Valley Home Concierge provides services including but not limited to:",
-      "subsections": [
-        "Vendor coordination and maintenance oversight",
-        "Seasonal home preparation (opening/closing)",
-        "Staging assistance and organization",
-        "Cleaning, laundry, and linen coordination",
-        "Exterior maintenance (lawncare, snow removal, gardening)",
-        "Concierge services such as package handling, grocery stocking, and home arrival prep"        
-      ],
-      "note": "Services will be performed at:"
-    },
-    {
       "id": "service-delivery-quality",
-      "serial": "3",
+      "serial": "2",
       "title": "Scheduling & Service Requests",
       "subsections": [
-       "All services must be scheduled in advance through the client portal.",
-       "Emergency requests will be accommodated based on staff availability.",
-       "Recurring service schedules (weekly, bi-weekly, monthly) will be outlined in each client’s Service Agreement.",
-       "Cancellations or reschedules require at least 24 hours’ notice to avoid a cancellation fee."          
+        "All services must be scheduled in advance through the client portal.",
+        "Emergency requests will be accommodated based on staff availability.",
+        "Recurring service schedules (weekly, bi-weekly, monthly) will be outlined in each client’s Service Agreement.",
+        "Cancellations or reschedules require at least 24 hours’ notice to avoid a cancellation fee."
       ]
     },
     {
       "id": "scheduling-changes",
-      "serial": "4",
+      "serial": "3",
       "title": "Access & Security",
       "subsections": [
-       "Clients must provide secure access (key, lockbox, or code) to the property.",
-       "Keys and access codes are stored securely and accessible only to authorized staff.",
-       "Staff must lock and secure all doors and windows before leaving a property.",
-       "No unauthorized guests or vendors are permitted on the premises."         
+        "Clients must provide secure access (key, lockbox, or code) to the property.",
+        "Keys and access codes are stored securely and accessible only to authorized staff.",
+        "Staff must lock and secure all doors and windows before leaving a property.",
+        "No unauthorized guests or vendors are permitted on the premises."
       ]
     },
     {
       "id": "property-access-security",
-      "serial": "5",
+      "serial": "4",
       "title": "Vendor Management",
       "subsections": [
-       "Only approved vendors will be scheduled for property maintenance.",
-       "The concierge team may coordinate vendor access and supervision per the client’s agreement.",
-       "Clients may request specific vendors; however Happy Valley Home Concierge is not liable for third-party vendor performance."       
+        "Only approved vendors will be scheduled for property maintenance.",
+        "The concierge team may coordinate vendor access and supervision per the client’s agreement.",
+        "Clients may request specific vendors; however Happy Valley Home Concierge is not liable for third-party vendor performance."
       ]
     },
     {
       "id": "third-party-vendors",
-      "serial": "6",
+      "serial": "5",
       "title": "Billing & Payment",
-     "subsections": [
-       "All services are invoiced monthly unless otherwise specified.",
-       "Payment is due within 15 days of the invoice date.",
-       "Accepted payment methods: check, ACH transfer, or credit card (3% fee applies).",
-       "A late payment fee of 1.5% per week will apply to overdue balances."       
+      "subsections": [
+        "All services are invoiced monthly unless otherwise specified.",
+        "Payment is due within 15 days of the invoice date.",
+        "Accepted payment methods: check, ACH transfer, or credit card (3% fee applies).",
+        "A late payment fee of 10% per week will apply to overdue balances."
       ]
     },
     {
       "id": "billing-payment",
-      "serial": "7",
+      "serial": "6",
       "title": "Liability & Insurance",
       "subsections": [
-       "Happy Valley Home Concierge maintains general liability and business insurance.",
-       "Staff are background-checked.",
-       "We are not liable for damage caused by normal wear and tear of property or systems, acts of nature, vendors, contractors, or preexisting property conditions.",
-       "Client agrees to hold Service Provider harmless from any claims arising from the performance of the agreed-upon services except in cases of gross negligence or willful misconduct."    
+        "Happy Valley Home Concierge maintains general liability and business insurance.",
+        "Staff are background-checked.",
+        "We are not liable for damage caused by normal wear and tear of property or systems, acts of nature, vendors, contractors, or preexisting property conditions.",
+        "Client agrees to hold Service Provider harmless from any claims arising from the performance of the agreed-upon services except in cases of gross negligence or willful misconduct."
       ]
     },
     {
       "id": "insurance-liability",
-      "serial": "8",
+      "serial": "7",
       "title": "Communication",
       "subsections": [
-       "Office Hours: Monday–Friday, 8:30 AM – 5:00 PM",
-       "After-hours calls are reserved for emergencies only.",
-       "All communication is documented via the client portal or email for quality assurance."
+        "Office Hours: Monday–Friday, 8:30 AM – 5:00 PM",
+        "After-hours calls are reserved for emergencies only.",
+        "All communication is documented via the client portal or email for quality assurance."
       ]
     },
     {
       "id": "confidentiality",
-      "serial": "9",
+      "serial": "8",
       "title": "Confidentiality",
       "content": "All client information, access details, and property data are strictly confidential and will not be shared outside the organization without written consent."
     },
     {
       "id": "confidentiality-privacy",
-      "serial": "10",
+      "serial": "9",
       "title": "Cancellations & Termination",
       "subsections": [
-       "Clients may cancel ongoing services with 30 days’ written notice.",
-       "Happy Valley Home Concierge reserves the right to terminate services for non-payment, unsafe property conditions, or repeated policy violations."
+        "Clients may cancel ongoing services with 30 days’ written notice.",
+        "Happy Valley Home Concierge reserves the right to terminate services for non-payment, unsafe property conditions, or repeated policy violations."
       ]
-    },
-    {
-      "id": "termination-cancellation",
-      "serial": "11",
-      "title": "Safety & Professional Standards",
-      "subsections": [
-       "Staff must wear appropriate attire and identification while on-site.",
-       "No smoking, eating, or personal activity is permitted in client homes.",
-       "All services will be conducted with professionalism, discretion, and care."
-      ]
-    },
-    {
-      "id": "force-majeure",
-      "serial": "12",
-      "title": "Safety & Professional Standards",
-      "content": "Happy Valley Home Concierge is an independent contractor and not an employee of the Client. Nothing in this Agreement creates a partnership, joint venture, or employment relationship."
     },
     {
       "id": "independent-contractor",
-      "serial": "13",
+      "serial": "10",
       "title": "Client Responsibilities",
       "subsections": [
-       "Maintain homeowner’s insurance coverage.",
-       "Notify Service Provider of any known hazards or maintenance concerns.",
-       "Provide at least 24 hours’ notice for schedule changes or cancellations."
+        "Maintain homeowner’s insurance coverage.",
+        "Notify Service Provider of any known hazards or maintenance concerns.",
+        "Provide at least 24 hours’ notice for schedule changes or cancellations."
       ]
-    },
-    {
-      "id": "governing-law",
-      "serial": "14",
-      "title": "Governing Law",
-      "content": "This Agreement shall be governed by the laws of the Commonwealth of Pennsylvania."
     },
     {
       "id": "severability-amendment",
-      "serial": "15",
+      "serial": "11",
       "title": "Feedback & Quality Assurance",
       "content": "We value client feedback and conduct periodic check-ins to ensure satisfaction. Concerns may be directed to",
       "subsections": [
-       "info@happyvalleyconcierge.com"
+        "info@happyvalleyconcierge.com"
       ]
-    },
-    {
-      "id": "feedback-quality-assurance",
-      "serial": "16",
-      "title": "Acknowledgment",
-      "content": "By engaging Happy Valley Home Concierge, clients acknowledge that they have reviewed and agree to the above policies and procedures.",
-      "subsections": [
-       "IN WITNESS WHEREOF, the Parties have executed this Agreement on the dates below."
-      ]
-
     }
   ]
 }

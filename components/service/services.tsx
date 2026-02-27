@@ -19,13 +19,20 @@ export default function ServicesPage() {
         <LoadingSpinner />
       ) : (
         <>
-          {servicesData?.map((service: Service, index: number) => (
-            <ServicesItem
-              key={service?._id}
-              service={service}
-              imagePosition={index % 2 === 0 ? "left" : "right"}
-            />
-          ))}
+          {servicesData && servicesData.length > 0 ? (
+            servicesData.map((service: Service, index: number) => (
+              <ServicesItem
+                key={service?._id}
+                service={service}
+                imagePosition={index % 2 === 0 ? "left" : "right"}
+              />
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <p className="text-lg font-semibold text-neutral-700">No services available</p>
+              <p className="text-sm text-neutral-500 mt-2">Please check back later for new services.</p>
+            </div>
+          )}
         </>
       )}
     </main>

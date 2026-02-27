@@ -30,9 +30,6 @@ export function MyOrdersPage() {
 
   const { data: orders, isLoading, isError } = useGetMyOrderQuery(undefined);
 
-console.log("getMyOrder",orders?.data)
-
-
   const filteredOrders = (orders?.data || []).filter((order: any) => {
     if (selectedFilter === "all") return true;
     if (selectedFilter === "pending") return ["pending", "scheduled", "submitted"].includes(order.status);

@@ -26,7 +26,12 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useCreateServiceMutation } from "@/redux/features/service/serviceApis";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useGetStaffQuery } from "@/redux/features/service/clientApis";
 
 type ServiceType = {
@@ -103,7 +108,7 @@ export function AddServiceDialog({
 
   const { data: staffData } = useGetStaffQuery();
 
-  console.log(staffData?.data)
+  console.log(staffData?.data);
 
   const handleAddServiceType = () => {
     if (!showServiceTypes) {
@@ -169,7 +174,7 @@ export function AddServiceDialog({
       selectedStaff.includes(id)
         ? selectedStaff.filter((v) => v !== id)
         : [...selectedStaff, id],
-      { shouldValidate: true }
+      { shouldValidate: true },
     );
   };
 
@@ -427,7 +432,7 @@ export function AddServiceDialog({
                           className="border-none bg-white text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                           placeholder="Describe this service type..."
                           {...register(
-                            `serviceTypes.${index}.description` as const
+                            `serviceTypes.${index}.description` as const,
                           )}
                           disabled={isLoading}
                         />
@@ -497,7 +502,7 @@ export function AddServiceDialog({
                           onValueChange={(value: string) => {
                             setValue(
                               `dynamicFields.${index}.type` as const,
-                              value as "string" | "number" | "boolean"
+                              value as "string" | "number" | "boolean",
                             );
                           }}
                           defaultValue={field.type}

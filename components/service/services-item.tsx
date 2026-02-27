@@ -15,7 +15,12 @@ export default function ServicesItem({
   imagePosition,
 }: ServicesItemProps) {
 
-  // console.log("service",service);
+const href =
+  service?.name === "Grocery Restock"
+    ? "/shopping-with-ai"
+    : `/service/${service?._id}`;
+
+  console.log("service",service);
   return (
     <section
       style={{
@@ -65,7 +70,7 @@ export default function ServicesItem({
             </div>
 
             <Link
-              href={`/service/${service?._id}`}
+              href={href}
               className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 inline-block"
             >
               Book Now

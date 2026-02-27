@@ -57,7 +57,7 @@ export default function Header() {
     // { href: "/", label: "Home" },
     { href: "/service", label: "Services" },
     { href: "/pricing", label: "Pricing" },
-    { href: "/realtor-referrals", label: "Realtor Referrals" },
+    // { href: "/realtor-referrals", label: "Realtor Referrals" },
     { href: "/terms-conditions", label: "Terms & Conditions" },
   ];
 
@@ -184,6 +184,19 @@ export default function Header() {
                         >
                           <ShoppingBag className="h-4 w-4" />
                           <span>My Order</span>
+                        </Link>
+                      </DropdownMenuItem>
+
+                       <DropdownMenuItem
+                        asChild
+                        className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
+                      >
+                        <Link
+                          href="/user-profile/invoice"
+                          className="flex items-center space-x-2"
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                          <span>Invoice</span>
                         </Link>
                       </DropdownMenuItem>
 

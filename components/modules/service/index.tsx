@@ -50,7 +50,7 @@ export default function ServiceSection() {
           <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
             Service Highlights
           </h1>
-          <p className="text-lg w-full md:max-w-80 mx-auto px-8 md:px-0">
+          <p className="text-lg w-full md:max-w-96 mx-auto px-8 md:px-0">
             Everything you need to keep your home ready for arrival whenever you
             need it.
           </p>
@@ -58,7 +58,7 @@ export default function ServiceSection() {
 
         {isLoading ? (
           <LoadingSpinner />
-        ) : (
+        ) : servicesCards.length > 0 ? (
           <div className="flex gap-4 sm:gap-6 justify-center items-stretch pl-4 md:px-4 lg:px-12">
             {visibleCards?.map((service: Service, idx: number) => {
               const isCenter = idx === 2;
@@ -92,9 +92,9 @@ export default function ServiceSection() {
                         <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
                           {service?.name}
                         </h3>
-                        <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        {/* <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
                           {service?.description}
-                        </p>
+                        </p> */}
                       </div>
                     </CardContent>
                   </Link>
@@ -102,9 +102,15 @@ export default function ServiceSection() {
               );
             })}
           </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-lg font-semibold text-neutral-700">No services available</p>
+            <p className="text-sm text-neutral-500 mt-2">Please check back later for new services.</p>
+          </div>
         )}
       </div>
 
+      {servicesCards.length > 0 && (
       <div className="flex justify-center items-center gap-3 mt-12">
         <Button
           onClick={prevSlide}
@@ -135,6 +141,7 @@ export default function ServiceSection() {
           <ChevronRight className="size-7" />
         </Button>
       </div>
+      )}
     </div>
   );
 }

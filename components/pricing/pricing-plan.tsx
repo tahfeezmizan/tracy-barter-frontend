@@ -21,29 +21,30 @@ import { PricingPlanType } from "@/config/Types/types";
 import LoadingSpinner from "@/lib/loading-spinner";
 import {
   useCreateSubscriptionMutation,
+  useDeletePricingPlanMutation,
   useGetPricingPlansQuery,
   useUpdatePricingPlanMutation,
 } from "@/redux/features/pricing/pricingApis";
 import { selectUser } from "@/redux/slice/userSlice";
-import { useSelector } from "react-redux";
 import clsx from "clsx";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
 
 export default function PricingPlan() {
   const pathname = usePathname();
   const router = useRouter();
 
-const isPricingPage = pathname === "/dashboard/pricing-plans";
-
+  const isPricingPage = pathname === "/dashboard/pricing-plans";
 
   // Fetch pricing plans
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
   const { user } = useSelector(selectUser);
-  
-  const [createSubscription, {isLoading:isCreatingSubscription}] = useCreateSubscriptionMutation();
+
+  const [createSubscription, { isLoading: isCreatingSubscription }] =
+    useCreateSubscriptionMutation();
+  const [deletePricingPlan] = useDeletePricingPlanMutation();
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
   const handleSubscription = async (planId: string) => {
@@ -67,17 +68,27 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
     }
   };
 
+  // const handleDelete = async (planId: string) => {
+  //   const confirmed = window.confirm("Are you sure you want to delete this plan?");
+  //   if (!confirmed) return;
+  //   try {
+  //     const res = await deletePricingPlan(planId).unwrap();
+  //     if (res.success) {
+  //       toast.success(res.message || "Plan deleted successfully");
+  //     }
+  //   } catch (error) {
+  //     console.error("Delete error:", error);
+  //     toast.error("Failed to delete plan");
+  //   }
+  // };
+
   return (
     <div
-  className={`bg-white px-4 sm:px-6 lg:px-8  ${
-    isPricingPage ? "py-10 rounded-2xl" : "py-32 faq-gradient-bg"
-  }`}
->
-  <div className={clsx(
-      !isPricingPage && "max-w-7xl mx-auto px-4"
-    )}
->
-
+      className={`bg-white px-4 sm:px-6 lg:px-8  ${
+        isPricingPage ? "py-10 rounded-2xl" : "py-32 faq-gradient-bg"
+      }`}
+    >
+      <div className={clsx(!isPricingPage && "max-w-7xl mx-auto px-4")}>
         {pathname !== "/dashboard/pricing-plans" && (
           <div className="text-center mb-8 md:mb-10">
             <h1 className="text-3xl md:text-4xl font-bold text-black mb-3 md:mb-5">
@@ -94,7 +105,7 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
           <LoadingSpinner />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            {data?.map((plan: PricingPlanType) => (
+            {data?.map((plan: PricingPlanType, index: number) => (
               <Card
                 key={plan._id}
                 className="border border-primary/70 transition-all duration-300 flex flex-col bg-white rounded-2xl overflow-hidden "
@@ -105,9 +116,9 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
                       {plan.title}
                     </CardTitle>
 
-                    <div className="flex gap-4 items-center justify-center">
+                    <div className="flex items-center justify-center">
                       <span className="text-3xl font-bold text-neutral-900">
-                        {plan.price}
+                        ${plan.price}
                       </span>
                       <span className="text-neutral-600 text-lg">
                         / {plan.paymentType}
@@ -123,44 +134,40 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
                       {/* {plan.features.join("\n")}
                        */}
                       {plan.features.map((item: string, index: number) => (
-                        <div key={index}>
-                          {index + 1}. {item}
+                        <div key={index} className="ml-4">
+                          <li className="list-disc">{item}</li>
                         </div>
                       ))}
                     </CardDescription>
+                    {plan.idealFor && (
+                      <p className="text-lg text-start text-neutral-500 mt-2">
+                        <span className="font-semibold">Ideal for:</span>{" "}
+                        {plan.idealFor}
+                      </p>
+                    )}
                   </div>
 
-                  <div className="w-full">
+                  <div className="w-full pt-2">
                     {isPricingPage ? (
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full"
-                          >
-                            Edit
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                          <DialogHeader>
-                            <DialogTitle>Edit Pricing Plan</DialogTitle>
-                          </DialogHeader>
-                          <EditPlanForm plan={plan} />
-                        </DialogContent>
-                      </Dialog>
+                      <div className="flex flex-col gap-2">
+                        <EditPlanDialog plan={plan} />
+                      </div>
                     ) : (
-                      <Button
-                        onClick={() => handleSubscription(plan?._id)}
-                        disabled={isCreatingSubscription}
-                        variant="outline"
-                        className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isCreatingSubscription && loadingPlanId === plan?._id ? (
-                          <LoadingSpinner />
-                        ) : (
-                          "Get started"
-                        )}
-                      </Button>
+                      index !== 0 && (
+                        <Button
+                          onClick={() => handleSubscription(plan?._id)}
+                          disabled={isCreatingSubscription}
+                          variant="outline"
+                          className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isCreatingSubscription &&
+                          loadingPlanId === plan?._id ? (
+                            <LoadingSpinner />
+                          ) : (
+                            "Get started"
+                          )}
+                        </Button>
+                      )
                     )}
                   </div>
                 </CardHeader>
@@ -168,20 +175,48 @@ const isPricingPage = pathname === "/dashboard/pricing-plans";
             ))}
           </div>
         )}
-
-        
       </div>
     </div>
   );
 }
 
-function EditPlanForm({ plan }: { plan: PricingPlanType }) {
+function EditPlanDialog({ plan }: { plan: PricingPlanType }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="border border-primary text-primary hover:bg-primary/40 font-semibold text-2xl py-6 rounded-xl transition-all duration-300 w-full"
+        >
+          Edit
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit Pricing Plan</DialogTitle>
+        </DialogHeader>
+        <EditPlanForm plan={plan} onSuccess={() => setOpen(false)} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditPlanForm({
+  plan,
+  onSuccess,
+}: {
+  plan: PricingPlanType;
+  onSuccess: () => void;
+}) {
   const [updatePlan, { isLoading: isUpdating }] =
     useUpdatePricingPlanMutation();
   const [formData, setFormData] = useState({
     title: plan.title,
     description: plan.description,
     features: plan.features.join("\n"),
+    idealFor: plan.idealFor || "",
     price: plan.price,
     session: plan.limits?.session || 0,
     duration: plan.duration,
@@ -195,7 +230,10 @@ function EditPlanForm({ plan }: { plan: PricingPlanType }) {
         id: plan._id,
         data: {
           ...formData,
-          features: formData.features.split("\n").filter((f: string) => f.trim() !== ""),
+          features: formData.features
+            .split("\n")
+            .filter((f: string) => f.trim() !== ""),
+          idealFor: formData.idealFor,
           limits: {
             session: Number(formData.session),
           },
@@ -205,6 +243,7 @@ function EditPlanForm({ plan }: { plan: PricingPlanType }) {
 
       if (res.success) {
         toast.success("Plan updated successfully");
+        onSuccess();
       }
     } catch (error) {
       console.error("Update error:", error);
@@ -258,9 +297,22 @@ function EditPlanForm({ plan }: { plan: PricingPlanType }) {
         <Textarea
           id="features"
           value={formData.features}
-          onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, features: e.target.value })
+          }
           className="h-32"
           required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="idealFor">Ideal For</Label>
+        <Input
+          id="idealFor"
+          value={formData.idealFor}
+          onChange={(e) =>
+            setFormData({ ...formData, idealFor: e.target.value })
+          }
         />
       </div>
 

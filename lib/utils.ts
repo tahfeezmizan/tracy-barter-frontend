@@ -25,3 +25,23 @@ export const formatDate = (date: string | Date) => {
     year: "numeric",
   });
 };
+
+
+
+// export function formatDate(dateString: string): string {
+//   const date = new Date(dateString);
+//   return date.toLocaleDateString('en-US', {
+//     month: 'short',
+//     day: 'numeric',
+//     year: 'numeric',
+//   });
+// }
+
+export function formatMonth(monthString: string): string {
+  const [year, month] = monthString.split('-');
+  const date = new Date(`${year}-${month}-01`);
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+}

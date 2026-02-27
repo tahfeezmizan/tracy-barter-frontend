@@ -10,6 +10,7 @@ const pricingApis = baseApi.injectEndpoints({
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ["Pricing"],
     }),
 
     createSubscription: builder.mutation({
@@ -27,6 +28,14 @@ const pricingApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Pricing"],
     }),
+
+    deletePricingPlan: builder.mutation({
+      query: (id: string) => ({
+        url: `/plan/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Pricing"],
+    }),
   }),
 });
 
@@ -34,4 +43,5 @@ export const {
   useGetPricingPlansQuery,
   useCreateSubscriptionMutation,
   useUpdatePricingPlanMutation,
+  useDeletePricingPlanMutation,
 } = pricingApis;
