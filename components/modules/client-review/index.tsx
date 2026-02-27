@@ -81,7 +81,8 @@ export default function ClientReview() {
                         {service?.reviewer?.profile ? (
                           <Image
                             src={
-                              getImageUrl(service?.reviewer?.profile) || "Defult Image url"
+                              getImageUrl(service?.reviewer?.profile) ||
+                              "Defult Image url"
                             }
                             alt={service?.reviewer?.name}
                             width={400}
@@ -94,13 +95,11 @@ export default function ClientReview() {
                       </div>
 
                       <div className="flex-1">
-                        <h4 className="text-lg font-bold capitalize leading-tight">
-                          {service?.reviewer?.name}
-                        </h4>
                         <div className="flex items-center justify-between ">
-                          <p className=" capitalize">
-                            {service?.reviewer?.role}
-                          </p>
+                          <h4 className="text-lg font-bold capitalize leading-tight">
+                            {service?.reviewer?.name}
+                          </h4>
+
                           <span className="text-yellow-500 text-2xl">
                             {[...Array(5)].map((_, i) => (
                               <span key={i}>
@@ -118,7 +117,16 @@ export default function ClientReview() {
                         {service?.title}
                       </h3>
                       <p className="text-base text-neutral-600 leading-relaxed">
-                        {service?.review}
+                        {(() => {
+                          const words = service?.review?.split(" ") || [];
+                          const isActive = idx === 2; // center card
+                          const maxWords = isActive ? 75 : 55; // center = 70–75, sides = 50–55
+
+                          if (words.length > maxWords) {
+                            return words.slice(0, maxWords).join(" ") + "...";
+                          }
+                          return service.review;
+                        })()}
                       </p>
                     </div>
                   </CardContent>
