@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { 
-  Star,
-  MessageSquare,
-  Loader,
-} from "lucide-react";
+import { Star, MessageSquare, Loader } from "lucide-react";
 import { useCreateReviewMutation } from "@/redux/features/review/reviewApis";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -13,8 +9,8 @@ import { useRouter } from "next/navigation";
 const Review = () => {
   const params = useParams();
   const router = useRouter();
-  const orderId = params?.orderId; 
-  
+  const orderId = params?.orderId;
+
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -55,16 +51,14 @@ const Review = () => {
     }
   };
   return (
-     <div className="w-full p-4 items-center justify-between rounded-xl gap-4 py-10">
-        {/* Header */}
+    <div className="w-full p-4 items-center justify-between rounded-xl gap-4 py-10">
+      {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
           <MessageSquare className="w-6 h-6 text-blue-600" />
           <h1 className="text-2xl font-bold text-gray-800">Submit a Review</h1>
         </div>
-        <p className="text-gray-600">
-          Share your experience with the service
-        </p>
+        <p className="text-gray-600">Share your experience with the service</p>
       </div>
 
       {/* Main Form Card */}
@@ -74,7 +68,7 @@ const Review = () => {
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
             Overall Rating <span className="text-red-500">*</span>
           </h2>
-          
+
           <div className="flex items-center gap-4 mb-4">
             {/* Star Rating */}
             <div className="flex gap-1">
@@ -97,16 +91,16 @@ const Review = () => {
                 </button>
               ))}
             </div>
-            
+
             {/* Rating Text */}
             <span className="text-lg font-medium text-gray-700">
-              {(hoverRating || rating) > 0 ? `${hoverRating || rating}.0` : "0.0"}
+              {(hoverRating || rating) > 0
+                ? `${hoverRating || rating}.0`
+                : "0.0"}
             </span>
           </div>
-          
-          <p className="text-sm text-gray-500">
-            Please select a rating
-          </p>
+
+          <p className="text-sm text-gray-500">Please select a rating</p>
         </div>
 
         {/* Review Title */}
@@ -136,8 +130,6 @@ const Review = () => {
           />
         </div>
 
-
-
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
           <button
@@ -160,9 +152,8 @@ const Review = () => {
           </button>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Review
+export default Review;

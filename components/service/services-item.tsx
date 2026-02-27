@@ -14,13 +14,12 @@ export default function ServicesItem({
   service,
   imagePosition,
 }: ServicesItemProps) {
+  const href =
+    service?.name === "Grocery Restock"
+      ? "/shopping-with-ai"
+      : `/service/${service?._id}`;
 
-const href =
-  service?.name === "Grocery Restock"
-    ? "/shopping-with-ai"
-    : `/service/${service?._id}`;
-
-  console.log("service",service);
+  console.log("service", service);
   return (
     <section
       style={{
@@ -32,7 +31,7 @@ const href =
           className={`flex flex-col! lg:flex-row!  ${
             imagePosition === "right" ? "lg:flex-row-reverse!" : "lg:flex-row!"
           } items-center justify-between gap-10`}
-        > 
+        >
           <div className="flex-1 w-full md:w-[550px] h-auto md:h-[600px] overflow-hidden">
             <Image
               src={getImageUrl(service?.image)}
@@ -47,9 +46,10 @@ const href =
             <h3 className="text-4xl font-medium text-primary mb-2 md:mb-4">
               {service?.name}
             </h3>
-            <p className="text-lg text-gray-500">{service?.description}</p>
+            
+            {/* <p className="text-lg text-gray-500">{service?.description}</p> */}
 
-            <div className="my-6 md:my-8">
+            {/* <div className="my-6 md:my-8">
               <h4 className="text-2xl font-medium text-primary">What we do:</h4>
               <ul className="mt-4 list-disc list-inside text-gray-500 space-y-1">
                 {service?.servicesProvided?.map((item, idx) => (
@@ -67,7 +67,7 @@ const href =
                   <li key={idx}>{item}</li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             <Link
               href={href}

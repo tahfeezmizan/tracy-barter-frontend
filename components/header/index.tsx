@@ -56,6 +56,7 @@ export default function Header() {
   const navigationLinks = [
     // { href: "/", label: "Home" },
     { href: "/service", label: "Services" },
+    { href: "/about-us", label: "About Us" },
     { href: "/pricing", label: "Pricing" },
     // { href: "/realtor-referrals", label: "Realtor Referrals" },
     { href: "/terms-conditions", label: "Terms & Conditions" },
@@ -109,7 +110,7 @@ export default function Header() {
                   href={link.href}
                   className={cn(
                     "px-2 text-2xl font-bold rounded-lg transition-all duration-300 py-1",
-                    pathname === link.href && "bg-secondary text-white"
+                    pathname === link.href && "bg-secondary text-white",
                   )}
                 >
                   {link.label}
@@ -187,7 +188,7 @@ export default function Header() {
                         </Link>
                       </DropdownMenuItem>
 
-                       <DropdownMenuItem
+                      <DropdownMenuItem
                         asChild
                         className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                       >
@@ -293,8 +294,9 @@ export default function Header() {
                             </DropdownMenuItem>
 
                             <DropdownMenuItem
-                            onClick={handleLogout}
-                            className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer">
+                              onClick={handleLogout}
+                              className="flex items-center space-x-2 data-[highlighted]:bg-primary data-[highlighted]:text-white cursor-pointer"
+                            >
                               <LogOut className="h-4 w-4" />
                               <span>Logout</span>
                             </DropdownMenuItem>
@@ -329,7 +331,7 @@ export default function Header() {
                       "px-3 py-2 text-base font-semibold transition-colors rounded-lg",
                       pathname === "/" ? "text-white" : "text-black",
                       pathname === "/" && isScrolled && "text-green-900",
-                      pathname === link.href && "bg-secondary text-white"
+                      pathname === link.href && "bg-secondary text-white",
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
