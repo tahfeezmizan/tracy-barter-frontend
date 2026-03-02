@@ -267,6 +267,8 @@
 //   );
 // }
 
+// ------------------------------------------
+
 "use client";
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -291,6 +293,7 @@ import { toast } from "sonner";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 import { usePurchaseSubscriptionMutation } from "@/redux/features/payments/paymentsApis";
 import LoadingSpinner from "@/lib/loading-spinner";
+import { useGetStaffsbyServiceQuery } from "@/redux/features/staff/staffApis";
 
 const TOTAL_STEPS = 5;
 
@@ -309,6 +312,9 @@ export default function BookingPage() {
 
   const [purchaseSubscription, { isLoading }] =
     usePurchaseSubscriptionMutation();
+
+  // ✅ Fetch staff list here so we can validate in step 3
+  const { data: staffProvider } = useGetStaffsbyServiceQuery({ id });
 
   const searchParams = useSearchParams();
   const initialStep = Number(searchParams.get("step")) || 1;
@@ -391,11 +397,14 @@ export default function BookingPage() {
     }
   }, [currentStep, serviceData]);
 
-  // ✅ STEP 1 VALIDATION ADDED HERE
+  // ✅ STEP 1 VALIDATION
   const validateStep1 = () => {
-    if (!formData.serviceType) {
-      toast.error("Please select a Service Type.");
-      return false;
+    // Only validate serviceType if the serviceType list exists
+    if (serviceData?.serviceType?.length) {
+      if (!formData.serviceType) {
+        toast.error("Please select a Service Type.");
+        return false;
+      }
     }
 
     if (serviceData?.fields?.length) {
@@ -417,11 +426,49 @@ export default function BookingPage() {
     return true;
   };
 
-  const handleContinue = () => {
-    // ✅ Only validate Step 1
-    if (currentStep === 1) {
-      if (!validateStep1()) return;
+  // ✅ STEP 2 VALIDATION
+  const validateStep2 = () => {
+    if (!formData.date) {
+      toast.error("Please select a date before continuing.");
+      return false;
     }
+
+    return true;
+  };
+
+  // ✅ STEP 3 VALIDATION
+  const validateStep3 = () => {
+    const staffList = staffProvider?.staff || serviceData?.staff || [];
+
+    // Only validate if the provider section exists (staff list has entries)
+    if (staffList.length > 0 && !formData.provider) {
+      toast.error("Please select a service provider before continuing.");
+      return false;
+    }
+
+    return true;
+  };
+
+  // ✅ STEP 4 VALIDATION
+  const validateStep4 = () => {
+    if (!formData.address.address.trim()) {
+      toast.error("Please enter a Service Address.");
+      return false;
+    }
+
+    if (!formData.address.city.trim()) {
+      toast.error("Please enter a City.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleContinue = () => {
+    if (currentStep === 1 && !validateStep1()) return;
+    if (currentStep === 2 && !validateStep2()) return;
+    if (currentStep === 3 && !validateStep3()) return;
+    if (currentStep === 4 && !validateStep4()) return;
 
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep((prev) => prev + 1);
@@ -441,16 +488,26 @@ export default function BookingPage() {
   };
 
   const handleSubmit = async () => {
+    const staffList = staffProvider?.staff || serviceData?.staff || [];
+    const hasStaffSection = staffList.length > 0;
+    const hasServiceTypeSection = !!serviceData?.serviceType?.length;
+
     const payload = {
       service: id,
-      staff: formData.provider,
+      // ✅ Only send staff if staff section exists and a provider is selected
+      ...(hasStaffSection && formData.provider
+        ? { staff: formData.provider }
+        : {}),
       date: formData.date
         ? new Date(formData.date).toISOString().split("T")[0]
         : "",
       startTime: "10:00",
       endTime: "11:00",
       address: formData.address,
-      serviceType: formData.serviceType,
+      // ✅ Only send serviceType if serviceType section exists
+      ...(hasServiceTypeSection && formData.serviceType
+        ? { serviceType: formData.serviceType }
+        : {}),
       serviceDetails: formData.serviceDetails,
       notes: formData.note,
     };
@@ -468,12 +525,32 @@ export default function BookingPage() {
           router.push(`${response?.data?.data}`);
         }
       } else {
-        const errorMessage =
-          res?.error?.data?.message ||
-          res?.data?.message ||
-          "Failed to create booking";
+        // ✅ Handle specific backend field errors
+        const errorMessages =
+          res?.error?.data?.errorMessages || res?.data?.errorMessages;
 
-        toast.error(errorMessage);
+        if (errorMessages?.length) {
+          errorMessages.forEach((err: { path: string; message: string }) => {
+            if (err.path === "staff") {
+              toast.error(
+                "Service provider is invalid or missing. Please go back and select a valid provider.",
+              );
+            } else if (err.path === "serviceType") {
+              toast.error(
+                "Service type is invalid or missing. Please go back and select a valid service type.",
+              );
+            } else {
+              toast.error(err.message || "An error occurred.");
+            }
+          });
+        } else {
+          const errorMessage =
+            res?.error?.data?.message ||
+            res?.data?.message ||
+            "Failed to create booking";
+
+          toast.error(errorMessage);
+        }
       }
     } catch (error: any) {
       toast.error(error?.data?.message || "Something went wrong");
