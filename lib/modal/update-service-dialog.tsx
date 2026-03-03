@@ -70,10 +70,10 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
 
   const { data: service } = useGetSingleServiceQuery(
     { id: serviceId },
-    { skip: !serviceId }
+    { skip: !serviceId },
   );
 
-  console.log("Update Service Data",service)
+  console.log("Update Service Data", service);
 
   const [updateService, { isLoading }] = useUpdateServiceMutation();
 
@@ -126,7 +126,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
     }
   }, [service, reset]);
 
-  const { data: staffData } = useGetStaffQuery();
+  const { data: staffData } = useGetStaffQuery({ page: 1, limit: 20 });
   const selectedStaff = watch("staff");
 
   const toggleStaff = (id: string) => {
@@ -135,7 +135,7 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
       selectedStaff.includes(id)
         ? selectedStaff.filter((v) => v !== id)
         : [...selectedStaff, id],
-      { shouldValidate: true }
+      { shouldValidate: true },
     );
   };
 
@@ -433,7 +433,6 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
               </label>
             )}
           </div>
-          
 
           {/* ACTIONS */}
           <div className="flex gap-3 pt-4">

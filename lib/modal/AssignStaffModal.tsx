@@ -40,7 +40,7 @@ export function AssignStaffModal({
   const [staffId, setStaffId] = useState("");
   const [updateAssingStaff] = useUpdateAssingStaffMutation();
 
-  const { data, isLoading } = useGetStaffQuery();
+  const { data, isLoading } = useGetStaffQuery({ page: 1, limit: 20 });
   const staffData = data?.data || [];
 
   // ✅ Filter active staff

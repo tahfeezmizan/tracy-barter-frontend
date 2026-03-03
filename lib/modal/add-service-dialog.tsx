@@ -106,7 +106,7 @@ export function AddServiceDialog({
     name: "dynamicFields",
   });
 
-  const { data: staffData } = useGetStaffQuery({ page: 1, limit: 10 });
+  const { data: staffData } = useGetStaffQuery({ page: 1, limit: 20 });
 
   console.log(staffData?.data);
 
