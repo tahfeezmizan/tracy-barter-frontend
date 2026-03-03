@@ -2,7 +2,7 @@
 import { baseApi } from "@/redux/features/baseApi";
 // import { Client, Staff } from "../types";
 
-interface ClientsResponse {
+export default interface ClientsResponse {
   data: any[];
   meta: {
     page: number;
@@ -29,7 +29,10 @@ const clientApis = baseApi.injectEndpoints({
         return response?.data;
       },
     }),
-    getClients: builder.query<ClientsResponse, { role: string; searchTerm?: string; page?: number }>({
+    getClients: builder.query<
+      ClientsResponse,
+      { role: string; searchTerm?: string; page?: number }
+    >({
       query: ({ role, searchTerm, page }) => ({
         url: "/user",
         method: "GET",
@@ -40,11 +43,11 @@ const clientApis = baseApi.injectEndpoints({
       },
       providesTags: ["client"],
     }),
-    getStaff: builder.query<StaffResponse, void>({
-      query: () => ({
+    getStaff: builder.query<ClientsResponse, { page: number; limit: number }>({
+      query: ({ page, limit }) => ({
         url: "/user",
         method: "GET",
-        params: { role: "staff" },
+        params: { role: "staff", page, limit },
       }),
       transformResponse: (response: any) => {
         return response?.data;

@@ -106,7 +106,7 @@ export function AddServiceDialog({
     name: "dynamicFields",
   });
 
-  const { data: staffData } = useGetStaffQuery();
+  const { data: staffData } = useGetStaffQuery({ page: 1, limit: 10 });
 
   console.log(staffData?.data);
 
@@ -315,7 +315,7 @@ export function AddServiceDialog({
                 rows={3}
                 className="border-none bg-gray-200/80 text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                 placeholder="Describe the service..."
-                {...register("description", { required: true })}
+                // {...register("description", { required: true })}
               />
             </div>
 
@@ -325,7 +325,7 @@ export function AddServiceDialog({
               <Input
                 className="border-none bg-gray-200/80 text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                 placeholder="e.g., Comprehensive cleaning of all areas"
-                {...register("servicesProvided", { required: true })}
+                // {...register("servicesProvided", { required: true })}
               />
               <p className="text-xs text-gray-500 mt-1">
                 Enter multiple services separated by commas
@@ -338,7 +338,7 @@ export function AddServiceDialog({
               <Input
                 className="border-none bg-gray-200/80 text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                 placeholder="e.g., Wedding, Birthday, Corporate Event"
-                {...register("occasions", { required: true })}
+                // {...register("occasions", { required: true })}
               />
               <p className="text-xs text-gray-500 mt-1">
                 Enter multiple occasions separated by commas
@@ -421,7 +421,7 @@ export function AddServiceDialog({
                         <Input
                           className="border-none bg-white text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                           placeholder="e.g., Starter Package"
-                          {...register(`serviceTypes.${index}.title` as const)}
+                          // {...register(`serviceTypes.${index}.title` as const)}
                           disabled={isLoading}
                         />
                       </div>
@@ -431,9 +431,9 @@ export function AddServiceDialog({
                           rows={2}
                           className="border-none bg-white text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                           placeholder="Describe this service type..."
-                          {...register(
-                            `serviceTypes.${index}.description` as const,
-                          )}
+                          // {...register(
+                          //   `serviceTypes.${index}.description` as const,
+                          // )}
                           disabled={isLoading}
                         />
                       </div>
@@ -492,7 +492,7 @@ export function AddServiceDialog({
                         <Input
                           className="border-none bg-white text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                           placeholder="e.g., duration"
-                          {...register(`dynamicFields.${index}.name` as const)}
+                          // {...register(`dynamicFields.${index}.name` as const)}
                           disabled={isLoading}
                         />
                       </div>
@@ -525,7 +525,7 @@ export function AddServiceDialog({
                         <Input
                           className="border-none bg-white text-black text-lg py-3 focus:ring-2 focus:ring-primary/75 focus:outline-none"
                           placeholder="e.g., Duration in hours"
-                          {...register(`dynamicFields.${index}.label` as const)}
+                          // {...register(`dynamicFields.${index}.label` as const)}
                           disabled={isLoading}
                         />
                       </div>
