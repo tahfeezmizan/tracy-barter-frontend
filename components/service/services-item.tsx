@@ -4,6 +4,8 @@ import { Service } from "@/lib/types/service.types";
 import { getImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "@/redux/slice/userSlice";
 
 interface ServicesItemProps {
   service: Service;
@@ -14,12 +16,15 @@ export default function ServicesItem({
   service,
   imagePosition,
 }: ServicesItemProps) {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const href =
     service?.name === "Grocery Restock"
       ? "/shopping-with-ai"
       : `/service/${service?._id}`;
 
-  // console.log("service", service);
+  const linkHref = isLoggedIn ? href : `/signin?callbackUrl=${encodeURIComponent(href)}`;
+
   return (
     <section
       style={{
@@ -28,9 +33,8 @@ export default function ServicesItem({
     >
       <div className="max-w-7xl mx-auto px-4 py-10 lg:py-24 lg:pb-36">
         <div
-          className={`flex flex-col! lg:flex-row!  ${
-            imagePosition === "right" ? "lg:flex-row-reverse!" : "lg:flex-row!"
-          } items-center justify-between gap-10`}
+          className={`flex flex-col! lg:flex-row!  ${imagePosition === "right" ? "lg:flex-row-reverse!" : "lg:flex-row!"
+            } items-center justify-between gap-10`}
         >
           <div className="flex-1 w-full md:w-[550px] h-auto md:h-[600px] overflow-hidden">
             <Image
@@ -70,7 +74,7 @@ export default function ServicesItem({
             </div> */}
 
             <Link
-              href={`/signin?callbackUrl=${encodeURIComponent(href)}`}
+              href={linkHref}
               className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 inline-block"
             >
               Book Now

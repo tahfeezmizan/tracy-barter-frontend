@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/signin", request.url));
     }
   }
-  
+
   if (pathname.startsWith("/user-profile")) {
     if (!token) {
       return NextResponse.redirect(new URL("/signin", request.url));
@@ -40,7 +40,7 @@ export const config = {
   matcher: [
     // Pattern to match dashboard routes
     "/dashboard/:path*",
- // Pattern to match user profile routes
+    // Pattern to match user profile routes
     "/user-profile/:path*",
 
     // Pattern to match service routes
