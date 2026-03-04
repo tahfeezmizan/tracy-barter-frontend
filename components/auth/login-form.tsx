@@ -12,8 +12,9 @@ import Link from "next/link";
 import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slice/userSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
@@ -25,6 +26,8 @@ export function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   const [loginUser, { isLoading }] = useLoginUserMutation({});
 
@@ -50,7 +53,9 @@ export function SignInForm() {
           })
         );
 
-        if (["admin", "staff"].includes(res?.data?.data?.role)) {
+        if (callbackUrl) {
+          router.push(callbackUrl);
+        } else if (["admin", "staff"].includes(res?.data?.data?.role)) {
           router.push("/dashboard");
         } else {
           router.push("/user-profile");
@@ -102,7 +107,7 @@ export function SignInForm() {
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleInputChange}
-            className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+            className="border-none bg-gray-200 text-black text-xl! py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
             required
           />
         </div>
@@ -119,7 +124,7 @@ export function SignInForm() {
               value={formData.password}
               onChange={handleInputChange}
               minLength={8}
-              className="border-none bg-gray-200 text-black !text-xl py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
+              className="border-none bg-gray-200 text-black text-xl! py-5 focus:ring-2 focus:ring-primary/75 focus:outline-none"
               required
             />
             <Button

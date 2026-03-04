@@ -19,7 +19,7 @@ export default function ServicesItem({
       ? "/shopping-with-ai"
       : `/service/${service?._id}`;
 
-  console.log("service", service);
+  // console.log("service", service);
   return (
     <section
       style={{
@@ -46,7 +46,7 @@ export default function ServicesItem({
             <h3 className="text-4xl font-medium text-primary mb-2 md:mb-4">
               {service?.name}
             </h3>
-            
+
             {/* <p className="text-lg text-gray-500">{service?.description}</p> */}
 
             {/* <div className="my-6 md:my-8">
@@ -70,7 +70,7 @@ export default function ServicesItem({
             </div> */}
 
             <Link
-              href={href}
+              href={`/signin?callbackUrl=${encodeURIComponent(href)}`}
               className="text-2xl text-white mt-6 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 inline-block"
             >
               Book Now

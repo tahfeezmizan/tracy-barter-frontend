@@ -1,3 +1,99 @@
+// "use client";
+
+// import { Button } from "@/components/ui/button";
+// import { BookmarkMinus, Facebook, Instagram } from "lucide-react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+
+// export default function AboutTracy() {
+//   const pathname = usePathname();
+//   const isAboutPage = pathname === "/about-us";
+
+//   return (
+//     <div className="relative flex items-center overflow-hidden bg-white">
+//       <div className="max-w-7xl mx-auto px-4 py-14">
+//         <div
+//           className={`flex flex-col ${
+//             isAboutPage ? "lg:flex-row-reverse" : "lg:flex-row"
+//           } items-center justify-between gap-10`}
+//         >
+//           <div className="flex-1 flex justify-center w-auto md:w-[530px] h-auto md:h-[700px]">
+//             <Image
+//               src={require("@/assets/about-tracy.png")}
+//               alt="here"
+//               width={1000}
+//               height={1000}
+//               className="w-full h-full object-contain"
+//             />
+//           </div>
+
+//           <div className="flex-1">
+//             {/* Show this badge only on /about-us */}
+//             {isAboutPage && (
+//               <div className="inline-block px-4 py-1 mb-3 font-medium rounded-full border border-primary text-primary">
+//                 About Us
+//               </div>
+//             )}
+//             <h2 className="text-3xl md:text-4xl text-black font-bold leading-tight tracking-tight ">
+//               Tracy Barter
+//             </h2>
+//             <Button className="p-2.5 bg-primary/60 text-secondary text-base font-medium rounded-full my-3">
+//               Founder & Realtor®
+//             </Button>
+//             <p className="text-lg md:text-xl leading-snug text-secondary ">
+//               With over two decades of experience in real estate, Tracy Barter
+//               has built her career on exceptional service, trusted
+//               relationships, and a deep love for helping clients feel at home in
+//               Happy Valley. As the founder of Happy Valley Home Concierge, Tracy
+//               combines her industry expertise with a genuine passion for
+//               simplifying homeownership offering clients peace of mind through
+//               thoughtful, personalized care. <br />
+//               When she's not serving her clients or managing the concierge team,
+//               you'll find Tracy spending time with her husband and 7 children,
+//               cheering on her kids at local sporting events, or enjoying the
+//               outdoors. A former Division I volleyball player, she brings the
+//               same energy, dedication, and teamwork to her business that she
+//               once brought to the court. <br />
+//               I'll need to learn how to update this section as I hire more
+//               employees in the future.
+//             </p>
+//             <div className="flex flex-col md:flex-row gap-1  md:gap-5">
+//               <Link href="tel:8148835114">
+//                 <Button className="flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary text-2xl text-white mt-6 py-6 ">
+//                   <BookmarkMinus className="size-6 text-primary group-hover:text-secondary" />
+//                   Contact Tracy
+//                 </Button>
+//               </Link>
+//               <Link
+//                 href={"https://www.instagram.com/happyvalleyconcierge"}
+//                 target="_blank"
+//                 className="flex items-center gap-3 justify-center font-medium group hover:bg-primary/80 hover:text-secondary text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg"
+//               >
+//                 Connect On Socials
+//                 <Link
+//                   href={
+//                     "https://www.facebook.com/profile.php?id=61582955212732"
+//                   }
+//                   target="_blank"
+//                 >
+//                   <Facebook className="size-6 text-primary group-hover:text-secondary" />
+//                 </Link>
+//                 <Link
+//                   href={"https://www.instagram.com/happyvalleyconcierge"}
+//                   target="_blank"
+//                 >
+//                   <Instagram className="size-6 text-primary group-hover:text-secondary" />
+//                 </Link>
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -18,74 +114,80 @@ export default function AboutTracy() {
             isAboutPage ? "lg:flex-row-reverse" : "lg:flex-row"
           } items-center justify-between gap-10`}
         >
+          {/* Image Section */}
           <div className="flex-1 flex justify-center w-auto md:w-[530px] h-auto md:h-[700px]">
             <Image
               src={require("@/assets/about-tracy.png")}
-              alt="here"
+              alt="Tracy Barter"
               width={1000}
               height={1000}
               className="w-full h-full object-contain"
+              priority
             />
           </div>
 
+          {/* Content Section */}
           <div className="flex-1">
-            {/* Show this badge only on /about-us */}
             {isAboutPage && (
               <div className="inline-block px-4 py-1 mb-3 font-medium rounded-full border border-primary text-primary">
                 About Us
               </div>
             )}
-            <h2 className="text-3xl md:text-4xl text-black font-bold leading-tight tracking-tight ">
+
+            <h2 className="text-3xl md:text-4xl text-black font-bold leading-tight tracking-tight">
               Tracy Barter
             </h2>
+
             <Button className="p-2.5 bg-primary/60 text-secondary text-base font-medium rounded-full my-3">
               Founder & Realtor®
             </Button>
-            <p className="text-lg md:text-xl leading-snug text-secondary ">
+
+            <p className="text-lg md:text-xl leading-snug text-secondary">
               With over two decades of experience in real estate, Tracy Barter
               has built her career on exceptional service, trusted
               relationships, and a deep love for helping clients feel at home in
               Happy Valley. As the founder of Happy Valley Home Concierge, Tracy
               combines her industry expertise with a genuine passion for
               simplifying homeownership offering clients peace of mind through
-              thoughtful, personalized care. <br />
+              thoughtful, personalized care.
+              <br />
+              <br />
               When she's not serving her clients or managing the concierge team,
               you'll find Tracy spending time with her husband and 7 children,
               cheering on her kids at local sporting events, or enjoying the
               outdoors. A former Division I volleyball player, she brings the
               same energy, dedication, and teamwork to her business that she
-              once brought to the court. <br />
-              I'll need to learn how to update this section as I hire more
-              employees in the future.
+              once brought to the court.
             </p>
-            <div className="flex flex-col md:flex-row gap-1  md:gap-5">
+
+            {/* Buttons Section */}
+            <div className="flex flex-col md:flex-row gap-4 mt-6">
+              {/* Contact Button */}
               <Link href="tel:8148835114">
-                <Button className="flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary text-2xl text-white mt-6 py-6 ">
+                <Button className="flex items-center gap-3 justify-center group hover:bg-primary/80 hover:text-secondary bg-secondary text-2xl text-white py-6">
                   <BookmarkMinus className="size-6 text-primary group-hover:text-secondary" />
                   Contact Tracy
                 </Button>
               </Link>
-              <Link
-                href={"https://www.instagram.com/happyvalleyconcierge"}
-                target="_blank"
-                className="flex items-center gap-3 justify-center font-medium group hover:bg-primary/80 hover:text-secondary text-2xl border border-primary text-primary mt-6 px-4 py-2 rounded-lg"
-              >
-                Connect On Socials
+
+              {/* Social Icons */}
+              <div className="flex items-center gap-4">
                 <Link
-                  href={
-                    "https://www.facebook.com/profile.php?id=61582955212732"
-                  }
+                  href="https://www.facebook.com/profile.php?id=61582955212732"
                   target="_blank"
+                  className="flex items-center justify-center border border-primary text-primary rounded-lg p-3 hover:bg-primary/80 hover:text-secondary transition"
                 >
-                  <Facebook className="size-6 text-primary group-hover:text-secondary" />
+                  <Facebook className="size-6" />
                 </Link>
+
                 <Link
-                  href={"https://www.instagram.com/happyvalleyconcierge"}
+                  href="https://www.instagram.com/happyvalleyconcierge"
                   target="_blank"
+                  className="flex items-center justify-center border border-primary text-primary rounded-lg p-3 hover:bg-primary/80 hover:text-secondary transition"
                 >
-                  <Instagram className="size-6 text-primary group-hover:text-secondary" />
+                  <Instagram className="size-6" />
                 </Link>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -4,14 +4,12 @@ import ServicesItem from "./services-item";
 
 import LoadingSpinner from "@/lib/loading-spinner";
 import { Service } from "@/lib/types/service.types";
-import {
-  useGetServiceHomeQuery
-} from "@/redux/features/service/serviceApis";
+import { useGetServiceHomeQuery } from "@/redux/features/service/serviceApis";
 
 export default function ServicesPage() {
   const { data, isLoading } = useGetServiceHomeQuery(undefined);
   const servicesData = data?.data;
-  console.log("servicesData",servicesData);
+  console.log("servicesData", servicesData);
 
   return (
     <main>
@@ -29,8 +27,12 @@ export default function ServicesPage() {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <p className="text-lg font-semibold text-neutral-700">No services available</p>
-              <p className="text-sm text-neutral-500 mt-2">Please check back later for new services.</p>
+              <p className="text-lg font-semibold text-neutral-700">
+                No services available
+              </p>
+              <p className="text-sm text-neutral-500 mt-2">
+                Please check back later for new services.
+              </p>
             </div>
           )}
         </>
