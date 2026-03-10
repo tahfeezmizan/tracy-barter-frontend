@@ -25,7 +25,7 @@ import {
   useGetPricingPlansQuery,
   useUpdatePricingPlanMutation,
 } from "@/redux/features/pricing/pricingApis";
-import { selectUser } from "@/redux/slice/userSlice";
+import { selectIsLoggedIn } from "@/redux/slice/userSlice";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -40,7 +40,8 @@ export default function PricingPlan() {
 
   // Fetch pricing plans
   const { data, isLoading } = useGetPricingPlansQuery(undefined);
-  const { user } = useSelector(selectUser);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [createSubscription, { isLoading: isCreatingSubscription }] =
     useCreateSubscriptionMutation();
@@ -48,8 +49,8 @@ export default function PricingPlan() {
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
   const handleSubscription = async (planId: string) => {
-    if (!user) {
-      router.push("/signin");
+    if (!isLoggedIn) {
+      router.push(`/signin?callbackUrl=${encodeURIComponent(pathname)}`);
       return;
     }
     setLoadingPlanId(planId);

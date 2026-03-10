@@ -23,7 +23,9 @@ export default function ServicesItem({
       ? "/shopping-with-ai"
       : `/service/${service?._id}`;
 
-  const linkHref = isLoggedIn ? href : `/signin?callbackUrl=${encodeURIComponent(href)}`;
+  const linkHref = isLoggedIn
+    ? href
+    : `/signin?callbackUrl=${encodeURIComponent(href)}`;
 
   return (
     <section
@@ -33,8 +35,9 @@ export default function ServicesItem({
     >
       <div className="max-w-7xl mx-auto px-4 py-10 lg:py-24 lg:pb-36">
         <div
-          className={`flex flex-col! lg:flex-row!  ${imagePosition === "right" ? "lg:flex-row-reverse!" : "lg:flex-row!"
-            } items-center justify-between gap-10`}
+          className={`flex flex-col! lg:flex-row!  ${
+            imagePosition === "right" ? "lg:flex-row-reverse!" : "lg:flex-row!"
+          } items-center justify-between gap-10`}
         >
           <div className="flex-1 w-full md:w-[550px] h-auto md:h-[600px] overflow-hidden">
             <Image
