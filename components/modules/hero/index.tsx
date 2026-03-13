@@ -9,19 +9,19 @@ export default function HeroSection() {
   const data = [
     {
       icon: Shield,
-      label: "Background checked",
+      label: "Vetted Local Professionals",
     },
     {
       icon: Camera,
-      label: "Background checked",
+      label: "Regular Home Check‑Ins",
     },
     {
       icon: CreditCard,
-      label: "Background checked",
+      label: "Vendor Coordination",
     },
     {
       icon: SquareCheck,
-      label: "Background checked",
+      label: "Emergency Response Support",
     },
   ];
 
@@ -72,8 +72,7 @@ export default function HeroSection() {
               Your Home, Handled.
             </span>
             <h2 className="text-4xl md:text-5xl text-primary font-bold leading-tight tracking-tight py-1 mb-2">
-              It's More Than A Service... <br className="" />{" "}
-              It's A Lifestyle.
+              It's More Than A Service... <br className="" /> It's A Lifestyle.
             </h2>
             <p className="text-lg md:text-2xl leading-snug md:pr-44 lg:pr-0">
               Cleaning, landscaping, grocery stocking, and occasional check-ins

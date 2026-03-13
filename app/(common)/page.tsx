@@ -7,9 +7,9 @@ export default function Page() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <ServiceSection />      
+      <ServiceSection />
       <AboutTracy />
-      <ClientReview /> 
+      <ClientReview />
     </div>
   );
 }
