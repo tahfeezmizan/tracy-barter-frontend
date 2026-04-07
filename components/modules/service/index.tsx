@@ -68,9 +68,11 @@ export default function ServiceSection() {
                 <Card
                   key={`${service?._id}`}
                   className={`
-                      transition-all duration-500 ease-out border-yellow-500 bg-[#fefce894] p-0
+                      flex items-center! justify-center! transition-all duration-500 ease-out border-yellow-500 bg-[#fefce894] p-0
                       ${
-                        isCenter ? "scale-100 z-10 w-full md:w-96" : "scale-90 "
+                        isCenter
+                          ? "scale-100 z-10 w-full md:w-96 "
+                          : "scale-90 "
                       }
                       ${isEdge ? "hidden lg:block" : ""}
                       ${idx === 1 || idx === 3 ? "hidden sm:block" : ""}
@@ -79,7 +81,7 @@ export default function ServiceSection() {
                 >
                   <Link href={`/service/${service?._id}`}>
                     <CardContent className="p-3 text-center">
-                      <div className="relative ">
+                      {/* <div className="relative ">
                         <Image
                           src={getImageUrl(service?.image)}
                           alt={service?.name}
@@ -87,8 +89,8 @@ export default function ServiceSection() {
                           height={400}
                           className="w-full rounded-2xl h-80 object-cover transition-transform duration-500 overflow-hidden"
                         />
-                      </div>
-                      <div className="p-6">
+                      </div> */}
+                      <div className="p-4">
                         <h3 className="text-2xl sm:text-2xl font-bold text-neutral-900 mb-2">
                           {service?.name}
                         </h3>
@@ -104,43 +106,47 @@ export default function ServiceSection() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <p className="text-lg font-semibold text-neutral-700">No services available</p>
-            <p className="text-sm text-neutral-500 mt-2">Please check back later for new services.</p>
+            <p className="text-lg font-semibold text-neutral-700">
+              No services available
+            </p>
+            <p className="text-sm text-neutral-500 mt-2">
+              Please check back later for new services.
+            </p>
           </div>
         )}
       </div>
 
       {servicesCards.length > 0 && (
-      <div className="flex justify-center items-center gap-3 mt-12">
-        <Button
-          onClick={prevSlide}
-          variant="outline"
-          size="icon"
-          className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
-        >
-          <ChevronLeft className="size-7" />
-        </Button>
-        {servicesCards.map((service: Service, index: number) => (
-          <button
-            key={service._id} // ✅ Unique key here as well
-            onClick={() => goToSlide(index)}
-            className={`transition-all duration-300 rounded-full ${
-              index === currentIndex
-                ? "w-12 h-3 bg-secondary"
-                : "w-3 h-3 bg-neutral-400"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-        <Button
-          onClick={nextSlide}
-          variant="outline"
-          size="icon"
-          className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
-        >
-          <ChevronRight className="size-7" />
-        </Button>
-      </div>
+        <div className="flex justify-center items-center gap-3 mt-12">
+          <Button
+            onClick={prevSlide}
+            variant="outline"
+            size="icon"
+            className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+          >
+            <ChevronLeft className="size-7" />
+          </Button>
+          {servicesCards.map((service: Service, index: number) => (
+            <button
+              key={service._id} // ✅ Unique key here as well
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-300 rounded-full ${
+                index === currentIndex
+                  ? "w-12 h-3 bg-secondary"
+                  : "w-3 h-3 bg-neutral-400"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+          <Button
+            onClick={nextSlide}
+            variant="outline"
+            size="icon"
+            className="h-12 w-12 rounded-full bg-primary hover:bg-primary/95 border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+          >
+            <ChevronRight className="size-7" />
+          </Button>
+        </div>
       )}
     </div>
   );

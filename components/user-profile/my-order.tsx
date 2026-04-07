@@ -18,21 +18,24 @@ import {
   MapPin,
   MoreVertical,
   User,
-  X
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export function MyOrdersPage() {
   const [selectedFilter, setSelectedFilter] = useState<
-    "all" | "pending" | "confirmed"
+    "all" | "pending" | "confirmed" | "requested"
   >("all");
 
   const { data: orders, isLoading, isError } = useGetMyOrderQuery(undefined);
 
+  console.log(orders);
+
   const filteredOrders = (orders?.data || []).filter((order: any) => {
     if (selectedFilter === "all") return true;
-    if (selectedFilter === "pending") return ["pending", "scheduled", "submitted"].includes(order.status);
+    if (selectedFilter === "pending")
+      return ["pending", "scheduled", "submitted"].includes(order.status);
     return order.status === selectedFilter;
   });
 
@@ -78,7 +81,7 @@ export function MyOrdersPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-2 items-center flex-wrap w-96 bg-gray-200 rounded-full p-1">
+      <div className="w-full md:w-[75%] lg:w-[55%] xl:w-[42%] flex gap-2 items-center flex-wrap bg-gray-200 rounded-md md:rounded-full p-1">
         <Button
           variant="outline"
           onClick={() => setSelectedFilter("all")}
@@ -97,6 +100,15 @@ export function MyOrdersPage() {
           }`}
         >
           Pending
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => setSelectedFilter("requested")}
+          className={`px-6 rounded-full ${
+            selectedFilter === "requested" ? "bg-white" : "bg-transparent"
+          }`}
+        >
+          requested
         </Button>
 
         <Button
@@ -122,10 +134,12 @@ export function MyOrdersPage() {
               <div className="flex items-start gap-4 flex-1">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    {order.serviceType[0]?.title || order.serviceType?.title || "Service"}
-                    {/* {order?. || "Service"} */}
+                    {order?.service?.name ||
+                      order?.serviceType?.name ||
+                      "Service"}
+                    {/* {order?. || "Service"}
+                     */}
                   </h3>
-                   
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -157,21 +171,29 @@ export function MyOrdersPage() {
               {/* Left Column */}
               <div className="space-y-3">
                 <div className="flex items-start gap-3 text-sm">
-                  <User size={16} className="text-muted-foreground shrink-0 mt-0.5" />
-                  <span className="text-foreground">{order.service?.name || "Provider"}</span>
+                  <User
+                    size={16}
+                    className="text-muted-foreground shrink-0 mt-0.5"
+                  />
+                  <span className="text-foreground">
+                    {order.service?.name || "Provider"}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
                   <MapPin
                     size={16}
                     className="text-muted-foreground shrink-0 mt-0.5"
                   />
-                  <span>{order?.user?.address?.city + " " + order?.user?.address?.permanentAddress
-}</span>
+                  <span>
+                    {order?.user?.address?.city +
+                      " " +
+                      order?.user?.address?.permanentAddress}
+                  </span>
                   <span className="text-foreground">
-                      {/* {typeof order.address === 'string' 
+                    {/* {typeof order.address === 'string' 
                         ? order.address 
                         : `${order.address?.address || ''}, ${order.address?.city || ''}, ${order.address?.state || ''} ${order.address?.zipCode || ''}`} */}
-                    </span>
+                  </span>
                 </div>
               </div>
 
@@ -183,17 +205,19 @@ export function MyOrdersPage() {
                     className="text-muted-foreground shrink-0"
                   />
                   <span className="text-foreground">
-                    {order.date ? new Date(order.date).toLocaleDateString() : "N/A"} at {order.startTime || "N/A"}
+                    {order.date
+                      ? new Date(order.date).toLocaleDateString()
+                      : "N/A"}{" "}
+                    at {order.startTime || "N/A"}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  
                   <span className="text-foreground font-semibold">
                     $ {order.bookingFee || 0}
                   </span>
                 </div>
               </div>
-            </div>            
+            </div>
           </Card>
         ))}
       </div>
