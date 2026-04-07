@@ -53,7 +53,7 @@ export default function ServicesPage() {
   const servicesData = data?.data;
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-10">
+    <main className="max-w-7xl mx-auto px-4 py-10 pb-20">
       {isLoading ? (
         <LoadingSpinner />
       ) : servicesData && servicesData.length > 0 ? (

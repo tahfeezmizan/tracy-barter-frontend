@@ -7,7 +7,7 @@ export default function page() {
     <div>
       <PricingHero />
       <PricingPlan />
-      <PricingComparisonTable />
+      {/* <PricingComparisonTable /> */}
     </div>
   );
 }
