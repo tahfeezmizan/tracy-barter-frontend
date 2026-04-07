@@ -34,8 +34,6 @@ export default function Header() {
   const role = useSelector(selectUserRole);
   const { data } = useGetStaffProfileQuery(undefined);
 
-  // console.log("data", data);
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -76,8 +74,8 @@ export default function Header() {
           "fixed top-0 w-full z-50 transition duration-300 ease-in`",
           pathname === "/" && "lg:top-12 left-0 ",
           pathname === "/" &&
-          isScrolled &&
-          "bg-primary top-0! border-b transition duration-300",
+            isScrolled &&
+            "bg-primary top-0! border-b transition duration-300",
           pathname !== "/" && isScrolled && "bg-primary",
         )}
       >
@@ -186,34 +184,35 @@ export default function Header() {
                         )}
                       </DropdownMenuItem>
 
-                      {role === "client" && (<div>
-                        <DropdownMenuItem
-                          asChild
-                          className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
-                        >
-                          <Link
-                            href="/user-profile/my-order"
-                            className="flex items-center space-x-2"
+                      {role === "client" && (
+                        <div>
+                          <DropdownMenuItem
+                            asChild
+                            className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                           >
-                            <ShoppingBag className="h-4 w-4" />
-                            <span>My Order</span>
-                          </Link>
-                        </DropdownMenuItem>
+                            <Link
+                              href="/user-profile/my-order"
+                              className="flex items-center space-x-2"
+                            >
+                              <ShoppingBag className="h-4 w-4" />
+                              <span>My Order</span>
+                            </Link>
+                          </DropdownMenuItem>
 
-                        <DropdownMenuItem
-                          asChild
-                          className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
-                        >
-                          <Link
-                            href="/user-profile/invoice"
-                            className="flex items-center space-x-2"
+                          <DropdownMenuItem
+                            asChild
+                            className="data-highlighted:bg-primary data-highlighted:text-white hover:bg-primary cursor-pointer"
                           >
-                            <ShoppingBag className="h-4 w-4" />
-                            <span>Invoice</span>
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>)}
-
+                            <Link
+                              href="/user-profile/invoice"
+                              className="flex items-center space-x-2"
+                            >
+                              <ShoppingBag className="h-4 w-4" />
+                              <span>Invoice</span>
+                            </Link>
+                          </DropdownMenuItem>
+                        </div>
+                      )}
 
                       <DropdownMenuItem
                         asChild

@@ -36,8 +36,6 @@ export function ReferralForm() {
   const [createReferral, { isLoading }] = useCreateReferralMutation({});
 
   const onSubmit = async (data: ReferralFormData) => {
-    // console.log("Form submitted:", data);
-
     try {
       const res = await createReferral({
         yourName: data.name,
@@ -46,7 +44,6 @@ export function ReferralForm() {
         referralPhone: data.phone,
         notes: data.notes,
       });
-      // console.log("Referral created:", res);
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);
@@ -58,7 +55,6 @@ export function ReferralForm() {
           error?.message ||
           "Something went wrong during signup";
         toast.error(message);
-        // console.log("Signup error:", error);
       }
     } catch {}
   };
@@ -193,8 +189,6 @@ export function ReferralForm() {
               )}
             </div>
           </div>
-
-          
 
           {/* Notes field */}
           <div>

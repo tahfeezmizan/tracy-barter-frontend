@@ -19,22 +19,22 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
   const [updateAvailability, { isLoading }] = useUpdateAvailabilityMutation();
 
   useEffect(() => {
-  setIsAvailable(!!data?.isAvailable);
-}, [data?.isAvailable]);
-
+    setIsAvailable(!!data?.isAvailable);
+  }, [data?.isAvailable]);
 
   const handleToggle = async () => {
     const newStatus = !isAvailable;
     // Optimistic update
     setIsAvailable(newStatus);
-    // console.log("Account Settings", newStatus);
 
     try {
       const res = await updateAvailability({
         isAvailable: newStatus,
       }).unwrap();
-      // console.log("Account Settings", res);
-      toast.success(`Availability updated to ${newStatus ? "available" : "unavailable"}`);
+
+      toast.success(
+        `Availability updated to ${newStatus ? "available" : "unavailable"}`,
+      );
     } catch (error) {
       console.error("Failed to update availability:", error);
       toast.error("Failed to update availability. Please try again.");
@@ -59,7 +59,7 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
         <Switch
           checked={isAvailable}
           onCheckedChange={handleToggle}
-          disabled={isLoading} 
+          disabled={isLoading}
           className="bg-gray-200 h-5"
         />
       </div>
@@ -69,15 +69,13 @@ const AccountSettings = ({ data }: AccountSettingsProps) => {
           <h3 className="font-medium">Change Password</h3>
           <p className="text-slate-500">Update your account password</p>
         </div>
-        
+
         <Link href="/user-profile/change-password">
-        <Button
-          className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white"          
-          >
-          <Lock />
-          Change Password
-        </Button>
-          </Link>
+          <Button className="mt-2 px-4 py-2 bg-slate-100 border border-slate-200 text-black rounded-md hover:bg-primary hover:text-white">
+            <Lock />
+            Change Password
+          </Button>
+        </Link>
       </div>
     </div>
   );

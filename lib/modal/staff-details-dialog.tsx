@@ -52,17 +52,11 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
   const { data: specialties = [] } =
     useGetStaffSpecialtyServicesQuery(undefined);
 
-    // console.log("data", staffId)
-
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
 
   const [updateStaff] = useUpdateStaffMutation();
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   // Set default values when API loads
   useEffect(() => {
@@ -76,13 +70,9 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
 
   const toggleSpecialty = (id: string) => {
     setSelectedSpecialties((prev) =>
-      prev.includes(id)
-        ? prev.filter((v) => v !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
     );
   };
-
-
 
   const initials =
     data?.name
@@ -107,9 +97,7 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
         toast.success(res?.data?.message);
         onOpenChange(false);
       }
-    } catch {
-      
-    }
+    } catch {}
   };
 
   return (
@@ -182,7 +170,7 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
               <div className="flex flex-col gap-2 mt-2">
                 {specialties
                   .filter((item: SelectedItem) =>
-                    selectedSpecialties.includes(item._id)
+                    selectedSpecialties.includes(item._id),
                   )
                   .map((item: SelectedItem) => (
                     <div
@@ -204,19 +192,14 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
 
             <div className="space-y-1">
               <Label>Bio</Label>
-              <Textarea
-                rows={4}
-                {...register("bio")}
-              />
+              <Textarea rows={4} {...register("bio")} />
             </div>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 bg-muted rounded-lg p-4 mt-6 text-center">
             <div>
-              <p className="text-sm text-muted-foreground">
-                Rating
-              </p>
+              <p className="text-sm text-muted-foreground">Rating</p>
               <p className="font-semibold">
                 {data?.rating || "5.0"}{" "}
                 <span className="text-yellow-500">★</span>
@@ -224,18 +207,12 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
             </div>
 
             <div>
-              <p className="text-sm text-muted-foreground">
-                Services
-              </p>
-              <p className="font-semibold">
-                {data?.services?.length}
-              </p>
+              <p className="text-sm text-muted-foreground">Services</p>
+              <p className="font-semibold">{data?.services?.length}</p>
             </div>
 
             <div>
-              <p className="text-sm text-muted-foreground">
-                Status
-              </p>
+              <p className="text-sm text-muted-foreground">Status</p>
               <Badge
                 className={
                   data?.status === "active"

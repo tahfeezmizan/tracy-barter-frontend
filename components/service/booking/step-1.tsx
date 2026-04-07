@@ -16,15 +16,12 @@ interface Step1Props {
 
 export default function Step1({ formData, updateFormData, data }: Step1Props) {
   if (data?.fields) {
-    console.log("All field labels from API:");
     const serviceDetails = data.fields.map((field, index) => {
       return {
         name: field.label,
         value: "",
       };
     });
-
-    console.log({ serviceDetails });
   }
 
   // ✅ Only show Service Type section if serviceType list exists and has items

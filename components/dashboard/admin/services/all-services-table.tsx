@@ -17,8 +17,6 @@
 // export default function AllServicesTable() {
 //   const { data, isLoading } = useGetServiceQuery(undefined);
 
-//   console.log("All SErvice", data);
-
 //   return (
 //     <Card className="bg-white shadow-sm rounded-xl p-6 w-full text-black">
 //       {/* Title */}
@@ -219,11 +217,9 @@ export default function AllServicesTable() {
     if (result.isConfirmed) {
       try {
         const res: any = await deleteService(id);
-        console.log("deleteService", res);
 
         Swal.fire("Deleted!", "Service has been deleted.", "success");
       } catch (error) {
-        console.log(error);
         Swal.fire(
           "Error!",
           "Something went wrong while deleting service.",

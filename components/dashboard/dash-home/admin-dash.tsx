@@ -21,7 +21,7 @@ import { TodaysSchedule } from "../provider/today-schedule";
 
 export default function AdminDash() {
   const role = useSelector(selectUserRole);
-  // console.log(role);
+
   // admin
   const { data, isLoading } = useGetAdminStatsQuery(undefined);
   const { data: adminRecentService, isLoading: adminRecentLoading } =
@@ -32,8 +32,6 @@ export default function AdminDash() {
     useGetStaffStatsQuery(undefined);
   const { data: staffRecentService, isLoading: staffRecentLoading } =
     useGetStaffRecentServiceQuery(undefined);
-
-  // console.log("staffRecentService", staffRecentService);
 
   const statsAdmin: StatsCardItem[] = [
     {

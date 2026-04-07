@@ -20,9 +20,7 @@ export default function SetNewPasswordForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: LoginFormData) => {
-    // console.log("Login form data:", data);
-  };
+  const onSubmit = (data: LoginFormData) => {};
 
   return (
     <div className="space-y-6">

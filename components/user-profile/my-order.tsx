@@ -30,8 +30,6 @@ export function MyOrdersPage() {
 
   const { data: orders, isLoading, isError } = useGetMyOrderQuery(undefined);
 
-  console.log(orders);
-
   const filteredOrders = (orders?.data || []).filter((order: any) => {
     if (selectedFilter === "all") return true;
     if (selectedFilter === "pending")

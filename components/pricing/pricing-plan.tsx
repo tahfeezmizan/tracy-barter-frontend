@@ -56,7 +56,6 @@ export default function PricingPlan() {
     setLoadingPlanId(planId);
     try {
       const res = await createSubscription(planId).unwrap();
-      // console.log("createSubscription", res);
 
       if (res.success) {
         toast.success(res.message);

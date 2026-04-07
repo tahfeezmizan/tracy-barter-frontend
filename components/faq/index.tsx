@@ -13,7 +13,6 @@ import Image from "next/image";
 
 export default function FAQSection() {
   const { data, isLoading } = useGetFaqQuery(undefined);
-  // console.log("Faq Data", data);
 
   return (
     <div className="relative flex items-center overflow-hidden py-16 md:py-32 faq-gradient-bg">

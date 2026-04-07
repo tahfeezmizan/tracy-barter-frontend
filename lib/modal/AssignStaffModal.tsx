@@ -79,8 +79,6 @@ export function AssignStaffModal({
         staffId,
       }).unwrap();
 
-      console.log(res);
-
       toast.success("Staff assigned successfully", { id: toastId });
       onClose();
     } catch (error: any) {

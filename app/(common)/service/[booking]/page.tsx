@@ -245,7 +245,6 @@ export default function BookingPage() {
 
     try {
       const res: any = await createBooking(payload);
-      console.log(res);
 
       if (res?.data?.success) {
         toast.success(res?.data?.message || "Booking created successfully");

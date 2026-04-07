@@ -60,23 +60,17 @@ export function AddStaffDialog({
 
   const [AddStaff] = useCreateStaffMutation({});
 
-  // console.log(data);
-
   const toggleSpecialty = (id: string) => {
     setValue(
       "specialty",
       selectedSpecialties.includes(id)
         ? selectedSpecialties.filter((v) => v !== id)
         : [...selectedSpecialties, id],
-      { shouldValidate: true }
+      { shouldValidate: true },
     );
   };
 
-
-
   const onSubmit = async (data: StaffFormValues) => {
-    console.log(data);
-
     try {
       const res = await AddStaff({
         name: data?.fullName,
@@ -88,10 +82,7 @@ export function AddStaffDialog({
       if (res?.data?.success) {
         toast.success(res?.data?.message);
       }
-      console.log("Api Res", res?.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
 
     reset();
     onOpenChange(false);
@@ -139,10 +130,7 @@ export function AddStaffDialog({
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                  >
+                  <Button variant="outline" className="w-full justify-start">
                     Select specialty
                   </Button>
                 </DropdownMenuTrigger>
@@ -164,7 +152,7 @@ export function AddStaffDialog({
               <div className="flex flex-col gap-2 mt-2">
                 {data
                   .filter((item: SelectedItem) =>
-                    selectedSpecialties.includes(item._id)
+                    selectedSpecialties.includes(item._id),
                   )
                   .map((item: SelectedItem) => (
                     <div

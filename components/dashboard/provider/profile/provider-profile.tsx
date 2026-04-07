@@ -17,7 +17,6 @@ interface ProviderProfileProps {
 }
 
 export default function ProviderProfile({ data }: ProviderProfileProps) {
-  // console.log("profile", data);
   const [file, setFile] = useState<File | null>(null);
 
   const [upload] = useStaffProfileUpdateMutation();
@@ -34,14 +33,11 @@ export default function ProviderProfile({ data }: ProviderProfileProps) {
     const formData = new FormData();
     formData.append("images", selectedFile);
 
-    // console.log(selectedFile);
-
     try {
       const res = await upload(formData).unwrap();
       if (res?.success) {
         toast.success(res?.message);
       }
-      // console.log("ProviderProfile", res);
     } catch (error) {
       console.error("Profile upload failed:", error);
     }

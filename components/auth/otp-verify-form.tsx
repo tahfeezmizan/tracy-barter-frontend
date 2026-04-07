@@ -82,8 +82,6 @@ export default function OtpVerify() {
   const handleVerify = async () => {
     setIsLoading(true);
     await new Promise((r) => setTimeout(r, 2000));
-    console.log("Verifying OTP:", otp.join(""));
-
     try {
       const res = await verifyOTP({
         email: email || "",
@@ -95,7 +93,7 @@ export default function OtpVerify() {
         const token = responseData.data.token;
         // ✅ Forgot password flow
         toast.success(
-          responseData?.message || "OTP verified, please reset your password"
+          responseData?.message || "OTP verified, please reset your password",
         );
         router.push(`/set-new-password?token=${token}`);
       } else if (responseData?.data?.accessToken) {
@@ -106,7 +104,7 @@ export default function OtpVerify() {
               accessToken: responseData?.data?.accessToken,
               role: responseData?.data?.role,
             },
-          })
+          }),
         );
 
         toast.success("OTP verification successful");
@@ -115,11 +113,7 @@ export default function OtpVerify() {
         const err = res as any;
         toast.error(err?.data?.message || "Something went wrong");
       }
-
-      // console.log("API Res", res);
-    } catch (error) {
-      // console.log(error);
-    }
+  } catch (error) }
 
     setIsLoading(false);
   };
@@ -133,9 +127,7 @@ export default function OtpVerify() {
       const res = await resendOTP({
         email: email || "",
         authType: authType || "createAccount",
-      });
-
-      // console.log(res);
+      })
 
       if (res?.data?.success) {
         toast.success(res?.data?.message || "OTP resent sucessfully");
@@ -146,13 +138,8 @@ export default function OtpVerify() {
           error?.message ||
           "Something went wrong during signup";
         toast.error(message);
-        // console.log("Signup error:", error);
-      }
-    } catch (error) {
-      // console.log(error);
     }
-
-    // console.log("Resending OTP...");
+    } catch (error) 
   };
 
   const isComplete = otp.every(Boolean);

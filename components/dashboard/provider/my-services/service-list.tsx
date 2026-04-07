@@ -50,7 +50,7 @@ export default function ServiceList() {
 
   // Map filter to API status
   const getApiStatusFromFilter = (
-    filterStatus: FilterStatus
+    filterStatus: FilterStatus,
   ): string | undefined => {
     const map: Record<FilterStatus, string | undefined> = {
       All: undefined,
@@ -115,7 +115,7 @@ export default function ServiceList() {
   // services status update
   const handleUpdateStatus = async (
     bookingId: string,
-    currentStatus: string
+    currentStatus: string,
   ) => {
     let nextStatus = "";
 
@@ -132,7 +132,7 @@ export default function ServiceList() {
       toast.success(
         nextStatus === "inProgress"
           ? "Service started successfully"
-          : "Service completed successfully"
+          : "Service completed successfully",
       );
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update booking status");
@@ -170,7 +170,7 @@ export default function ServiceList() {
             >
               {i}
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
       }
     } else {
@@ -191,13 +191,13 @@ export default function ServiceList() {
               >
                 {i}
               </PaginationLink>
-            </PaginationItem>
+            </PaginationItem>,
           );
         }
         items.push(
           <PaginationItem key="ellipsis">
             <span className="px-2">...</span>
-          </PaginationItem>
+          </PaginationItem>,
         );
         items.push(
           <PaginationItem key={totalPages}>
@@ -212,7 +212,7 @@ export default function ServiceList() {
             >
               {totalPages}
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
       } else if (currentPage >= totalPages - 2) {
         // Show first page and last 4 pages
@@ -229,12 +229,12 @@ export default function ServiceList() {
             >
               1
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
         items.push(
           <PaginationItem key="ellipsis">
             <span className="px-2">...</span>
-          </PaginationItem>
+          </PaginationItem>,
         );
         for (let i = totalPages - 3; i <= totalPages; i++) {
           items.push(
@@ -250,7 +250,7 @@ export default function ServiceList() {
               >
                 {i}
               </PaginationLink>
-            </PaginationItem>
+            </PaginationItem>,
           );
         }
       } else {
@@ -268,12 +268,12 @@ export default function ServiceList() {
             >
               1
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
         items.push(
           <PaginationItem key="ellipsis1">
             <span className="px-2">...</span>
-          </PaginationItem>
+          </PaginationItem>,
         );
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           items.push(
@@ -289,13 +289,13 @@ export default function ServiceList() {
               >
                 {i}
               </PaginationLink>
-            </PaginationItem>
+            </PaginationItem>,
           );
         }
         items.push(
           <PaginationItem key="ellipsis2">
             <span className="px-2">...</span>
-          </PaginationItem>
+          </PaginationItem>,
         );
         items.push(
           <PaginationItem key={totalPages}>
@@ -310,7 +310,7 @@ export default function ServiceList() {
             >
               {totalPages}
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
       }
     }
@@ -429,7 +429,6 @@ export default function ServiceList() {
                   className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200"
                   onClick={() => {
                     setOpenId(service._id);
-                    // console.log("Clicked appointment ID:", service._id);
                   }}
                 >
                   <Eye size={16} />
@@ -457,7 +456,6 @@ export default function ServiceList() {
                   </Button>
                 )}
               </div>
-
             </Card>
           ))
         ) : (

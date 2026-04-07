@@ -15,7 +15,6 @@ import { getImageUrl } from "@/lib/utils";
 
 export default function Page() {
   const { data } = useGetStaffProfileQuery(undefined);
-  console.log(data);
 
   const [upload] = useStaffProfileUpdateMutation();
 

@@ -33,9 +33,6 @@ interface Props {
 export function BookingDetailsModal({ open, onClose, booking }: Props) {
   if (!booking) return null;
 
-  console.log("booking",booking);
-  
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden">
@@ -43,7 +40,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold">
               Booking Details
-            </DialogTitle>            
+            </DialogTitle>
           </DialogHeader>
 
           {/* Location */}
@@ -59,20 +56,20 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
 
             <div className="flex gap-2 pt-2">
               <Link href={booking?.googleMapsUrl || "#"} target="_blank">
-              <Button variant="outline" size="sm" className="rounded-full">
-                Open in Maps
-              </Button>
+                <Button variant="outline" size="sm" className="rounded-full">
+                  Open in Maps
+                </Button>
               </Link>
-              
+
               <Link href={booking.userPhoneUrl || "#"}>
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full flex items-center gap-1"
-              >
-                <Phone className="h-4 w-4" />
-                Call User
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full flex items-center gap-1"
+                >
+                  <Phone className="h-4 w-4" />
+                  Call User
+                </Button>
               </Link>
             </div>
           </div>
@@ -89,9 +86,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
             <div className="flex justify-between text-sm items-center">
               <span className="text-gray-600">Booking Fee</span>
               <span className="flex items-center gap-2">
-                <Badge className="bg-green-100 text-green-700">
-                  completed
-                </Badge>
+                <Badge className="bg-green-100 text-green-700">completed</Badge>
                 $12
               </span>
             </div>
@@ -99,9 +94,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
             <div className="flex justify-between text-sm items-center">
               <span className="text-gray-600">Service Charge</span>
               <span className="flex items-center gap-2">
-                <Badge className="bg-yellow-100 text-yellow-700">
-                  pending
-                </Badge>
+                <Badge className="bg-yellow-100 text-yellow-700">pending</Badge>
                 $0
               </span>
             </div>
@@ -119,11 +112,7 @@ export function BookingDetailsModal({ open, onClose, booking }: Props) {
             {/* <Button className="flex-1 bg-slate-900 text-white">
               Edit
             </Button> */}
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={onClose}
-            >
+            <Button variant="outline" className="flex-1" onClick={onClose}>
               Close
             </Button>
           </div>

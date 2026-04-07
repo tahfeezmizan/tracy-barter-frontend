@@ -62,7 +62,7 @@ export default function AppointmentList({
 
   const handleUpdateStatus = async (
     bookingId: string,
-    currentStatus: string
+    currentStatus: string,
   ) => {
     let nextStatus = "";
 
@@ -79,7 +79,7 @@ export default function AppointmentList({
       toast.success(
         nextStatus === "inProgress"
           ? "Service started successfully"
-          : "Service completed successfully"
+          : "Service completed successfully",
       );
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update booking status");
@@ -173,7 +173,6 @@ export default function AppointmentList({
                       className="flex-1 inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gray-50 text-gray-700 hover:bg-gray-100 h-10 px-4 py-2 border border-gray-200"
                       onClick={() => {
                         setOpenId(appointment._id);
-                        // console.log("Clicked appointment ID:", appointment._id);
                       }}
                     >
                       <Eye size={16} />
@@ -187,7 +186,7 @@ export default function AppointmentList({
                         onClick={() =>
                           handleUpdateStatus(
                             appointment?._id,
-                            appointment?.status
+                            appointment?.status,
                           )
                         }
                         className="w-full flex-1 flex items-center gap-1 px-4 py-2 rounded-lg text-sm text-white bg-secondary hover:bg-primary"

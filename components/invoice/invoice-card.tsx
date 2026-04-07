@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 import {
   Download,
@@ -13,15 +12,14 @@ import {
   ChevronUp,
   CloudCog,
   Loader2,
-} from 'lucide-react';
-import { useState } from 'react';
-import { formatMonth } from '@/lib/utils';
-import InvoiceSummary from './invoice-summary';
-import InvoiceBookingTable from './invoice-booking-table';
-import { Invoice } from '@/lib/types/invoice.types';
-import { usePayInvoiceMutation } from '@/redux/features/invoices/invoicesApi';
-import { useRouter } from 'next/navigation';
-
+} from "lucide-react";
+import { useState } from "react";
+import { formatMonth } from "@/lib/utils";
+import InvoiceSummary from "./invoice-summary";
+import InvoiceBookingTable from "./invoice-booking-table";
+import { Invoice } from "@/lib/types/invoice.types";
+import { usePayInvoiceMutation } from "@/redux/features/invoices/invoicesApi";
+import { useRouter } from "next/navigation";
 
 interface InvoiceCardProps {
   invoice: Invoice;
@@ -33,37 +31,32 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
 
   const [payInvoice, { isLoading }] = usePayInvoiceMutation();
 
-
   const handlePayNow = async (id: string) => {
-    console.log(id)
-
     try {
       const res = await payInvoice(id).unwrap();
-      console.log(res);
-      if(res.success){
+
+      if (res.success) {
         router.push(res.data);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    } catch (error) {}
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'paid':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'overdue':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case "paid":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "overdue":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
   return (
     <Card className="overflow-hidden border border-border transition-all duration-300 hover:shadow-md">
-      <CardHeader 
+      <CardHeader
         className="cursor-pointer border-b border-border bg-card/50 p-3 sm:p-4 lg:p-6 transition-all duration-300 hover:bg-card/70"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -74,8 +67,11 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
                 <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground">
                   Invoice for {formatMonth(invoice.month)}
                 </h3>
-                <Badge className={`text-xs sm:text-sm ${getStatusColor(invoice.status)}`}>
-                  {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+                <Badge
+                  className={`text-xs sm:text-sm ${getStatusColor(invoice.status)}`}
+                >
+                  {invoice.status.charAt(0).toUpperCase() +
+                    invoice.status.slice(1)}
                 </Badge>
                 {isExpanded ? (
                   <ChevronUp className="ml-auto h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground sm:ml-0" />
@@ -94,29 +90,31 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
               ${invoice.totalAmount.toFixed(2)}
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              {invoice.bookings.length} booking{invoice.bookings.length !== 1 ? 's' : ''}
+              {invoice.bookings.length} booking
+              {invoice.bookings.length !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className={`overflow-hidden p-6 transition-all duration-300 ${isExpanded ? 'max-h-[2000px]' : 'max-h-0'}`}>
+      <CardContent
+        className={`overflow-hidden p-6 transition-all duration-300 ${isExpanded ? "max-h-[2000px]" : "max-h-0"}`}
+      >
         <div className="space-y-6">
-            <InvoiceBookingTable bookings={invoice.bookings} />
-            <InvoiceSummary invoice={invoice} />
+          <InvoiceBookingTable bookings={invoice.bookings} />
+          <InvoiceSummary invoice={invoice} />
 
-            <div className="flex flex-col gap-2 sm:gap-3 border-t border-border pt-4 sm:pt-6 sm:flex-row">
-              <Button
-                variant="outline"
-                
-                className="flex items-center justify-center gap-2 text-xs sm:text-sm"
-                onClick={() => alert('Download PDF functionality')}
-              >
-                <Download className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Download PDF</span>
-                <span className="sm:hidden">Download</span>
-              </Button>
-              {/* <Button
+          <div className="flex flex-col gap-2 sm:gap-3 border-t border-border pt-4 sm:pt-6 sm:flex-row">
+            <Button
+              variant="outline"
+              className="flex items-center justify-center gap-2 text-xs sm:text-sm"
+              onClick={() => alert("Download PDF functionality")}
+            >
+              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Download PDF</span>
+              <span className="sm:hidden">Download</span>
+            </Button>
+            {/* <Button
                 variant="outline"
                 size="sm"
                 className="flex items-center justify-center gap-2 text-xs sm:text-sm"
@@ -126,22 +124,21 @@ export default function InvoiceCard({ invoice }: InvoiceCardProps) {
                 <span className="hidden sm:inline">View Details</span>
                 <span className="sm:hidden">Details</span>
               </Button> */}
-              {invoice.status !== 'paid' && (
-                <Button 
-                  
-                  onClick={() => handlePayNow(invoice?._id)}
-                  className="flex items-center justify-center gap-2 text-xs sm:text-sm bg-primary hover:bg-primary/80"
-                >
-                  {isLoading ? (
-                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-                  ) : (
-                    <CreditCard className="h-3 w-3 sm:h-4 sm:w-4" />
-                  )}
-                  <span className="hidden sm:inline">Pay Now</span>
-                  <span className="sm:hidden">Pay</span>
-                </Button>
-              )}
-            </div>
+            {invoice.status !== "paid" && (
+              <Button
+                onClick={() => handlePayNow(invoice?._id)}
+                className="flex items-center justify-center gap-2 text-xs sm:text-sm bg-primary hover:bg-primary/80"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                ) : (
+                  <CreditCard className="h-3 w-3 sm:h-4 sm:w-4" />
+                )}
+                <span className="hidden sm:inline">Pay Now</span>
+                <span className="sm:hidden">Pay</span>
+              </Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

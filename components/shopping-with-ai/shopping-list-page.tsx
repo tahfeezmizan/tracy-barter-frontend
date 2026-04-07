@@ -44,8 +44,6 @@ export function ShoppingListPage() {
     setItems(updatedItems);
 
     // ✅ log instantly when item is added
-    console.log("Item added:", newItem);
-    console.log("Updated shopping list:", updatedItems);
   };
 
   // Delete item
@@ -57,7 +55,6 @@ export function ShoppingListPage() {
   const handleSubmit = async () => {
     try {
       const res = await confirmChat({ sessionId: sessionId });
-      console.log("res", res);
 
       // Find the Grocery Shopping service ID
       const groceryService = servicesData?.data?.find(
@@ -79,8 +76,6 @@ export function ShoppingListPage() {
     } catch (error) {
       console.error("Submission error:", error);
     }
-
-    console.log("Submitted Shopping List Data:", items);
   };
 
   return (
@@ -196,7 +191,6 @@ export function ShoppingListPage() {
         onAddItem={addItem}
         onSessionIdReceived={(sessionId) => {
           setSessionId(sessionId);
-          // console.log("Session ID received in ShoppingListPage:", sessionId);
         }}
       />
     </div>

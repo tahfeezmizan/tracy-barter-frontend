@@ -73,8 +73,6 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
     { skip: !serviceId },
   );
 
-  console.log("Update Service Data", service);
-
   const [updateService, { isLoading }] = useUpdateServiceMutation();
 
   const { register, handleSubmit, reset, control, setValue, watch } =
@@ -191,9 +189,6 @@ export function UpdateServiceDialog({ open, onOpenChange, serviceId }: Props) {
         id: serviceId,
         data: formData,
       }).unwrap();
-
-      console.log("formData", formData);
-      console.log(res);
 
       toast.success("Service updated successfully", {
         id: "update-service",

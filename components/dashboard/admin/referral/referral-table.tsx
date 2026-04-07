@@ -18,10 +18,9 @@ import { useState } from "react";
 
 export default function ReferralTable() {
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); 
+  const [limit] = useState(10);
 
   const { data, isLoading, isFetching } = useGetReferralQuery({ page, limit });
-  // console.log(data);
 
   const handlePrevPage = () => {
     if (data?.meta?.page && data.meta.page > 1) {
@@ -198,7 +197,7 @@ export default function ReferralTable() {
                     >
                       {pageNum}
                     </Button>
-                  )
+                  ),
                 )}
               </div>
 
