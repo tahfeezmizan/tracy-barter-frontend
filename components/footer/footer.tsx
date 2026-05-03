@@ -31,7 +31,7 @@
 //               </h4>
 //               <div className="space-y-4">
 //                 <div className="flex items-start gap-3">
-//   <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+//   <Mail className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
 //   <Link
 //     href="mailto:tracy@HappyValleyHomeConcierge.com"
 //     className="text-slate-300 hover:underline"
@@ -41,7 +41,7 @@
 // </div>
 
 // <div className="flex items-start gap-3">
-//   <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+//   <Phone className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
 //   <Link
 //     href="tel:8148835114"
 //     className="text-slate-300 hover:underline"
@@ -51,7 +51,7 @@
 // </div>
 
 //                 <div className="flex items-start gap-3">
-//                   <MapPin className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+//                   <MapPin className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
 //                   <span className="text-slate-300">Happy Valley, USA</span>
 //                 </div>
 //               </div>
@@ -64,7 +64,7 @@
 //               <div className="space-y-4">
 //                 <div>
 //                   <p className="text-slate-300 font-medium">Monday – Friday</p>
-                  
+
 //                 </div>
 //                 <div>
 //                   <p className="text-slate-300 font-medium">
@@ -86,9 +86,6 @@
 //     </footer>
 //   );
 // }
-
-
-
 
 import { Home, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
@@ -123,17 +120,17 @@ export default function Footer() {
               </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+                  <Mail className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
                   <Link
-                    href="mailto:tracy@HappyValleyHomeConcierge.com"
+                    href="mailto:tracy@happyvalleyconcierge.com"
                     className="text-slate-300 hover:underline"
                   >
-                    tracy@HappyValleyHomeConcierge.com
+                    Tracy@HappyValleyConcierge.com
                   </Link>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
+                  <Phone className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
                   <Link
                     href="tel:8148835114"
                     className="text-slate-300 hover:underline"
@@ -143,13 +140,13 @@ export default function Footer() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-slate-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Happy Valley, USA</span>
+                  <MapPin className="h-5 w-5 text-slate-400 mt-1 shrink-0" />
+                  <span className="text-slate-300">State College, PA</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex-1">
+            {/* <div className="flex-1">
               <h4 className="text-lg font-semibold text-white mb-6">
                 Office Hours
               </h4>
@@ -159,11 +156,11 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-slate-300 font-medium">
-                    Emergency services available 24/7
+                     Emergency services available 24/7
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -179,7 +176,8 @@ export default function Footer() {
 
         <div className="border-t border-slate-700 pt-8">
           <p className="text-center text-slate-400 text-sm">
-            © {new Date().getFullYear()} Happy Valley Home Concierge, LLC. All rights reserved.
+            © {new Date().getFullYear()} Happy Valley Home Concierge, LLC. All
+            rights reserved.
           </p>
         </div>
       </div>
