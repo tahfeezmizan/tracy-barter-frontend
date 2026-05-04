@@ -74,12 +74,12 @@ export default function Step4({ formData, updateFormData }: Step4Props) {
             />
           </div>
 
-          <Button
+          {/* <Button
             type="button"
             className="py-5 rounded-lg border border-primary text-secondary bg-white text-lg"
           >
             Check Availability
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

@@ -15,6 +15,9 @@ export default function OurMission() {
           We don’t measure success through achievements or awards, but through
           the satisfaction of our clients. */}
         </p>
+        <p className="w-full md:max-w-5xl mx-auto text-lg md:text-2xl leading-snug text-gray-500 text-center">
+          Mission statement coming soon
+        </p>
       </div>
     </div>
   );

@@ -9,7 +9,10 @@ import { useState } from "react";
 export default function OurTeam() {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data } = useGetStaffQuery({ page: currentPage, limit: 10 });
+  const { data, isLoading } = useGetStaffQuery({
+    page: currentPage,
+    limit: 10,
+  });
 
   const teamMembers = data?.data || [];
   const meta = data?.meta;
@@ -30,6 +33,13 @@ export default function OurTeam() {
             Professionals dedicated to making your experience seamless
           </p>
         </div>
+
+        {/* Placeholder message */}
+        {!isLoading && !data?.data?.length && (
+          <p className="text-lg text-center text-neutral-500 mb-6">
+            Our team profiles are coming soon.
+          </p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {teamMembers?.map((member) => (
