@@ -3,7 +3,7 @@
 import { Card, CardContent } from "../ui/card";
 
 export default function StatsCard({ stats }: { stats: any }) {
-
+  console.log("Stats card data", stats);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -22,7 +22,9 @@ export default function StatsCard({ stats }: { stats: any }) {
               )}
             </div>
 
-            <p className="text-3xl font-medium text-slate-700">{stat?.value || 0}</p>
+            <p className="text-3xl font-medium text-slate-700">
+              {stat?.value || 0}
+            </p>
           </CardContent>
         </Card>
       ))}

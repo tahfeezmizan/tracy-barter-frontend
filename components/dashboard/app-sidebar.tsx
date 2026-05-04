@@ -10,6 +10,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { menuItems } from "@/config/menuConfig";
+import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 import Cookies from "js-cookie";
 import { LogOut } from "lucide-react";
@@ -18,7 +19,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Badge } from "../ui/badge";
 
 export function AppSidebar() {
   const dispatch = useDispatch();
@@ -28,6 +29,11 @@ export function AppSidebar() {
   const router = useRouter();
   const [token, setToken] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
+
+  const { data } = useGetStaffProfileQuery(undefined);
+  const user = data?.data;
+
+  console.log("Staff profile", data);
 
   useEffect(() => {
     setToken(!!Cookies.get("token"));
@@ -41,16 +47,15 @@ export function AppSidebar() {
     router.push("/");
   };
 
-  // Prevent hydration mismatch by only rendering after mount and when role is available
   if (!mounted || !role) {
     return null;
   }
 
   return (
-    <Sidebar className="border-none flex flex-col h-screen px-6">
+    <Sidebar className="border-none flex flex-col h-screen px-4 overflow-hidden">
       <div className="bg-[#0F233F] flex flex-col h-full">
         {/* Fixed Logo Section */}
-        <div className="pt-6 mb-20 flex justify-center shrink-0">
+        <div className="pt-3 mb-5 flex justify-center shrink-0">
           <Link href="/">
             <Image
               src={require("@/assets/logo.png")}
@@ -60,6 +65,24 @@ export function AppSidebar() {
               className="block"
             />
           </Link>
+        </div>
+
+        <div className="text-white mb-8 ">
+          <Image
+            src={
+              user?.profile ||
+              "https://scontent.fdac207-1.fna.fbcdn.net/v/t39.30808-6/571188182_10107312777622138_146878389789160457_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=MsKx_yNEBQMQ7kNvwHvDLCx&_nc_oc=Ado2dGIln1GuRWhxXfeMkOJK7ID3zFQIH0G8CFbLugZihscK4Wd4qwjvLj-jTfqFMfc&_nc_zt=23&_nc_ht=scontent.fdac207-1.fna&_nc_gid=TNfu6H99rhC5N_BNFqYE_g&_nc_ss=7b2a8&oh=00_Af6mSdUoQdlIxPATTCp8I9mwYDzcUiFnkOElgngibvUlZw&oe=69FEEC01"
+            }
+            alt="User Profile"
+            width={200}
+            height={200}
+            className="w-16 h-16 rounded-lg mb-2"
+          />
+          <p className="text-xl font-semibold capitalize ">{user?.name}</p>
+          <p className="text-sm my-1">{user?.email}</p>
+          <Badge className="bg-blue-100 text-blue-700 font-semibold border-blue-200 capitalize ">
+            {user?.role}
+          </Badge>
         </div>
 
         {/* Scrollable Menu */}
@@ -72,7 +95,7 @@ export function AppSidebar() {
         >
           <SidebarGroup className="p-0">
             <SidebarGroupContent>
-              <SidebarMenu className="gap-4">
+              <SidebarMenu className="gap-2">
                 {items?.map((item) => (
                   <SidebarMenuItem
                     key={item.title}
@@ -84,7 +107,7 @@ export function AppSidebar() {
                               !items.some(
                                 (i) =>
                                   i.url !== "/dashboard" &&
-                                  pathname.startsWith(i.url)
+                                  pathname.startsWith(i.url),
                               ))
                           : pathname === item.url
                       )
@@ -108,7 +131,7 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter className="mb-14 px-0">
+        <SidebarFooter className="mb-6 px-0">
           <div
             onClick={handleLogout}
             className="flex items-center justify-start gap-4 px-4 py-2 font-medium text-white rounded-xl hover:bg-primary hover:text-red-500 cursor-pointer"

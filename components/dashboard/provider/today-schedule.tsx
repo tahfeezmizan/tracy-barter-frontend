@@ -22,9 +22,11 @@ export function TodaysSchedule() {
   const [updateBookingStatus, { isLoading: isUpdating }] =
     useUpdateBookingStatusMutation();
 
+  console.log("Upcoming schedule", data);
+
   const handleUpdateStatus = async (
     bookingId: string,
-    currentStatus: string
+    currentStatus: string,
   ) => {
     let nextStatus = "";
 
@@ -45,7 +47,7 @@ export function TodaysSchedule() {
       toast.success(
         nextStatus === "inProgress"
           ? "Service started successfully"
-          : "Service completed successfully"
+          : "Service completed successfully",
       );
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to update booking status");
