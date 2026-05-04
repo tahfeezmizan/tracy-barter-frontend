@@ -10,18 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useGetMyOrderQuery } from "@/redux/features/service/staffApis";
-import {
-  Calendar,
-  CheckCircle2,
-  Clock,
-  DollarSign,
-  MapPin,
-  MoreVertical,
-  User,
-  X,
-} from "lucide-react";
+import { Calendar, MapPin, MoreVertical, User } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function MyOrdersPage() {
   const [selectedFilter, setSelectedFilter] = useState<
@@ -29,6 +20,8 @@ export function MyOrdersPage() {
   >("all");
 
   const { data: orders, isLoading, isError } = useGetMyOrderQuery(undefined);
+
+  console.log(orders?.data);
 
   const filteredOrders = (orders?.data || []).filter((order: any) => {
     if (selectedFilter === "all") return true;
@@ -183,14 +176,7 @@ export function MyOrdersPage() {
                     className="text-muted-foreground shrink-0 mt-0.5"
                   />
                   <span>
-                    {order?.user?.address?.city +
-                      " " +
-                      order?.user?.address?.permanentAddress}
-                  </span>
-                  <span className="text-foreground">
-                    {/* {typeof order.address === 'string' 
-                        ? order.address 
-                        : `${order.address?.address || ''}, ${order.address?.city || ''}, ${order.address?.state || ''} ${order.address?.zipCode || ''}`} */}
+                    {order?.address?.address}, {order?.address?.city}
                   </span>
                 </div>
               </div>

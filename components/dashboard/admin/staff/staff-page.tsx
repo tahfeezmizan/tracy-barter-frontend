@@ -13,6 +13,8 @@ export default function StaffPage() {
   const [open, setOpen] = useState(false);
   const { data } = useGetStaffStatsOnAdminQuery(undefined);
 
+  console.log(data);
+
   const stats = [
     {
       title: "Total Staff",
@@ -24,7 +26,7 @@ export default function StaffPage() {
     },
     {
       title: "Avg Rating",
-      value: `${data?.averageRating}⭐`,
+      value: `${data?.averageRating || "0"}⭐`,
     },
     {
       title: "Services This Month",

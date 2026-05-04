@@ -176,6 +176,8 @@ export default function StaffCards() {
 
   const { data } = useGetStaffQuery({ page: currentPage, limit: 10 });
 
+  console.log("Staff Data:", data);
+
   const totalPages = data?.meta?.totalPages || 1;
 
   const [deleteStaff] = useDeleteStaffMutation();
@@ -273,10 +275,10 @@ export default function StaffCards() {
                   <Mail size={16} className="text-gray-500" />
                   {person?.email}
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <Phone size={16} className="text-gray-500" />
                   {person?.phone || "XXXXXXXXXX"}
-                </div>
+                </div> */}
               </div>
 
               {/* Button */}

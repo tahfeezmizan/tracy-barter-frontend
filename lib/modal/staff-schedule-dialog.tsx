@@ -11,13 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useGetWeeklyScheduleQuery } from "@/redux/features/service/staffApis";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  MapPin,
-  User,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, MapPin, User } from "lucide-react";
 import { useState } from "react";
 
 type Booking = {
@@ -56,10 +50,12 @@ export function StaffScheduleDialog({
   const [dateParam, setDateParam] = useState<string | undefined>(undefined);
   const { data, isLoading } = useGetWeeklyScheduleQuery(
     { date: dateParam, staffId },
-    { skip: !staffId || !open }
+    { skip: !staffId || !open },
   );
 
   const bookings: Booking[] = data?.data || [];
+
+  console.log("booking data", data)
 
   // Group bookings by date
   const groupedBookings = bookings.reduce((acc: any, booking) => {
@@ -118,7 +114,11 @@ export function StaffScheduleDialog({
             Previous Week
           </Button>
           <span className="font-semibold text-[#475569]">
-            {dateParam === "prev" ? "Previous Week" : dateParam === "next" ? "Next Week" : "This Week"}
+            {dateParam === "prev"
+              ? "Previous Week"
+              : dateParam === "next"
+                ? "Next Week"
+                : "This Week"}
           </span>
           <Button
             variant="ghost"
@@ -138,74 +138,83 @@ export function StaffScheduleDialog({
             </div>
           ) : Object.keys(groupedBookings).length > 0 ? (
             <div className="space-y-8">
-              {Object.entries(groupedBookings).map(([date, dayBookings]: [string, any]) => (
-                <div key={date}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-[#1E293B]">{date}</h3>
-                    </div>
-                    <span className="text-[#94A3B8] border border-[#E2E8F0] px-3 py-1 rounded-lg text-sm">
-                      {dayBookings.length} appointments
-                    </span>
-                  </div>
-
-                  <div className="space-y-4">
-                    {dayBookings.map((appt: Booking) => (
-                      <div
-                        key={appt._id}
-                        className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm hover:shadow-md transition-shadow"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-full bg-[#F1F5F9] flex items-center justify-center text-[#64748B]">
-                              <User className="h-4 w-4" />
-                            </div>
-                            <span className="font-bold text-[#1E293B] text-lg">
-                              {appt.user.name}
-                            </span>
-                            <Badge
-                              variant="secondary"
-                              className={cn(
-                                "font-medium px-3 rounded-full capitalize",
-                                appt.status === "completed"
-                                  ? "bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7]"
-                                  : appt.status === "scheduled" || appt.status === "pending"
-                                  ? "bg-[#FEF9C3] text-[#854D0E] hover:bg-[#FEF9C3]"
-                                  : "bg-red-100 text-red-700"
-                              )}
-                            >
-                              {appt.status}
-                            </Badge>
-                          </div>
-                          <span className="text-[#475569] font-medium">
-                            {appt.serviceType.title}
-                          </span>
-                        </div>
-
-                        <div className="space-y-2 text-[#64748B]">
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
-                            <span className="text-[15px]">
-                              {appt.startTime} - {appt.endTime}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            <span className="text-[15px]">
-                              {appt.address.address}, {appt.address.city}
-                            </span>
-                          </div>
-                        </div>
+              {Object.entries(groupedBookings).map(
+                ([date, dayBookings]: [string, any]) => (
+                  <div key={date}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-xl font-bold text-[#1E293B]">
+                          {date}
+                        </h3>
                       </div>
-                    ))}
+                      <span className="text-[#94A3B8] border border-[#E2E8F0] px-3 py-1 rounded-lg text-sm">
+                        {dayBookings.length} appointments
+                      </span>
+                    </div>
+
+                    <div className="space-y-4">
+                      {dayBookings.map((appt: Booking) => (
+                        <div
+                          key={appt._id}
+                          className="border border-[#E2E8F0] rounded-xl p-5 space-y-4 shadow-sm hover:shadow-md transition-shadow"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="h-8 w-8 rounded-full bg-[#F1F5F9] flex items-center justify-center text-[#64748B]">
+                                <User className="h-4 w-4" />
+                              </div>
+                              <span className="font-bold text-[#1E293B] text-lg">
+                                {appt.user.name}
+                              </span>
+                              <Badge
+                                variant="secondary"
+                                className={cn(
+                                  "font-medium px-3 rounded-full capitalize",
+                                  appt.status === "completed"
+                                    ? "bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7]"
+                                    : appt.status === "scheduled" ||
+                                        appt.status === "pending"
+                                      ? "bg-[#FEF9C3] text-[#854D0E] hover:bg-[#FEF9C3]"
+                                      : "bg-red-100 text-red-700",
+                                )}
+                              >
+                                {appt.status}
+                              </Badge>
+                            </div>
+                            <span className="text-[#475569] bg-amber-700 font-medium">
+                              {appt?.serviceType?.title}
+                            </span>
+                          </div>
+
+                          <div className="space-y-2 text-[#64748B]">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span className="text-[15px]">
+                                {appt.startTime} - {appt.endTime}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4" />
+                              <span className="text-[15px]">
+                                {appt.address.address}, {appt.address.city}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-[300px] text-center space-y-2">
-              <p className="text-xl font-bold text-[#1E293B]">No Appointments</p>
-              <p className="text-[#64748B]">There are no scheduled services for this week.</p>
+              <p className="text-xl font-bold text-[#1E293B]">
+                No Appointments
+              </p>
+              <p className="text-[#64748B]">
+                There are no scheduled services for this week.
+              </p>
             </div>
           )}
         </div>

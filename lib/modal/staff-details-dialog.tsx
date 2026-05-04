@@ -41,16 +41,13 @@ type Props = {
   staffId: string;
 };
 
-const staffMock = {
-  specialty: "Home Cleaning",
-  status: "Active",
-};
-
 export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const { data } = useGetSingleStaffQuery(staffId);
   const { data: specialties = [] } =
     useGetStaffSpecialtyServicesQuery(undefined);
+
+  console.log("Data from api", data);
 
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
 
@@ -116,9 +113,9 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
             {initials}
           </div>
           <div>
-            <p className="font-semibold">{data?.name}</p>
+            <p className="font-semibold capitalize">{data?.name}</p>
             <p className="text-sm text-muted-foreground">
-              {staffMock.specialty}
+              {data?.services[0]?.name}
             </p>
           </div>
         </div>
@@ -220,7 +217,7 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
                     : "bg-gray-500"
                 }
               >
-                {staffMock.status}
+                {data?.status}
               </Badge>
             </div>
           </div>
@@ -246,7 +243,7 @@ export function StaffDetailsDialog({ open, onOpenChange, staffId }: Props) {
           open={isScheduleOpen}
           onOpenChange={setIsScheduleOpen}
           staffName={data?.name}
-          specialty={staffMock.specialty}
+          specialty={data?.services[0]?.name}
           staffId={staffId}
         />
       </DialogContent>
