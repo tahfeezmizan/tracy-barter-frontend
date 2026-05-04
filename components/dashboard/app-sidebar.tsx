@@ -10,10 +10,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { menuItems } from "@/config/menuConfig";
+import { EditProfileModal } from "@/lib/modal/edit-profile-modal";
+import { getImageUrl } from "@/lib/utils";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
 import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 import Cookies from "js-cookie";
-import { LogOut } from "lucide-react";
+import { LogOut, SquareUserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -29,11 +31,10 @@ export function AppSidebar() {
   const router = useRouter();
   const [token, setToken] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { data } = useGetStaffProfileQuery(undefined);
   const user = data?.data;
-
-  console.log("Staff profile", data);
 
   useEffect(() => {
     setToken(!!Cookies.get("token"));
@@ -68,22 +69,39 @@ export function AppSidebar() {
         </div>
 
         <div className="text-white mb-8 ">
-          <Image
-            src={
-              user?.profile ||
-              "https://scontent.fdac207-1.fna.fbcdn.net/v/t39.30808-6/571188182_10107312777622138_146878389789160457_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=MsKx_yNEBQMQ7kNvwHvDLCx&_nc_oc=Ado2dGIln1GuRWhxXfeMkOJK7ID3zFQIH0G8CFbLugZihscK4Wd4qwjvLj-jTfqFMfc&_nc_zt=23&_nc_ht=scontent.fdac207-1.fna&_nc_gid=TNfu6H99rhC5N_BNFqYE_g&_nc_ss=7b2a8&oh=00_Af6mSdUoQdlIxPATTCp8I9mwYDzcUiFnkOElgngibvUlZw&oe=69FEEC01"
-            }
-            alt="User Profile"
-            width={200}
-            height={200}
-            className="w-16 h-16 rounded-lg mb-2"
-          />
+          {user?.profile ? (
+            <Image
+              src={getImageUrl(user?.profile)}
+              alt="User Profile"
+              width={500}
+              height={500}
+              className="w-16 h-16 rounded-lg mb-2 object-cover"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-lg mb-2 bg-secondary flex items-center justify-center">
+              <SquareUserRound className="size-16 text-white" />
+            </div>
+          )}
           <p className="text-xl font-semibold capitalize ">{user?.name}</p>
           <p className="text-sm my-1">{user?.email}</p>
-          <Badge className="bg-blue-100 text-blue-700 font-semibold border-blue-200 capitalize ">
-            {user?.role}
-          </Badge>
+          <div className=" flex items-center gap-2">
+            <Badge className="bg-blue-100 text-blue-700 font-semibold border-blue-200 capitalize ">
+              {user?.role}
+            </Badge>
+            <button
+              onClick={() => setIsEditModalOpen(true)}
+              className="bg-primary capitalize font-semibold rounded-full text-white px-2.5 text-xs py-1"
+            >
+              edit profile
+            </button>
+          </div>
         </div>
+
+        <EditProfileModal
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          user={user}
+        />
 
         {/* Scrollable Menu */}
         <SidebarContent
