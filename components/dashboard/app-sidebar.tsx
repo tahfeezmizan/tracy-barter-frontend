@@ -13,6 +13,8 @@ import { menuItems } from "@/config/menuConfig";
 import { EditProfileModal } from "@/lib/modal/edit-profile-modal";
 import { getImageUrl } from "@/lib/utils";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { useLogoutUserMutation } from "@/redux/features/auth/authApi";
+import { baseApi } from "@/redux/features/baseApi";
 import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 import Cookies from "js-cookie";
 import { LogOut, SquareUserRound } from "lucide-react";
@@ -26,6 +28,7 @@ import { Badge } from "../ui/badge";
 export function AppSidebar() {
   const dispatch = useDispatch();
   const role = useSelector(selectUserRole);
+  const [logoutUser] = useLogoutUserMutation();
   const pathname = usePathname();
   const items = menuItems[role];
   const router = useRouter();
@@ -42,9 +45,14 @@ export function AppSidebar() {
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("token");
+    // Optimistically clear local state and cache for immediate UI response
     dispatch(removeUser());
+    dispatch(baseApi.util.resetApiState());
     setToken(false); // instant UI update
+
+    // Trigger server-side logout
+    logoutUser(undefined);
+
     router.push("/");
   };
 

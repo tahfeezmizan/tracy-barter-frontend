@@ -21,6 +21,15 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["Auth"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Clear any stale cache from previous sessions on successful login
+          dispatch(baseApi.util.resetApiState());
+        } catch (error) {
+          console.error("Login failed:", error);
+        }
+      },
     }),
 
     // verify user
@@ -63,14 +72,14 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
 
-  changePassword: builder.mutation({
-    query: (data) => ({
-      url: "/auth/change-password",
-      method: "POST",
-      body: data,
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Auth"],
     }),
-    invalidatesTags: ["Auth"],
-  }),
 
     // logout user
     logoutUser: builder.mutation({
@@ -82,12 +91,12 @@ const authApi = baseApi.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          // Clear RTK Query cache
-          dispatch(baseApi.util.resetApiState());
-          // Clear Redux user state
-          dispatch(removeUser()); // This will clear your user slice
         } catch (error) {
-          console.error("Logout failed:", error);
+          console.error("Logout failed on server:", error);
+        } finally {
+          // Always clear local state and cache on logout
+          dispatch(removeUser());
+          dispatch(baseApi.util.resetApiState());
         }
       },
     }),
