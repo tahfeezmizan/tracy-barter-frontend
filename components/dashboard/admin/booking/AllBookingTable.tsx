@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AssignStaffModal } from "@/lib/modal/AssignStaffModal";
 import { PriceEditModal } from "@/lib/modal/PriceEditModal";
 import {
   useGetBookingsQuery,
@@ -19,7 +20,6 @@ import { ChevronLeft, ChevronRight, Edit, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { BookingDetailsModal } from "./booking-details-modal";
-import { AssignStaffModal } from "@/lib/modal/AssignStaffModal";
 
 export default function AllBookingTable() {
   const [open, setOpen] = useState(false);
@@ -53,6 +53,8 @@ export default function AllBookingTable() {
     limit: itemsPerPage,
     search: debouncedSearch,
   });
+
+  console.log("Helo", data?.data);
 
   const totalPages = data?.meta?.totalPages || 0;
   const totalItems = data?.meta?.total || 0;
@@ -124,7 +126,6 @@ export default function AllBookingTable() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="p-4">User Name</th>
-                <th className="p-4">Service</th>
                 <th className="p-4">Staff</th>
                 <th className="p-4">Date</th>
                 <th className="p-4">Location</th>
@@ -174,9 +175,9 @@ export default function AllBookingTable() {
                       </p>
                     </td>
 
-                    <td className="p-4">
+                    {/* <td className="p-4">
                       {booking.serviceType?.title || "N/A"}
-                    </td>
+                    </td> */}
 
                     <td className="p-4 flex ">
                       <div className="">

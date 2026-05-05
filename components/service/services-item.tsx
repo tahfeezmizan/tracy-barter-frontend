@@ -19,7 +19,7 @@ export default function ServicesItem({
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const href =
-    service?.name === "Grocery Restock"
+    service?.name?.toLowerCase().includes("grocery")
       ? "/shopping-with-ai"
       : `/service/${service?._id}`;
 

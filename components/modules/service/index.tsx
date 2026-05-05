@@ -78,7 +78,13 @@ export default function ServiceSection() {
                       shrink-0 w-full sm:w-[280px] lg:w-96 hover:shadow-xl bg-white rounded-3xl overflow-hidden
                     `}
                 >
-                  <Link href={`/service/${service?._id}`}>
+                  <Link
+                    href={
+                      service?.name?.toLowerCase().includes("grocery")
+                        ? "/shopping-with-ai"
+                        : `/service/${service?._id}`
+                    }
+                  >
                     <CardContent className="p-3 text-center">
                       {/* <div className="relative ">
                         <Image

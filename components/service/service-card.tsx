@@ -1,11 +1,9 @@
 "use client";
 
 import { Service } from "@/lib/types/service.types";
-import { getImageUrl } from "@/lib/utils";
-import Image from "next/image";
+import { selectIsLoggedIn } from "@/redux/slice/userSlice";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "@/redux/slice/userSlice";
 
 interface ServicesItemProps {
   service: Service;
@@ -15,7 +13,7 @@ export default function ServicesItem({ service }: ServicesItemProps) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const href =
-    service?.name === "Grocery Restock"
+    service?.name?.toLowerCase().includes("grocery")
       ? "/shopping-with-ai"
       : `/service/${service?._id}`;
 
