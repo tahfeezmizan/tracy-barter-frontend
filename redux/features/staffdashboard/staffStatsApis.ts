@@ -9,9 +9,9 @@ const staffStatsApis = baseApi.injectEndpoints({
         url: "/user/profile",
         method: "GET",
       }),
-      // transformResponse: (response: any) => {
-      //   return response?.data;
-      // },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
       providesTags: ["staff"],
     }),
 

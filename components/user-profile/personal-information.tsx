@@ -27,7 +27,7 @@ export default function PersonalInformation({
   const [isEditing, setIsEditing] = useState(false);
   const [updateProfile] = useStaffProfileUpdateMutation();
 
-  const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",

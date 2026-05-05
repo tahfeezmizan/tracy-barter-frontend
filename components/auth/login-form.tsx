@@ -58,7 +58,7 @@ export function SignInForm() {
         } else if (["admin", "staff"].includes(res?.data?.data?.role)) {
           router.push("/dashboard");
         } else {
-          router.push("/user-profile");
+          router.push("/");
         }
       } else if (res?.error) {
         const errorData = res?.error as any;

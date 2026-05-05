@@ -53,7 +53,8 @@ export default function RecentServices({
                   <p className="text-sm text-gray-500">{item?.service}</p>
                 </div>
 
-                <div className="flex items-center gap-4 mt-3 md:mt-0">
+                <div className="flex flex-col items-end justify-end gap-2 mt-3 md:mt-0">
+                  <p className="font-medium">Staff Name: <span className="font-semibold capitalize">{item?.staff?.name || " Not assigned yet"}</span></p>
                   <Badge
                     className={`${
                       statusColor[item.status as keyof typeof statusColor]
