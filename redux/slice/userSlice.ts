@@ -64,6 +64,7 @@ export const userSlice = createSlice({
 
       if (typeof window !== "undefined") {
         localStorage.clear();
+        sessionStorage.clear();
         Cookies.remove("user");
         Cookies.remove("token");
       }

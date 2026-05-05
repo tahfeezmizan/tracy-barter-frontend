@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn, getImageUrl } from "@/lib/utils";
 import { useGetStaffProfileQuery } from "@/redux/features/staffdashboard/staffStatsApis";
+import { useLogoutUserMutation } from "@/redux/features/auth/authApi";
+import { baseApi } from "@/redux/features/baseApi";
 import { removeUser, selectUserRole } from "@/redux/slice/userSlice";
 import Cookies from "js-cookie";
 import {
@@ -32,6 +34,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const role = useSelector(selectUserRole);
+  const [logoutUser] = useLogoutUserMutation();
   const { data } = useGetStaffProfileQuery(undefined);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -61,9 +64,14 @@ export default function Header() {
   ];
 
   const handleLogout = () => {
-    Cookies.remove("token");
+    // Optimistically clear local state and cache for immediate UI response
     dispatch(removeUser());
+    dispatch(baseApi.util.resetApiState());
     setToken(false);
+    
+    // Trigger server-side logout
+    logoutUser(undefined);
+    
     router.push("/");
   };
 
