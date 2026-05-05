@@ -33,8 +33,8 @@ export function AppSidebar() {
   const [mounted, setMounted] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { data } = useGetStaffProfileQuery(undefined);
-  const user = data?.data;
+  const { data: user } = useGetStaffProfileQuery(undefined);
+  
 
   useEffect(() => {
     setToken(!!Cookies.get("token"));
